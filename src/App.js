@@ -1,4 +1,10 @@
+import { Route, Routes } from "react-router";
 import { Header } from "./components/Header";
+import NavigationBar from "./components/NavigationBar";
+import { HomePage } from "./pages/HomePage";
+
+
+
 
 
 function App() {
@@ -6,8 +12,12 @@ function App() {
 
     <>
 
-    <Header/>
-    <h1>Hola mundo</h1>
+    <Routes>
+      <Route path="/" element={<HomePage/>} />
+    </Routes>
+
+
+  
     
     </>
 
