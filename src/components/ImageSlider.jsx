@@ -11,14 +11,15 @@ const images = [
 
 const ImageSliderContainer = styled.div`
   position: relative;
-  width: 800px;
+  width: 100%;
   height: 300px; /* establecemos una altura fija */
   margin: 0 auto; /* centramos horizontalmente */
 `;
 
 const Image = styled.img`
-  width: 800px;
+  width: 100%;
   height: 300px;
+  transition: transform 0.5s ease-out; /* transición de 0.3 segundos con aceleración al final */
 `;
 
 const Button = styled.button`
@@ -29,7 +30,7 @@ const Button = styled.button`
   border: none;
   cursor: pointer;
   font-size: 2rem;
-  color: red;
+  color: white;
   z-index: 1;
 
   &:hover {
@@ -39,10 +40,12 @@ const Button = styled.button`
 
 const NextButton = styled(Button)`
   right: 0;
+  background-color: gray;
 `;
 
 const PrevButton = styled(Button)`
   left: 0;
+  background-color: gray;
 `;
 
 const ImageSlider = () => {
@@ -59,7 +62,7 @@ const ImageSlider = () => {
     setCurrentImage(currentImage === 0 ? images.length - 1 : currentImage - 1);
   };
 
-  // Efecto para cambiar de imagen automáticamente después de 5 segundos
+  // Efecto para cambiar de imagen automáticamente después de 3 segundos
   useEffect(() => {
     const intervalId = setInterval(() => {
       setCurrentImage((currentImage + 1) % images.length);
