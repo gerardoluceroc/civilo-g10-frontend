@@ -10,18 +10,56 @@ const StyledDiv = styled.div`
 
 `;
 
+const ListadoProductos = styled.div`
+  display: flex; // Aplicamos el estilo display:flex para que los elementos hijos se muestren en una fila horizontal
+  flex-direction: row; // Aplicamos el estilo flex-direction:row para indicar que los elementos hijos deben distribuirse en una fila horizontal
+  flex-wrap: wrap; // Aplicamos el estilo flex-wrap:wrap para que los elementos hijos se distribuyan en varias filas si no caben todos en una sola
+  justify-content: center; // Aplicamos el estilo justify-content:center para centrar los elementos hijos horizontalmente dentro del contenedor padre
+  align-items: flex-start; // Aplicamos el estilo align-items:flex-start para alinear los elementos hijos en la parte superior del contenedor padre
+  gap: 20px; // Aplicamos el estilo gap:20px para agregar un espacio de 20px entre cada elemento hijo
+  margin-top: 20px; // Aplicamos el estilo margin-top:20px para agregar un espacio de 20px en la parte superior del contenedor padre
+`;
+
 const Titulo = styled.h1`
   font-size: xx-large;
 `;
 
 export const OurProducts = () => {
+
+  let productos = [
+    {
+      id: 1,
+      titulo: "Roller Blackout",
+      imagen: "https://aridesign.cl/wp-content/uploads/2021/08/5Berlingris1_8c523c0e-d2ca-4804-82b5-9cc6ded083fa_1200x.jpg",
+      descripcion: "Bloquea completamente la luz y protege tu privacidad con nuestras Cortinas Roller Blackout de alta calidad. Disponible en una variedad de tamaños y colores para adaptarse a tus necesidades"
+    },
+    {
+      id: 2,
+      titulo: "Roller Dúo",
+      imagen: "https://homeseven.cl/wp-content/uploads/2021/03/ca1c1a368db2beba448a28a09ac69cf.jpg",
+      descripcion: "La cortina roller duo combina dos telas en una sola, permitiéndote controlar la entrada de luz y privacidad. Con su diseño elegante y minimalista, es una opción versátil y práctica para cualquier habitación."
+    }
+  ];
+
+  //Funcion que genera los componentes ProductItem con la info de los productos disponibles de acuerdo al listado de entrada
+  const mostrarProductos = (productos) => {
+    return productos.map((producto) => (
+      <ProductItem
+        key={producto.id}
+        title={producto.titulo}
+        image={producto.imagen}
+        description={producto.descripcion}
+      />
+    ));
+  };
+
+  
   return (
     <>
     <div>Div ejemplo para contrastar con fondo blanco (borrar dps)</div>
     <StyledDiv>
       <Titulo>Nuestros Productos</Titulo>
-      <ProductItem/>
-    
+      <ListadoProductos>{mostrarProductos(productos)}</ListadoProductos>
     </StyledDiv>
     </>
   )

@@ -33,7 +33,7 @@ const Descripcion = styled.p`
     word-wrap: break-word; /* Permitimos que las palabras se dividan en varias líneas si exceden el ancho disponible */
 `;
 
-export const ProductItem = () => {
+export const ProductItem = ({title,image,description}) => {
     
 
     const rollerBlackoutImage = "https://aridesign.cl/wp-content/uploads/2021/08/5Berlingris1_8c523c0e-d2ca-4804-82b5-9cc6ded083fa_1200x.jpg";
@@ -41,13 +41,9 @@ export const ProductItem = () => {
 
     return (
         <StyledDiv>
-            <Titulo>Roller Blackout</Titulo>
-            <Imagen src={rollerBlackoutImage}/>
-            <Descripcion>
-                Bloquea completamente la luz y protege tu privacidad con nuestras cortinas roller blackout de alta calidad. 
-                Disponible en una variedad de tamaños y colores para adaptarse a tus necesidades
-            </Descripcion>
-
+            <Titulo>{title}</Titulo>
+            <Imagen src={image}/>
+            <Descripcion>{description}</Descripcion>
         </StyledDiv>
     )
 }
