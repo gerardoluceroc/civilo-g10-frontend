@@ -36,10 +36,8 @@ const Descripcion = styled.p`
 export const ProductItem = ({title,image,description}) => {
     
 
-    const rollerBlackoutImage = "https://aridesign.cl/wp-content/uploads/2021/08/5Berlingris1_8c523c0e-d2ca-4804-82b5-9cc6ded083fa_1200x.jpg";
-    
-
     return (
+        
         <StyledDiv>
             <Titulo>{title}</Titulo>
             <Imagen src={image}/>

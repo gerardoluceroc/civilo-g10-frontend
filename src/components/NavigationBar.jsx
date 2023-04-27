@@ -8,6 +8,20 @@ const Navbar = styled.nav`
   padding: 1rem 2rem;
   background-color: #1076d6;
   color: #fff;
+
+  //ESTO ES PARA PROBAR EL BOTON INICIO SOLAMENTE
+  //La idea es aplicarle estilo personalizado mas tarde
+  button {
+    background-color: inherit;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 1.3rem;
+  }
+
+  button:hover {
+  background-color: #0062cc;
+  }
 `;
 
 const Logo = styled.div`
@@ -38,7 +52,12 @@ const NavItem = styled.li`
 function NavigationBar() {
   return (
     <Navbar>
-      <Logo>Inicio</Logo>
+      <Link to={"/"}>
+        <button>Inicio</button>
+      </Link>
+      <Link to={"/client/request"}>
+        <button>ver diseño pagina solicitudes (componente prueba, borrar dps)</button>
+      </Link>
       <NavItems>
         <NavItem>
           <Link to={"/login"}>
