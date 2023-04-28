@@ -32,22 +32,122 @@ const ListaSolicitudes = styled.div`
 
 `;
 
+//Funcion para definir los estilos que tendrá el tag del resumen de la solicitud y otras propiedades del componente principal
+const showRequestResume = (solicitudes) => {
+  return solicitudes.map((solicitud) => {
+    if (solicitud.status.toLowerCase() === "enviada") {
+      return (
+        <RequestResume
+          key={solicitud.requestID}
+          fecha={solicitud.admissionDate}
+          estado={solicitud.status}
+          colorLetraTag="white"
+          colorFondoTag="#1f618d"
+        />
+      );
+    } else if (solicitud.status.toLowerCase() === "aceptada") {
+      return (
+        <RequestResume
+          key={solicitud.requestID}
+          fecha={solicitud.admissionDate}
+          estado={solicitud.status}
+          colorLetraTag="#134c2b"
+          colorFondoTag="#53cfb6"
+        />
+      );
+    } else if (solicitud.status.toLowerCase() === "cancelada") {
+      return (
+        <RequestResume
+          key={solicitud.requestID}
+          fecha={solicitud.admissionDate}
+          estado={solicitud.status}
+          colorLetraTag="#9e1919"
+          colorFondoTag="#f5b7b1"
+        />
+      );
+    } else if (solicitud.status.toLowerCase() === "completada") {
+      return (
+        <RequestResume
+          key={solicitud.requestID}
+          fecha={solicitud.admissionDate}
+          estado={solicitud.status}
+          colorLetraTag="white"
+          colorFondoTag=" #22653f "
+        />
+      );
+    }
+    return null; //devolver null si el status no coincide con ninguno de los casos anteriores
+  });
+};
+
 
 
 export const ClientRequestList = () => {
+  
+
+  let solicitudes = [
+    {
+      requestID: 1,
+      description: "necesito una cortina roller café",
+      admissionDate: "27-04-2023",
+      closingDate: "29-04-2023",
+      commune: "Puente Alto",
+      reason: "razon",
+      status: "Aceptada"
+    },
+    {
+      requestID: 2,
+      description: "necesito una cortina dúo rojo",
+      admissionDate: "21-01-2023",
+      closingDate: "04-02-2023",
+      commune: "Maipú",
+      reason: "razon 2" ,
+      status: "Enviada"
+    },{
+      requestID: 3,
+      description: "necesito una cortina roller amarilla",
+      admissionDate: "23-04-2023",
+      closingDate: "27-04-2023",
+      commune: "La Florida",
+      reason: "razon 3",
+      status: "Cancelada",
+    }
+    ,{
+      requestID: 4,
+      description: "necesito una cortina roller screen",
+      admissionDate: "20-03-23",
+      closingDate: "22-04-2023",
+      commune: "Providencia",
+      reason: "razon 4" ,
+      status: "Completada",
+    }
+  ]
+
+  console.log(showRequestResume(solicitudes));
+
+
+
+
+
+
+/*   const mostrarProductos = (productos) => {
+    return productos.map((producto) => (
+      <ProductItem
+        key={producto.id}
+        title={producto.titulo}
+        image={producto.imagen}
+        description={producto.descripcion}
+      />
+    ));
+  }; */
+
   return (
 
     <StyledDiv>
       <Titulo>Mis Solicitudes</Titulo>
       <ListaSolicitudes>
-        <RequestResume/>
-        <RequestResume/>
-        <RequestResume/>
-        <RequestResume/>
-        <RequestResume/>
-        <RequestResume/>
-        <RequestResume/>
-        <RequestResume/>
+        {showRequestResume(solicitudes)}
+        
       </ListaSolicitudes>
       
 

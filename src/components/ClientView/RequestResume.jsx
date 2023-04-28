@@ -8,7 +8,7 @@ const StyledDiv = styled.div`
     border-radius: 10px;
     display: flex;
     align-items: center;
-    width: 350px;
+    width: 300px;
     margin: 5px; //separador vertical entre este elementos y otros hermanos
     margin-left: 10px;//separador horizontal respecto al borde izquierdo
     padding: 7px;
@@ -53,15 +53,18 @@ const InfoSolicitud = styled.div`
 const EstadoSolicitud = styled.div`
   margin-left: 20px; /* Margen a la izquierda de 5px */
   border-radius: 10px;
-  background-color:     #53cfb6 ; /* Color de fondo */
-  color:  #134c2b; /* Color del texto */
+
+  //Se define el estilo del fondo y la letra dependiendo del estado de la solicitud
+  background-color: ${(props) => props.backgroundColor};
+  color:  ${(props) => props.color}; 
+
   font-size: 150%; /* Tamaño de fuente del texto */
   align-items: center; 
   height: 30px; /* Altura del contenedor */
-  width: 100px; /* Ancho del contenedor */
+  width: 123px; /* Ancho del contenedor */
   display: flex; /* Establece el contenedor como un elemento flex */
   justify-content: center; /* Centra horizontalmente los elementos */
-  padding: 0.5rem; /* Espacio interior alrededor del contenido */
+  padding: 0.35rem; /* Espacio interior alrededor del contenido */
 
   //color letra cancelado: #9e1919, color fondo: #f5b7b1;
   //color letra Enviada: white, color fondo: #1f618d;
@@ -73,21 +76,22 @@ const CalendarioIcono = styled(CalendarMonth)`
 
 `;
 
-export const RequestResume = () => {
+export const RequestResume = ({fecha,estado, colorFondoTag, colorLetraTag}) => {
+
   return (
     <StyledDiv>
         <InfoSolicitud>
-            <Titulo>Solicitud Cortina Roller</Titulo>
+            <Titulo>Solicitud Cortina</Titulo>
             <Fecha>
                 <CalendarioIcono/>
-                26-04-2022
+                {fecha}
             </Fecha>
             <VerDetalles>
                 <Info/>
                 Ver Detalles
             </VerDetalles>        
         </InfoSolicitud>
-        <EstadoSolicitud>Aceptada</EstadoSolicitud>
+        <EstadoSolicitud backgroundColor={colorFondoTag} color={colorLetraTag}>{estado}</EstadoSolicitud>
 
 
     </StyledDiv>
