@@ -4,8 +4,8 @@ import NavigationBar from "./components/NavigationBar";
 import { HomePage } from "./pages/HomePage";
 import { ClientRequestPage } from "./pages/ClientRequestPage";
 import {RegisterPage } from "./pages/Register";
-
-
+//import LoginPage from "./Pages/LoginPage";
+import LoginPage from "./pages/LoginPage";
 
 
 
@@ -18,6 +18,9 @@ function App() {
       <Route path="/" element={<HomePage/>} />
       <Route path="/client/request" element={<ClientRequestPage/>}/>
       <Route path="/register" element={<RegisterPage/>} />
+
+      
+      <Route path="/login" element={<LoginPage/>} />
     </Routes>
 
 
