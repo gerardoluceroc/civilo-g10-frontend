@@ -123,23 +123,6 @@ export const ClientRequestList = () => {
     }
   ]
 
-  console.log(showRequestResume(solicitudes));
-
-
-
-
-
-
-/*   const mostrarProductos = (productos) => {
-    return productos.map((producto) => (
-      <ProductItem
-        key={producto.id}
-        title={producto.titulo}
-        image={producto.imagen}
-        description={producto.descripcion}
-      />
-    ));
-  }; */
 
   return (
 
