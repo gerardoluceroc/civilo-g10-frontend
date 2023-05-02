@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { iniciarSesion } from "../api/civilo_roller_api";
 
 const LoginContainer = styled.div`
   display: flex;
@@ -62,23 +63,7 @@ const LoginForm = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const user = { email: email, password: password };
-    fetch("http://localhost:8080/users/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(user),
-    })
-      .then((response) => {
-        if (response.ok) {
-          console.log("Login successful");
-        } else {
-          console.log("Login failed");
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+    iniciarSesion(user);
   };
 
   return (
