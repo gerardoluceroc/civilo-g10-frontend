@@ -2,6 +2,8 @@ import { Form } from 'react-router-dom'
 
 import styled from 'styled-components'
 import Select from '@mui/material/Select';
+import { registrarUsuario } from '../api/civilo_roller_api';
+import { useState } from 'react';
 
 
 const Formulario = styled.form`
@@ -113,7 +115,7 @@ width: 90%;
 
 `;
 
-const CiudadComuna = styled.div`
+const RegionComuna = styled.div`
   border-color: transparent;
   margin: auto;
   width: 80%;
@@ -131,6 +133,16 @@ const CiudadComuna = styled.div`
   }
 
 `;
+
+const RolUsuario = styled.div`
+  border-color: transparent;
+  display: flex;
+  flex-direction: column;
+  gap: 10%; // Agrega un espacio de 10px entre los hijos del div
+  margin: auto;
+  width: 80%;
+`;
+
 
 const Birthday = styled.div`
   border-color: transparent;
@@ -182,14 +194,46 @@ const SubmitButton = styled.button`
 
 
 export const RegisterForm = () => {
+  // Define los estados para cada campo del formulario
+  const [nombre, setNombre] = useState('');
+  const [apellido, setApellido] = useState('');
+  const [telefono, setTelefono] = useState('');
+  const [codigoInternacional, setCodigoInternacional] = useState('+56'); 
+  const [region, setRegion] = useState('Seleccione Su Región');
+  const [comuna, setComuna] = useState('Seleccione Su Comuna');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordRepetida, setPasswordRepetida] = useState('');
+  const [rolUsuario, setRolUsuario] = useState('Cliente');
+  const [birthDate, setBirthDate] = useState('');
 
   const handleClick = (event) => {
 
     //Se llama al metodo para evitar que haga su comportamiento por defecto, en este caso enviar el formulario
     event.preventDefault();
 
-    //alert("¡Hiciste clic en el botón!");
-    console.log("Botón presionado");
+    //Se guardan los datos del nuevo usuario para enviarlos al servidor
+    const usuarioNuevo = {
+      "name": nombre,
+      "surname": apellido,
+      "email":email,
+      "password": password,
+      "phoneNumber": `${codigoInternacional}${telefono}`,
+      "region": region,
+      "commune":comuna,
+      "birthDate": birthDate,
+      "age" : "",
+      "role": {
+        "accountType" : rolUsuario
+    }
+    }
+    //borrar estos print despues
+    console.log("El objeto usuario es:");
+    console.log(usuarioNuevo);
+
+    registrarUsuario(usuarioNuevo);
+
+
   }
   return (
     
@@ -200,49 +244,60 @@ export const RegisterForm = () => {
     </Titulo>
     
     <NombreApellido>
-      <Nombres type="text" name="nombres" placeholder='Nombre(s)'/>
-      <Apellidos type="text" name="nombres" placeholder='Apellido(s)'/>
+      <Nombres type="text" name="nombres" placeholder='Nombre(s)' onChange={(e) => setNombre(e.target.value)}/>
+      <Apellidos type="text" name="nombres" placeholder='Apellido(s)' onChange={(e) => setApellido(e.target.value)}/>
     </NombreApellido>
 
     {/*Espacio creado para separar los elementos*/}
     <EspacioVertical />
 
-    <Input type="email" name="email" placeholder='Correo Electrónico'/>
+    <Input type="email" name="email" placeholder='Correo Electrónico' onChange={(e) => setEmail(e.target.value)}/>
     <EspacioVertical />
-    <Input type="password" name="password" placeholder='Contraseña Nueva'/>
+    <Input type="password" name="password" placeholder='Contraseña Nueva' onChange={(e) => setPassword(e.target.value)}/>
     <EspacioVertical />
-    <Input type="password" name="password" placeholder='Repita Su Contraseña'/>
+    <Input type="password" name="password" placeholder='Repita Su Contraseña' onChange={(e) => setPasswordRepetida(e.target.value)}/>
     <EspacioVertical />
 
     <NumeroTelefonico>
-      <CodigosInternacionales>
-        <option>+56</option>
+      <CodigosInternacionales onChange={(e) => setCodigoInternacional(e.target.value)}>
+        <option selected>+56</option>
+        <option>+54</option>
       </CodigosInternacionales>
-      <InputTelefono type='tel' name='telefono' placeholder='Número Telefónico (ejemplo: 912345678)'></InputTelefono>
+      <InputTelefono type='tel' name='telefono' placeholder='Número Telefónico (ejemplo: 912345678)' onChange={(e) => setTelefono(e.target.value)}></InputTelefono>
     </NumeroTelefonico>
 
     <EspacioVertical />
 
-    <CiudadComuna>
+    <RegionComuna>
       
-      <select>
-        <option selected>Seleccione Su Ciudad</option>
+      <select onChange={(e) => setRegion(e.target.value)}>
+        <option selected>Seleccione Su Region</option>
         <option >Santiago</option>
         <option>Valparaiso</option>
       </select>
 
-      <select>
+      <select onChange={(e) => setComuna(e.target.value)}>
         <option selected>Seleccione Su Comuna</option>
         <option>La Florida</option>
         <option>Puente Alto</option>
       </select>      
-    </CiudadComuna>
+    </RegionComuna>
+
+    <EspacioVertical />
+
+    <RolUsuario>
+      <label>Registrarse como</label>
+      <select onChange={(e) => setRolUsuario(e.target.value)}>
+        <option selected>Cliente</option>
+        <option>Vendedor</option>
+      </select>
+    </RolUsuario>
 
     <EspacioVertical />
 
     <Birthday>
       <label>Ingrese Su Fecha de Nacimiento</label>
-      <input type="date"/>
+      <input type="date" onChange={(e) => setBirthDate(e.target.value)}/>
     </Birthday>
     <EspacioVertical/>
     <SubmitButton onClick={handleClick}>Registrarse</SubmitButton>
@@ -254,44 +309,3 @@ export const RegisterForm = () => {
 
   )
 }
-
-
-{/* <label>
-    Nombre:
-    <input type="text" name="firstName" placeholder='nombre'/>
-  </label>
-
-  <input type="text" name="firstName" placeholder='nombrdddde'/>
-  <label>
-    Apellido:
-    <input type="text" name="lastName" />
-  </label>
-
-  <label>
-    Email:
-    <input type="email" name="email" />
-  </label>
-
-  <label>
-    Contraseña:
-    <input type="password" name="password" />
-  </label>
-
-  <label>
-    Comuna:
-    <select name="comuna">
-      <option value="puente-alto">Puente Alto</option>
-      <option value="la-florida">La Florida</option>
-      
-    </select>
-  </label>
-
-  <label>
-    Teléfono:
-    <input type="tel" name="phone" />
-  </label>
-
-  <label>
-    Fecha de nacimiento:
-    <input type="date" name="birthdate" />
-  </label> */}
