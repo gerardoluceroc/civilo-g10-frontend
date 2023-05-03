@@ -1,11 +1,10 @@
 import { Route, Routes } from "react-router";
-import { Header } from "./components/Header";
-import NavigationBar from "./components/NavigationBar";
 import { HomePage } from "./pages/HomePage";
 import { ClientRequestPage } from "./pages/ClientRequestPage";
 import {RegisterPage } from "./pages/Register";
 //import LoginPage from "./Pages/LoginPage";
 import LoginPage from "./pages/LoginPage";
+import ClientHomePage from "./pages/ClientHomePage";
 
 
 
@@ -19,7 +18,7 @@ function App() {
       <Route path="/client/request" element={<ClientRequestPage/>}/>
       <Route path="/register" element={<RegisterPage/>} />
 
-      
+      <Route path="/client" element={<ClientHomePage/>} />
       <Route path="/login" element={<LoginPage/>} />
     </Routes>
 

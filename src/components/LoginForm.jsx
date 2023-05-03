@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { iniciarSesion } from "../api/civilo_roller_api";
 
 const LoginContainer = styled.div`
   display: flex;
@@ -60,11 +59,31 @@ const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const user = { email: email, password: password };
-    iniciarSesion(user);
+    const userDTO = { email: email, password: password };
+    try {
+      const response = await fetch("http://localhost:8080/users/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(userDTO),
+      });
+      if (response.ok) {
+        localStorage.setItem("email", email);
+        localStorage.setItem("password", password);
+        const url = `/client?email=${encodeURIComponent(
+          email
+        )}&password=${encodeURIComponent(password)}`;
+        window.location.replace(url);
+      } else {
+        alert("Email o contraseña incorrectos");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Error al iniciar sesión");
+    }
   };
+  
 
   return (
     <LoginContainer>
@@ -96,5 +115,4 @@ const LoginForm = () => {
     </LoginContainer>
   );
 };
-
 export default LoginForm;
