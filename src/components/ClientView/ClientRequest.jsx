@@ -15,8 +15,6 @@ const Input = styled.input`
   border-radius: 5px;
 `;
 
-
-
 const Select = styled.select`
   margin-bottom: 10px;
   padding: 10px;
@@ -39,17 +37,38 @@ const ClientRequest = () => {
     const [description, setDescription] = useState("");
     const [deadline, setDeadline] = useState("");
     const [admissionDate, setAdmissionDate] = useState("");
-    const [coverageID, setCoverageID] = useState("");
-    const [commune, setCommune] = useState("");
-    const [communes, setCommunes] = useState([]);
     const [user, setUser] = useState(null);
+
+    const [curtains, setCurtains] = useState([]);
+    const [curtain, setCurtain] = useState({
+        curtainID: "",
+        curtainType: "",
+    });
+
+    const [communes, setCommunes] = useState([]);
+    const [coverage, setCoverage] = useState({
+        coverageID: "",
+        commune: "",
+    });
+
+    useEffect(() => {
+        fetch("http://localhost:8080/curtains")
+        .then((responseCurtain) => responseCurtain.json())
+        .then((dataCurtain) => {
+            console.log(dataCurtain);
+            setCurtains(dataCurtain);
+        })
+        .catch((error) => {
+            console.error("Error fetching curtains: ", error);
+        });
+    }, []);
 
     useEffect(() => {
         fetch("http://localhost:8080/coverages")
             .then((response) => response.json())
             .then((data) => {
                 console.log(data);
-                setCommunes(data.map((coverage) => coverage.commune));
+                setCommunes(data);
             })
             .catch((error) => {
                 console.error("Error fetching communes: ", error);
@@ -60,14 +79,25 @@ const ClientRequest = () => {
         setUser(JSON.parse(sessionStorage.getItem("user")));
     }, []);
 
+    const handleCurtainChange = (eventCurtain) => {
+        const curtainType = eventCurtain.target.value;
+        const selectedCurtain = curtains.find(
+            (a) => a.curtainType === curtainType
+        );
+        setCurtain(selectedCurtain);
+    };
+
+    const handleCommuneChange = (event) => {
+        const commune = event.target.value;
+        const selectedCoverage = communes.find(
+            (c) => c.commune === commune
+        );
+        setCoverage(selectedCoverage);
+    };
+
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const coverage = { coverageID: coverageID, commune: commune };
-
-        console.log(communes);
-
-
         const data = {
             description: description,
             deadline: deadline,
@@ -76,7 +106,7 @@ const ClientRequest = () => {
             reason: null,
             user: user,
             coverage: coverage,
-            curtains: null,
+            curtain: curtain,
             status: null,
         };
         try {
@@ -91,11 +121,6 @@ const ClientRequest = () => {
 
             if (response.ok) {
                 alert("Solicitud creada con éxito");
-                setDescription("");
-                setDeadline("");
-                setAdmissionDate("");
-                setCoverageID("");
-                setCommune("");
             } else {
                 alert("Ha ocurrido un error al crear la solicitud");
             }
@@ -130,18 +155,33 @@ const ClientRequest = () => {
                     onChange={(event) => setAdmissionDate(event.target.value)}
                     required
                 />
+
                 <Select
-                    value={commune}
-                    onChange={(event) => setCommune(event.target.value)}
+                    value={curtain.curtainType}
+                    onChange={handleCurtainChange}
                     required
                 >
-                    <option value="">Selecciona una commune</option>
-                    {communes.map((commune) => (
-                        <option key={commune} value={commune}>
-                            {commune}
+                    <option value="">Seleccione un tipo de cortina</option>
+                    {curtains.map((a) => (
+                        <option key={a.curtainID} value={a.curtainType}>
+                            {a.curtainType}
                         </option>
                     ))}
                 </Select>
+
+                <Select
+                    value={coverage.commune}
+                    onChange={handleCommuneChange}
+                    required
+                >
+                    <option value="">Seleccione una comuna</option>
+                    {communes.map((c) => (
+                        <option key={c.coverageID} value={c.commune}>
+                            {c.commune}
+                        </option>
+                    ))}
+                </Select>
+                
                 <Button type="submit">Enviar solicitud</Button>
             </form>
         </Container>
