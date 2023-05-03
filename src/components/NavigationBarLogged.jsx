@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { useState, useEffect } from 'react';
 
 const Navbar = styled.nav`
   display: flex;
@@ -46,25 +45,8 @@ const NavItem = styled.li`
 `;
 
 function NavigationBarLogged() {
-  const [user, setUser] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const encodedEmail = encodeURIComponent(localStorage.email);
-    const encodedPassword = encodeURIComponent(localStorage.password)
-    const url = `http://localhost:8080/users/currentSession?email=${encodedEmail}&password=${encodedPassword}`;
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => {
-        sessionStorage.setItem("user", JSON.stringify(data));
-        setUser(data);
-        setIsLoading(false);
-      })
-      .catch((err) => console.error(err));
-  }, []);
-
   const handleLogout = () => {
-    sessionStorage.removeItem("user");
+    sessionStorage.removeItem('user');
     fetch("http://localhost:8080/users/logout", {
       method: "POST",
       headers: {
@@ -82,9 +64,7 @@ function NavigationBarLogged() {
       .catch((err) => console.error(err));
   };
 
-  if (isLoading) {
-    return null; // o puedes retornar algún indicador de carga
-  }
+
 
   return (
     <Navbar>
@@ -96,11 +76,11 @@ function NavigationBarLogged() {
           ver diseño pagina solicitudes (componente prueba, borrar dps)
         </button>
       </Link>
-      {user && (
+      {JSON.parse(sessionStorage.getItem('user')) && (
         <NavItems>
           <NavItem>
             <span>
-              {user.name} {user.surname}
+              {JSON.parse(sessionStorage.getItem('user')).name} {JSON.parse(sessionStorage.getItem('user')).surname}
             </span>
           </NavItem>
           <NavItem>

@@ -56,24 +56,36 @@ const Image = styled.img`
 `;
 
 const LoginForm = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  });
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const userDTO = { email: email, password: password };
     try {
       const response = await fetch("http://localhost:8080/users/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(userDTO),
+        body: JSON.stringify(formData),
       });
       if (response.ok) {
-        localStorage.setItem("email", email);
-        localStorage.setItem("password", password);
+        const email = formData.email;
+        const userData = await fetch(`http://localhost:8080/users/${email}`);  
+        const data = await userData.json();
+        sessionStorage.setItem('user', JSON.stringify(data));
+        console.log(sessionStorage.getItem('user'));
         const url = `/client?email=${encodeURIComponent(
-          email
-        )}&password=${encodeURIComponent(password)}`;
+          formData.email
+        )}&password=${encodeURIComponent(formData.password)}`;
         window.location.replace(url);
       } else {
         alert("Email o contraseña incorrectos");
@@ -83,7 +95,7 @@ const LoginForm = () => {
       alert("Error al iniciar sesión");
     }
   };
-  
+
 
   return (
     <LoginContainer>
@@ -96,16 +108,18 @@ const LoginForm = () => {
           <form onSubmit={handleSubmit}>
             <Input
               type="email"
+              name="email"
               placeholder="E-mail"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
+              value={formData.email}
+              onChange={handleInputChange}
               required
             />
             <Input
               type="password"
+              name="password"
               placeholder="Contraseña"
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
+              value={formData.password}
+              onChange={handleInputChange}
               required
             />
             <Button type="submit">Iniciar sesión</Button>

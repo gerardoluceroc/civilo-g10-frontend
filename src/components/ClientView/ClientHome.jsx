@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom"; // Importamos Link de React Router
 
 const ButtonContainer = styled.div`
   display: flex;
@@ -41,25 +42,11 @@ const RightButton = styled(Button)`
 `;
 
 const ClientHome = () => {
-  /*
-  <console.log(localStorage.email);
-  const encodedEmail = encodeURIComponent(localStorage.email);
-  console.log(encodedEmail);
-  const url = `http://localhost:8080/users/currentSession?email=${encodedEmail}`;
-  fetch(url)
-    .then((res) => res.json())
-    .then((data) => {
-      sessionStorage.setItem("user", JSON.stringify(data)); console.log(data)
-    })
-    .catch((err) => console.error(err));>
-  
-    const userData = JSON.parse(sessionStorage.getItem("user"));
-    console.log(userData.name); // muestra el nombre del usuario
-  */
-
   return (
     <ButtonContainer>
-      <LeftButton>Ingresar Solicitud</LeftButton>
+      <Link to="/request"> {/* Agregamos el Link */}
+        <LeftButton>Ingresar Solicitud</LeftButton> {/* Envolvemos el botón con el Link */}
+      </Link>
       <RightButton>Mis Solicitudes</RightButton>
     </ButtonContainer>
   );
