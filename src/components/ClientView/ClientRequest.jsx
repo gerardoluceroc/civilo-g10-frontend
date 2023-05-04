@@ -108,6 +108,7 @@ const ClientRequest = () => {
             coverage: coverage,
             curtain: curtain,
             status: null,
+            seller: null,
         };
         try {
             const response = await fetch("http://localhost:8080/requests/clientRequest", {

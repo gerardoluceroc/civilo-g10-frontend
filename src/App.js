@@ -8,6 +8,7 @@ import ClientHomePage from "./pages/ClientHomePage";
 import ClientRequestFormPage from "./pages/ClientRequestFormPage";
 import SellerLoginFormPage from "./pages/SellerLoginFormPage";
 import SellerHomePage from "./pages/SellerHomePage";
+import SellerMyRequestsPage from "./pages/SellerMyRequestsPage";
 
 
 
@@ -21,6 +22,7 @@ function App() {
       <Route path="/client/request" element={<ClientRequestPage/>}/>
       <Route path="/register" element={<RegisterPage/>} />
 
+      <Route path="/seller/assignnedRequest" element={<SellerMyRequestsPage />} />
       <Route path="/request" element={<ClientRequestFormPage />} />
       <Route path="/client" element={<ClientHomePage/>} />
       <Route path="/login" element={<LoginPage/>} />

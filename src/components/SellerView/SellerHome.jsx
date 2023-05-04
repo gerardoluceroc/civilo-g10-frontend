@@ -47,7 +47,10 @@ const SellerHome = () => {
       <Link to="/quote"> {/* Agregamos el Link */}
         <LeftButton>Realizar Cotización</LeftButton> {/* Envolvemos el botón con el Link */}
       </Link>
-      <RightButton>Solicitudes Asignadas</RightButton>
+      <Link to="/seller/assignnedRequest"> {/* Agregamos el Link */}
+        <RightButton>Solicitudes Asignadas</RightButton>
+      </Link>
+
     </ButtonContainer>
   );
 };
