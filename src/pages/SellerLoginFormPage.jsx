@@ -1,17 +1,16 @@
 import React from "react";
-//import LoginForm from "../Components/LoginForm";
 import NavigationBar from '../components/NavigationBar'
 import Footer from '../components/Footer'
-import LoginForm from "../components/LoginForm";
+import SellerLoginForm from "../components/SellerView/LoginSellerForm";
 
-const LoginPage = () => {
+const SellerLoginFormPage = () => {
   return (
     <>
       <NavigationBar />;
-      <LoginForm />;
+      <SellerLoginForm />;
       <Footer />;
     </>
   )
 };
 
-export default LoginPage;
+export default SellerLoginFormPage;

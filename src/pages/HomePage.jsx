@@ -7,11 +7,11 @@ import { OurProducts } from '../components/OurProducts/OurProducts'
 export const HomePage = () => {
   return (
     <>
-        <NavigationBar/>
-        <ImageSlider/>
-        <OurProducts/>
-        <Footer/>
-    
+      <NavigationBar />
+      <ImageSlider />
+      <OurProducts />
+      <Footer />
+
     </>
   )
 }

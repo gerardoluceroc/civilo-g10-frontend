@@ -6,6 +6,8 @@ import {RegisterPage } from "./pages/Register";
 import LoginPage from "./pages/LoginPage";
 import ClientHomePage from "./pages/ClientHomePage";
 import ClientRequestFormPage from "./pages/ClientRequestFormPage";
+import SellerLoginFormPage from "./pages/SellerLoginFormPage";
+import SellerHomePage from "./pages/SellerHomePage";
 
 
 
@@ -22,6 +24,8 @@ function App() {
       <Route path="/request" element={<ClientRequestFormPage />} />
       <Route path="/client" element={<ClientHomePage/>} />
       <Route path="/login" element={<LoginPage/>} />
+      <Route path="/loginSeller" element={<SellerLoginFormPage/>} />
+      <Route path="/seller" element={<SellerHomePage />} />
     </Routes>
 
 
