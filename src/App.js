@@ -9,7 +9,9 @@ import ClientRequestFormPage from "./pages/ClientRequestFormPage";
 import SellerLoginFormPage from "./pages/SellerLoginFormPage";
 import SellerHomePage from "./pages/SellerHomePage";
 import SellerMyRequestsPage from "./pages/SellerMyRequestsPage";
-
+import ExecutiveLoginFormPage from "./pages/ExecutiveLoginFormPage";
+import ExecutiveHomePage from "./pages/ExecutiveHomePage";
+import ExecutiveAssignmentPage from "./pages/ExecutiveAssignmentPage";
 
 
 function App() {
@@ -22,12 +24,18 @@ function App() {
       <Route path="/client/request" element={<ClientRequestPage/>}/>
       <Route path="/register" element={<RegisterPage/>} />
 
+      <Route path="/executive/executiveAssignment" element={<ExecutiveAssignmentPage />} />
+      <Route path="/executive" element={<ExecutiveHomePage />} />
+      <Route path="/loginExecutive" element={<ExecutiveLoginFormPage />} />
+
       <Route path="/seller/assignnedRequest" element={<SellerMyRequestsPage />} />
+      <Route path="/loginSeller" element={<SellerLoginFormPage/>} />
+      <Route path="/seller" element={<SellerHomePage />} />
+
       <Route path="/request" element={<ClientRequestFormPage />} />
       <Route path="/client" element={<ClientHomePage/>} />
       <Route path="/login" element={<LoginPage/>} />
-      <Route path="/loginSeller" element={<SellerLoginFormPage/>} />
-      <Route path="/seller" element={<SellerHomePage />} />
+      
     </Routes>
 
 
