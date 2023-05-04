@@ -1,9 +1,8 @@
-import { Form } from 'react-router-dom'
-
 import styled from 'styled-components'
-import Select from '@mui/material/Select';
 import { registrarUsuario } from '../api/civilo_roller_api';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+
+
 
 
 const Formulario = styled.form`
@@ -13,7 +12,7 @@ const Formulario = styled.form`
     border-color: gray;
     display: flex;
     flex-direction: column;
-    margin: auto; //Se centra el formulario
+    margin: 40px 400px; //Se centra el formulario
     width: 43%;
     word-wrap: break-word; //Hace que el texto se ajuste de forma automática para evitar que se salga del botón.
 
@@ -86,7 +85,7 @@ const Input = styled.input`
   background-color: #ccd0d5;
   border-radius: 6px;
   display: flex;
-  width: 80%;
+  width: 79%;
   margin: auto;
 `;
 
@@ -121,7 +120,7 @@ const RegionComuna = styled.div`
   width: 80%;
   
   & > * {
-    width: 49.4%;  
+    width: 51%;  
   }
 
   @media (max-width: 600px) {
@@ -198,14 +197,45 @@ export const RegisterForm = () => {
   const [nombre, setNombre] = useState('');
   const [apellido, setApellido] = useState('');
   const [telefono, setTelefono] = useState('');
-  const [codigoInternacional, setCodigoInternacional] = useState('+56'); 
-  const [region, setRegion] = useState('Seleccione Su Región');
-  const [comuna, setComuna] = useState('Seleccione Su Comuna');
+  const [codigoInternacional, setCodigoInternacional] = useState('+56');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [passwordRepetida, setPasswordRepetida] = useState('');
+  const [, setPasswordRepetida] = useState('');
   const [rolUsuario, setRolUsuario] = useState('Cliente');
   const [birthDate, setBirthDate] = useState('');
+  const [communes, setCommunes] = useState([]);
+  const [coverage, setCoverage] = useState({
+    coverageID: "",
+    commune: "",
+  });
+
+
+  const handleCommuneChange = (event) => {
+    const commune = event.target.value;
+    const selectedCoverage = communes.find(
+      (c) => c.commune === commune
+    );
+    setCoverage(selectedCoverage);
+  };
+
+  useEffect(() => {
+    fetch("http://localhost:8080/coverages")
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setCommunes(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching communes: ", error);
+      });
+  }, []);
+
+  const handleRolChange = (event) => {
+    setRolUsuario(event.target.value);
+  };
+
+
+
 
   const handleClick = (event) => {
 
@@ -216,94 +246,93 @@ export const RegisterForm = () => {
     const usuarioNuevo = {
       "name": nombre,
       "surname": apellido,
-      "email":email,
+      "email": email,
       "password": password,
       "phoneNumber": `${codigoInternacional}${telefono}`,
-      "region": region,
-      "commune":comuna,
+      "commune": coverage.commune,
       "birthDate": birthDate,
-      "age" : "",
+      "age": "",
       "role": {
-        "accountType" : rolUsuario
+        "accountType": rolUsuario
+      }
     }
-    }
+
     //borrar estos print despues
     console.log("El objeto usuario es:");
     console.log(usuarioNuevo);
 
     registrarUsuario(usuarioNuevo);
-
-
   }
   return (
-    
-<Formulario>
-    <EspacioVertical/>
-    <Titulo>Regístrate
-      <Subtitulo>Es rápido y facil</Subtitulo>
-    </Titulo>
-    
-    <NombreApellido>
-      <Nombres type="text" name="nombres" placeholder='Nombre(s)' onChange={(e) => setNombre(e.target.value)}/>
-      <Apellidos type="text" name="nombres" placeholder='Apellido(s)' onChange={(e) => setApellido(e.target.value)}/>
-    </NombreApellido>
 
-    {/*Espacio creado para separar los elementos*/}
-    <EspacioVertical />
+    <Formulario>
+      <EspacioVertical />
+      <Titulo>Regístrate
+        <Subtitulo>Es rápido y facil</Subtitulo>
+      </Titulo>
 
-    <Input type="email" name="email" placeholder='Correo Electrónico' onChange={(e) => setEmail(e.target.value)}/>
-    <EspacioVertical />
-    <Input type="password" name="password" placeholder='Contraseña Nueva' onChange={(e) => setPassword(e.target.value)}/>
-    <EspacioVertical />
-    <Input type="password" name="password" placeholder='Repita Su Contraseña' onChange={(e) => setPasswordRepetida(e.target.value)}/>
-    <EspacioVertical />
+      <NombreApellido>
+        <Nombres type="text" name="nombres" placeholder='Nombre(s)' onChange={(e) => setNombre(e.target.value)} />
+        <Apellidos type="text" name="nombres" placeholder='Apellido(s)' onChange={(e) => setApellido(e.target.value)} />
+      </NombreApellido>
 
-    <NumeroTelefonico>
-      <CodigosInternacionales onChange={(e) => setCodigoInternacional(e.target.value)}>
-        <option selected>+56</option>
-        <option>+54</option>
-      </CodigosInternacionales>
-      <InputTelefono type='tel' name='telefono' placeholder='Número Telefónico (ejemplo: 912345678)' onChange={(e) => setTelefono(e.target.value)}></InputTelefono>
-    </NumeroTelefonico>
+      {/*Espacio creado para separar los elementos*/}
+      <EspacioVertical />
 
-    <EspacioVertical />
+      <Input type="email" name="email" placeholder='Correo Electrónico' onChange={(e) => setEmail(e.target.value)} />
+      <EspacioVertical />
+      <Input type="password" name="password" placeholder='Contraseña Nueva' onChange={(e) => setPassword(e.target.value)} />
+      <EspacioVertical />
+      <Input type="password" name="password" placeholder='Repita Su Contraseña' onChange={(e) => setPasswordRepetida(e.target.value)} />
+      <EspacioVertical />
 
-    <RegionComuna>
-      
-      <select onChange={(e) => setRegion(e.target.value)}>
-        <option selected>Seleccione Su Region</option>
-        <option >Santiago</option>
-        <option>Valparaiso</option>
-      </select>
+      <NumeroTelefonico>
+        <CodigosInternacionales onChange={(e) => setCodigoInternacional(e.target.value)}>
+          <option selected>+56</option>
+          <option>+54</option>
+        </CodigosInternacionales>
+        <InputTelefono type='tel' name='telefono' placeholder='Número Telefónico (Ejemplo: 9 1234 5678)' onChange={(e) => setTelefono(e.target.value)}></InputTelefono>
+      </NumeroTelefonico>
 
-      <select onChange={(e) => setComuna(e.target.value)}>
-        <option selected>Seleccione Su Comuna</option>
-        <option>La Florida</option>
-        <option>Puente Alto</option>
-      </select>      
-    </RegionComuna>
+      <EspacioVertical />
 
-    <EspacioVertical />
+      <RegionComuna>
+        <select
+          value={coverage.commune}
+          onChange={handleCommuneChange}
+          required
+        >
+          <option value="">Seleccione una comuna</option>
+          {communes.map((c) => (
+            <option key={c.coverageID} value={c.commune}>
+              {c.commune}
+            </option>
+          ))}
+        </select>
+      </RegionComuna>
 
-    <RolUsuario>
-      <label>Registrarse como</label>
-      <select onChange={(e) => setRolUsuario(e.target.value)}>
-        <option selected>Cliente</option>
-        <option>Vendedor</option>
-      </select>
-    </RolUsuario>
+      <EspacioVertical />
 
-    <EspacioVertical />
+      <RolUsuario>
+        <label>Registrarse como</label>
+        <select name="rol" onChange={handleRolChange}>
+          <option value="Cliente">Cliente</option>
+          <option value="Vendedor">Vendedor</option>
+        </select>
+      </RolUsuario>
 
-    <Birthday>
-      <label>Ingrese Su Fecha de Nacimiento</label>
-      <input type="date" onChange={(e) => setBirthDate(e.target.value)}/>
-    </Birthday>
-    <EspacioVertical/>
-    <SubmitButton onClick={handleClick}>Registrarse</SubmitButton>
-    {/* lo ultimo que hice fue configurar que al presionar el boton no se haga nada, pq antes se hacia eso de enviar la info al swervidor
+
+      <EspacioVertical />
+
+      <Birthday>
+        <label>Ingrese Su Fecha de Nacimiento</label>
+        <input type="date" onChange={(e) => setBirthDate(e.target.value)} />
+      </Birthday>
+      <EspacioVertical />
+      <SubmitButton onClick={handleClick}>Registrarse</SubmitButton>
+      {/* lo ultimo que hice fue configurar que al presionar el boton no se haga nada, pq antes se hacia eso de enviar la info al swervidor
     pero ahora no hace nada, por lo que yo puedo configurar lo que se hace*/}
-</Formulario>
+    </Formulario>
 
 
 

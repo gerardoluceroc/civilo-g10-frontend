@@ -28,23 +28,28 @@ export const iniciarSesion = (usuario) => {
 
 
 export const registrarUsuario = (usuario) => {
-    //Se envia la peticion POST al servidor
     fetch(`${URL_CIVILO}${RUTA_REGISTER}`, {
-        method: "POST",
-        headers: {
+      method: "POST",
+      headers: {
         "Content-Type": "application/json",
-    },
-        body: JSON.stringify(usuario),
+      },
+      body: JSON.stringify(usuario),
     })
-        .then((response) => {
+      .then((response) => {
         if (response.ok) {
-            console.log("Login successful");
-        }else {
-          console.log("Login failed");
+          console.log("Registro exitoso");
+          console.log(usuario.role.accountType);
+          if (usuario.role.accountType === "Cliente") {
+            window.location.href = 'http://localhost:3000/login';
+          } else if (usuario.role.accountType === "Vendedor") {
+            window.location.href = 'http://localhost:3000/sellerInformation';
+          }
+        } else {
+          console.log("Registro fallido");
         }
       })
-        .catch((error) => {
-            console.error("Error:", error);
+      .catch((error) => {
+        console.error("Error:", error);
       });
-
-}
+  }
+  
