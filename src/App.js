@@ -12,6 +12,7 @@ import SellerMyRequestsPage from "./pages/SellerMyRequestsPage";
 import ExecutiveLoginFormPage from "./pages/ExecutiveLoginFormPage";
 import ExecutiveHomePage from "./pages/ExecutiveHomePage";
 import ExecutiveAssignmentPage from "./pages/ExecutiveAssignmentPage";
+import SellerInformationPage from "./pages/SellerInformationPage";
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
       <Route path="/executive" element={<ExecutiveHomePage />} />
       <Route path="/loginExecutive" element={<ExecutiveLoginFormPage />} />
 
+      <Route path="/seller/sellerInformation" element={<SellerInformationPage />} />
       <Route path="/seller/assignnedRequest" element={<SellerMyRequestsPage />} />
       <Route path="/loginSeller" element={<SellerLoginFormPage/>} />
       <Route path="/seller" element={<SellerHomePage />} />

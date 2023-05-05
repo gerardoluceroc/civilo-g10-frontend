@@ -42,7 +42,9 @@ export const registrarUsuario = (usuario) => {
           if (usuario.role.accountType === "Cliente") {
             window.location.href = 'http://localhost:3000/login';
           } else if (usuario.role.accountType === "Vendedor") {
-            window.location.href = 'http://localhost:3000/sellerInformation';
+            localStorage.setItem('email', JSON.stringify(usuario.email));
+            console.log(usuario);
+            window.location.href = 'http://localhost:3000/seller/sellerInformation';
           }
         } else {
           console.log("Registro fallido");
