@@ -21,6 +21,7 @@ import { cerrarSesionCliente } from '../api/civilo_roller_api';
 const RUTA_LOGIN = "/login";
 const RUTA_HOME = "/";
 const RUTA_REGISTER = "/register";
+const RUTA_SOLICITUDES_CLIENTE = "/request"
 
 
 function NavbarResponsive() {
@@ -73,6 +74,8 @@ function NavbarResponsive() {
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
+
+
 
   //Evento cuando alguno de los item de la barra de navegacion es presionado
   const handleCloseNavMenu = (event) => {
@@ -129,6 +132,18 @@ function NavbarResponsive() {
     }
     else if(itemSeleccionado === 'registrarse'){
       return RUTA_REGISTER
+    }
+
+    else if(itemSeleccionado === 'mis solicitudes'){
+      //Si existe una sesion activa
+      if(JSON.parse(sessionStorage.getItem('user')) !== null){
+        //Si es de tipo cliente
+        if(JSON.parse(sessionStorage.getItem('user')).role.accountType.toLowerCase() === 'cliente'){
+          return RUTA_SOLICITUDES_CLIENTE
+        }
+
+      }
+      
     }
     else return "/";
 
