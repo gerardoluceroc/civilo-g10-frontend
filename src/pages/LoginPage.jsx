@@ -3,11 +3,12 @@ import React from "react";
 import NavigationBar from '../components/NavigationBar'
 import Footer from '../components/Footer'
 import LoginForm from "../components/LoginForm";
+import NavbarResponsive from "../components/NavbarResponsive";
 
 const LoginPage = () => {
   return (
     <>
-      <NavigationBar />;
+      <NavbarResponsive/>
       <LoginForm />;
       <Footer />;
     </>

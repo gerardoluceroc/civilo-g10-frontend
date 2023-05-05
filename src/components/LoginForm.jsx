@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { iniciarSesionCliente } from "../api/civilo_roller_api";
 
 const LoginContainer = styled.div`
   display: flex;
@@ -57,6 +58,8 @@ const Image = styled.img`
 
 
 const LoginForm = () => {
+
+  const RUTA_HOME = "/";
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -70,32 +73,34 @@ const LoginForm = () => {
     }));
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    try {
-      const response = await fetch("http://localhost:8080/users/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-      if (response.ok) {
-        const email = formData.email;
-        const userData = await fetch(`http://localhost:8080/users/${email}`);
-        const data = await userData.json();
-        sessionStorage.setItem('user', JSON.stringify(data));
-        console.log(sessionStorage.getItem('user'));
-        const url = `/client?email=${encodeURIComponent(
-          formData.email
-        )}&password=${encodeURIComponent(formData.password)}`;
-        window.location.replace(url);
-      } else {
-        alert("Email o contraseña incorrectos");
-      }
-    } catch (error) {
-      console.error(error);
-      alert("Error al iniciar sesión");
-    }
-  };
+    const handleSubmit = (evento) => {iniciarSesionCliente(evento, formData)};
+
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault();
+  //   try {
+  //     const response = await fetch("http://localhost:8080/users/login", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify(formData),
+  //     });
+  //     if (response.ok) {
+  //       const email = formData.email;
+  //       const userData = await fetch(`http://localhost:8080/users/${email}`);
+  //       const data = await userData.json();
+  //       sessionStorage.setItem('user', JSON.stringify(data));
+  //       console.log(sessionStorage.getItem('user'));
+  //       const url = `/client?email=${encodeURIComponent(
+  //         formData.email
+  //       )}&password=${encodeURIComponent(formData.password)}`;
+  //       window.location.replace(RUTA_HOME);
+  //     } else {
+  //       alert("Email o contraseña incorrectos");
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //     alert("Error al iniciar sesión");
+  //   }
+  // };
 
 
   return (

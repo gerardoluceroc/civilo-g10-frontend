@@ -1,8 +1,10 @@
 //Archivo donde se definirán todas las conexiones a la api de civilo_roller
 
 const URL_CIVILO = "http://localhost:8080"
+const RUTA_HOME = "/"
 const RUTA_LOGIN = "/users/login"
 const RUTA_REGISTER = "/users/register"
+const RUTA_LOGOUT_CLIENTE = "/users/logout"
 
 
 export const iniciarSesion = (usuario) => {
@@ -54,4 +56,52 @@ export const registrarUsuario = (usuario) => {
         console.error("Error:", error);
       });
   }
+
+
+  //funcion para cerrar la sesion de un usuario tipo cliente
+  export const cerrarSesionCliente = () => {
+    sessionStorage.removeItem('user');
+    fetch(`${URL_CIVILO}${RUTA_LOGOUT_CLIENTE}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({}),
+    })
+      .then((res) => {
+        if (res.ok) {
+          window.location.href = RUTA_HOME;
+        } else {
+          throw new Error("Error en la solicitud de logout");
+        }
+      })
+      .catch((err) => console.error(err));
+  };
+
+  export const iniciarSesionCliente = async (event, formData) => {
+    event.preventDefault();
+    try {
+      const response = await fetch(`${URL_CIVILO}${RUTA_LOGIN}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      if (response.ok) {
+        const email = formData.email;
+        const userData = await fetch(`${URL_CIVILO}/users/${email}`);
+        const data = await userData.json();
+        sessionStorage.setItem('user', JSON.stringify(data));
+        console.log(sessionStorage.getItem('user'));
+        const url = `/client?email=${encodeURIComponent(
+          formData.email
+        )}&password=${encodeURIComponent(formData.password)}`;
+        window.location.replace(RUTA_HOME);
+      } else {
+        alert("Email o contraseña incorrectos");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Error al iniciar sesión");
+    }
+  };
   
