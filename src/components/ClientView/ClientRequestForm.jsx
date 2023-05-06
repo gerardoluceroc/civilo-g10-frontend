@@ -5,7 +5,14 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 50px;
+  margin-top: 9px;
+  background-color: transparent;
+`;
+
+const Form = styled.form`
+    display: flex;
+    flex-direction: column;
+    width: 85%;
 `;
 
 const Input = styled.input`
@@ -13,6 +20,21 @@ const Input = styled.input`
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
+
+`;
+
+const Label = styled.label`
+    font-family: 'Times New Roman', Times, serif;
+    font-size: large;
+    margin-bottom: 5px;
+`;
+
+const TextArea = styled.textarea`
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    max-width: 97%;
 `;
 
 const Select = styled.select`
@@ -23,17 +45,33 @@ const Select = styled.select`
 `;
 
 const Button = styled.button`
-  padding: 10px 20px;
-  border-radius: 5px;
-  background-color: #2196f3;
-  color: #fff;
-  border: none;
-  cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: #1010b3;
+    border-color: #1010b3;
+    margin-bottom: 15px;
+    color: #fff;
+    font-size: x-large;
+    //Animación para cuando el cursor pase por encima del botón.
+    &:hover {
+        box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.25); /* Agrega una sombra */
+        transform: scale(0.95); /* Reduzca ligeramente el tamaño */
+        }
+
+    /* sombra del botón */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s ease-in-out;
+    
+    /* estilo cuando se presiona el botón */
+    &:active {
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
+    }
+
 `;
 
 
 
-const ClientRequest = () => {
+const ClientRequestForm = () => {
     const [description, setDescription] = useState("");
     const [deadline, setDeadline] = useState("");
     const [admissionDate, setAdmissionDate] = useState("");
@@ -98,6 +136,7 @@ const ClientRequest = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+
         const data = {
             description: description,
             deadline: deadline,
@@ -110,6 +149,8 @@ const ClientRequest = () => {
             status: null,
             seller: null,
         };
+        console.log("sesion storage es ",sessionStorage.getItem('user'));
+        console.log("data: ", data);
         try {
             const response = await fetch("http://localhost:8080/requests/clientRequest", {
                 method: "POST",
@@ -134,29 +175,7 @@ const ClientRequest = () => {
     return (
         <Container>
             <h2>Nueva solicitud</h2>
-            <form onSubmit={handleSubmit}>
-                <Input
-                    type="text"
-                    placeholder="Descripción"
-                    value={description}
-                    onChange={(event) => setDescription(event.target.value)}
-                    required
-                />
-                <Input
-                    type="date"
-                    placeholder="Fecha límite"
-                    value={deadline}
-                    onChange={(event) => setDeadline(event.target.value)}
-                    required
-                />
-                <Input
-                    type="date"
-                    placeholder="Fecha de admisión"
-                    value={admissionDate}
-                    onChange={(event) => setAdmissionDate(event.target.value)}
-                    required
-                />
-
+            <Form onSubmit={handleSubmit}>
                 <Select
                     value={curtain.curtainType}
                     onChange={handleCurtainChange}
@@ -182,11 +201,41 @@ const ClientRequest = () => {
                         </option>
                     ))}
                 </Select>
+
+                <Label>Fecha de Inicio</Label>
+                <Input
+                    type="date"
+                    placeholder="Fecha de admisión"
+                    value={admissionDate}
+                    onChange={(event) => setAdmissionDate(event.target.value)}
+                    required
+                />
+                
+                <Label>Fecha de expiración</Label>
+                <Input
+                    type="date"
+                    placeholder="Fecha límite"
+                    value={deadline}
+                    onChange={(event) => setDeadline(event.target.value)}
+                    required
+                />
+
+                <TextArea
+                    type="text"
+                    placeholder="Descripción de solicitud"
+                    value={description}
+                    onChange={(event) => setDescription(event.target.value)}
+                    required
+                />
+
+                
+
+                
                 
                 <Button type="submit">Enviar solicitud</Button>
-            </form>
+            </Form>
         </Container>
     );
 };
 
-export default ClientRequest;
+export default ClientRequestForm;

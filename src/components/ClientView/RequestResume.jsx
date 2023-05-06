@@ -13,7 +13,12 @@ const StyledDiv = styled.div`
     margin-left: 10px;//separador horizontal respecto al borde izquierdo
     padding: 7px;
 
+    @media (max-width: 679px){
+      margin: auto;
+      width: 70%;
+    }
 `;
+
 
 const Titulo = styled.h1`
     color: black;
@@ -48,6 +53,11 @@ const VerDetalles = styled.button`
 
 const InfoSolicitud = styled.div`
 
+  @media (max-width: 678px) {
+    margin-left: 5%;
+    
+  }
+
 `;
 
 const EstadoSolicitud = styled.div`
@@ -61,10 +71,22 @@ const EstadoSolicitud = styled.div`
   font-size: 150%; /* Tamaño de fuente del texto */
   align-items: center; 
   height: 30px; /* Altura del contenedor */
-  width: 123px; /* Ancho del contenedor */
+  width: 50%; /* Ancho del contenedor */
   display: flex; /* Establece el contenedor como un elemento flex */
   justify-content: center; /* Centra horizontalmente los elementos */
   padding: 0.35rem; /* Espacio interior alrededor del contenido */
+
+  @media (max-width: 678px) {
+    margin: auto;
+    
+  }
+
+  @media (max-width: 400px) {
+    width: 35%;
+    font-size: 100%;
+    
+  }
+
 
   //color letra cancelado: #9e1919, color fondo: #f5b7b1;
   //color letra Enviada: white, color fondo: #1f618d;
@@ -80,18 +102,19 @@ export const RequestResume = ({fecha,estado, colorFondoTag, colorLetraTag}) => {
 
   return (
     <StyledDiv>
-        <InfoSolicitud>
-            <Titulo>Solicitud Cortina</Titulo>
-            <Fecha>
-                <CalendarioIcono/>
-                {fecha}
-            </Fecha>
-            <VerDetalles>
-                <Info/>
-                Ver Detalles
-            </VerDetalles>        
-        </InfoSolicitud>
-        <EstadoSolicitud backgroundColor={colorFondoTag} color={colorLetraTag}>{estado}</EstadoSolicitud>
+          <InfoSolicitud>
+              <Titulo>Solicitud Cortina</Titulo>
+              <Fecha>
+                  <CalendarioIcono/>
+                  {fecha}
+              </Fecha>
+              <VerDetalles>
+                  <Info/>
+                  Ver Detalles
+              </VerDetalles>        
+          </InfoSolicitud>
+          <EstadoSolicitud backgroundColor={colorFondoTag} color={colorLetraTag}>{estado}</EstadoSolicitud>
+
 
 
     </StyledDiv>

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { RequestResume } from './RequestResume';
 
 const StyledDiv = styled.div`
-    background-color: #d0d3d4;
+    background-color: transparent;//#d0d3d4
     margin-top: -17px; //POR ALGUNA RAZON HAY UN ESPACIO vertical arriba ENTRE ESTE COMPONENTE Y SUS HERMANOS, ESTO LO SOLUCIONA.
     //max-width: 100%;
     //justify-content: space-between;
@@ -13,7 +13,7 @@ const StyledDiv = styled.div`
 const Titulo = styled.h1`
   color: black; // Establece el color del texto del título
   font-size: x-large; // Establece el tamaño de fuente del título
-  margin-left: 80px; // Establece el margen izquierdo del título
+  margin-left: 1%; // Establece el margen izquierdo del título
   display: flex; // Establece el modo de visualización en "flex"
   align-items: center; // Establece el alineamiento vertical de los elementos en el centro
   &::after { // Agrega una pseudoclase "::after" al elemento principal "Titulo"
@@ -22,6 +22,15 @@ const Titulo = styled.h1`
     height: 2px; // Establece la altura de la línea horizontal en 2 píxeles
     background-color: gray; // Establece el color de fondo de la línea horizontal en gris
     margin-left: 10px;
+  }
+
+  @media (max-width: 890px) {
+    margin-left: 5%;
+    
+  }
+  @media (max-width: 540px) {
+    margin-left: 10%;
+    
   }
 `;
 

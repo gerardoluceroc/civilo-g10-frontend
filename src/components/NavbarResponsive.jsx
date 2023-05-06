@@ -21,7 +21,7 @@ import { cerrarSesionCliente } from '../api/civilo_roller_api';
 const RUTA_LOGIN = "/login";
 const RUTA_HOME = "/";
 const RUTA_REGISTER = "/register";
-const RUTA_SOLICITUDES_CLIENTE = "/request"
+const RUTA_SOLICITUDES_CLIENTE = "/client/request"
 
 
 function NavbarResponsive() {
