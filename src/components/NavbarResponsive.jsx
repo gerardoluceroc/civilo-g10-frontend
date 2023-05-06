@@ -36,7 +36,7 @@ function NavbarResponsive() {
   const pagesCLiente = ['Inicio', 'Mis Solicitudes'];
   const settingsCliente = ['Cerrar Sesión'];
 
-  const pagesVendedor = ['Inicio'];
+  const pagesVendedor = ['Inicio', 'Mis Asignaciones'];
   const settingsVendedor = ['Cerrar Sesion'];
 
   let userLocalStorage = JSON.parse(sessionStorage.getItem('user'));
@@ -59,6 +59,14 @@ function NavbarResponsive() {
       setPages(pagesCLiente);
       setSettings(settingsCliente);
     }
+    //Si existe una sesion activa y es de tipo vendedor
+    else if(userLocalStorage.role.accountType.toLowerCase() === 'vendedor'){
+      //se muestran las siguientes opciones en la barra de navegacion
+      setSesionUsuario(userLocalStorage.role.accountType);
+      setPages(pagesVendedor);
+      setSettings(settingsVendedor);
+    }
+
   }, [sesionUsuario]);
 
 

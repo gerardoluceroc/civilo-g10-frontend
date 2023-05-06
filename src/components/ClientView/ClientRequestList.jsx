@@ -92,6 +92,8 @@ const showRequestResume = (solicitudes) => {
 
 
 export const ClientRequestList = () => {
+
+  fetch("http://localhost:3000/seller/sellerInformation");
   
 
   let solicitudes = [

@@ -13,6 +13,9 @@ const MyRequestSection = styled.div`
   display: flex;
   flex-direction: column;
   gap: 30px;
+  width: 100%;
+  min-height: calc(100vh - 80px);
+  margin-bottom: 14px;
 
 `;
 

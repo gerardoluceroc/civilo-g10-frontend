@@ -35,7 +35,7 @@ function App() {
       <Route path="/seller" element={<SellerHomePage />} />
 
       <Route path="/request" element={<ClientRequestFormPage />} />
-      {/*<Route path="/client" element={<ClientHomePage/>} />*/}s
+      {/*<Route path="/client" element={<ClientHomePage/>} />*/}
       <Route path="/login" element={<LoginPage/>} />
       
     </Routes>

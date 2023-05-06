@@ -12,7 +12,9 @@ const Formulario = styled.form`
     border-color: gray;
     display: flex;
     flex-direction: column;
-    margin: 40px 400px; //Se centra el formulario
+    margin: auto; //Se centra el formulario
+    margin-top: 15px;
+    margin-bottom: 15px;
     width: 43%;
     word-wrap: break-word; //Hace que el texto se ajuste de forma automática para evitar que se salga del botón.
 
@@ -192,6 +194,7 @@ const SubmitButton = styled.button`
 
 
 
+
 export const RegisterForm = () => {
   // Define los estados para cada campo del formulario
   const [nombre, setNombre] = useState('');
@@ -265,6 +268,8 @@ export const RegisterForm = () => {
   }
   return (
 
+
+
     <Formulario>
       <EspacioVertical />
       <Titulo>Regístrate
@@ -333,6 +338,7 @@ export const RegisterForm = () => {
       {/* lo ultimo que hice fue configurar que al presionar el boton no se haga nada, pq antes se hacia eso de enviar la info al swervidor
     pero ahora no hace nada, por lo que yo puedo configurar lo que se hace*/}
     </Formulario>
+
 
 
 

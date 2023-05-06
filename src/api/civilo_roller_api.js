@@ -78,6 +78,7 @@ export const registrarUsuario = (usuario) => {
       .catch((err) => console.error(err));
   };
 
+
   export const iniciarSesionCliente = async (event, formData) => {
     event.preventDefault();
     try {
