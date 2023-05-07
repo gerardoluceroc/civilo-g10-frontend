@@ -55,21 +55,15 @@ const Td = styled.td`
   padding: 10px;
 `;
 
-
-
 const Status = styled.td`
   color: ${({ approved }) => (approved ? "green" : "red")};
 `;
 
 const ExecutiveAssignment = () => {
-
     const [requests, setRequests] = useState([]);
     const user = JSON.parse(sessionStorage.getItem("user"));
     const [sellers, setSellers] = useState([]);
     console.log(user.userID);
-
-    const [selectedSeller, setSelectedSeller] = useState("");
-
 
     useEffect(() => {
         const fetchRequests = async () => {
@@ -77,7 +71,12 @@ const ExecutiveAssignment = () => {
                 const response = await fetch(`http://localhost:8080/requests`);
                 const data = await response.json();
                 console.log(data);
-                setRequests(data);
+                setRequests(
+                    data.map((request) => ({
+                        ...request,
+                        selectedSeller: "",
+                    }))
+                );
             } catch (error) {
                 console.error(error);
             }
@@ -97,6 +96,34 @@ const ExecutiveAssignment = () => {
         fetchSellers();
     }, [user.userID]);
 
+    const handleSellerChange = async (requestID, sellerID) => {
+        setRequests((prevRequests) =>
+            prevRequests.map((request) =>
+                request.requestID === requestID
+                    ? { ...request, selectedSeller: sellerID }
+                    : request
+            )
+        );
+        try {
+            console.log(requestID, sellerID);
+            const response = await fetch(`http://localhost:8080/requests/updateRequest/${requestID}/${sellerID}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ requestID, sellerId: sellerID }),
+            });
+            const data = await response.json();
+            console.log(data);
+            if (data.success) {
+                alert('¡Actualización exitosa!');
+            } else {
+                alert('¡Actualización fallida!');
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
 
     return (
@@ -106,6 +133,7 @@ const ExecutiveAssignment = () => {
                 <thead>
                     <Tr>
                         <Th>Identificador</Th>
+                        <Th>Tipo de cortina</Th>
                         <Th>Descripción</Th>
                         <Th>Fecha ingreso</Th>
                         <Th>Fecha limite</Th>
@@ -118,13 +146,18 @@ const ExecutiveAssignment = () => {
                     {requests.map((request) => (
                         <Tr key={request.requestID}>
                             <Td>{request.requestID}</Td>
+                            <Td>{`${request.curtain.curtainType}`}</Td>
                             <Td>{request.description}</Td>
                             <Td>{request.admissionDate}</Td>
                             <Td>{request.deadline}</Td>
                             <Td>{`${request.user.name} ${request.user.surname}`}</Td>
-                            <Status approved={request.status.statusName === "Completada"}>{request.status.statusName}</Status>
+                            <Status approved={request.status.statusName === "Asignada"}>{request.status.statusName}</Status>
+
                             <Td>
-                                <select value={selectedSeller} onChange={(e) => setSelectedSeller(e.target.value)}>
+                                <select
+                                    value={request.sellerID}
+                                    onChange={(e) => handleSellerChange(request.requestID, e.target.value)}
+                                >
                                     <option value="">Seleccione un vendedor</option>
                                     {sellers.map((seller) => (
                                         <option key={seller.userID} value={seller.userID}>
@@ -133,17 +166,16 @@ const ExecutiveAssignment = () => {
                                     ))}
                                 </select>
                             </Td>
-
                         </Tr>
                     ))}
                 </tbody>
             </Table>
             <ButtonContainer>
-                <Button onClick={() => window.location.href = "/executive"}>Regresar</Button>
+                <Button onClick={() => (window.location.href = "/executive")}>Regresar</Button>
                 <Button onClick={() => alert("Automáticamente asignado")}>Asignar Automáticamente</Button>
             </ButtonContainer>
         </TableContainer>
-    );
+    )
 };
 
 export default ExecutiveAssignment;

@@ -87,7 +87,7 @@ const SellerMyRequests = () => {
               <Td>{`${request.user.name} ${request.user.surname}`}</Td>
               <Td>{request.user.email}</Td>
               <Td>{request.user.phoneNumber}</Td>
-              <Status approved={request.status.statusName === "Completada"}>{request.status.statusName}</Status>
+              <Status approved={request.status.statusName === "Asignada"}>{request.status.statusName}</Status>
             </Tr>
           ))}
         </tbody>
