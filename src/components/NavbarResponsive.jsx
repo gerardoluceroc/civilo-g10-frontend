@@ -48,7 +48,6 @@ function NavbarResponsive() {
   
   //En caso de cambiar el tipo de sesion, se actualizara la barra de navegacion
   useEffect(() => {
-    console.log("UseEffect. Acaba de cambiar sesionUsuario ahora es ",sesionUsuario);
     //Si no hay ninguna sesion activa, se muestran las siguientes opciones en la barra de navegacion
     if (sesionUsuario === null) {
       setPages(pagesHome);
@@ -90,10 +89,7 @@ function NavbarResponsive() {
   //Evento cuando alguno de los item de la barra de navegacion es presionado
   const handleCloseNavMenu = (event) => {
     setAnchorElNav(null);
-    const itemSeleccionado = event.target.textContent.toLowerCase();
-
-    console.log("El item seleccionado de la navbar es",itemSeleccionado);
-    
+    const itemSeleccionado = event.target.textContent.toLowerCase();   
   };
 
   //Evento cuando es presionado alguno de los items del menu de usuario
@@ -111,7 +107,6 @@ function NavbarResponsive() {
     
     //si el item seleccionado es cerrar sesion
     if(itemSeleccionado === 'cerrar sesión'){
-      console.log("item seleccionado es cerrar sesion");
       //Se cierra la sesion del cliente y se actualiza el valor de sesion usuario
       //para actualizar las opciones de la barra de navegacion;
       setAnchorElUser(null);

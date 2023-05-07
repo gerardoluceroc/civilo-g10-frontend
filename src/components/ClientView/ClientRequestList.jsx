@@ -1,9 +1,11 @@
 
 import styled from 'styled-components'
 import { RequestResume } from './RequestResume';
+import { useState } from 'react';
+import { useEffect } from 'react';
 
 const URL_CIVILO = "http://localhost:8080";
-const RUTA_MIS_SOLICITUDES = "";
+const RUTA_MIS_SOLICITUDES = "/requests/clientRequest/";
 
 
 const StyledDiv = styled.div`
@@ -38,52 +40,66 @@ const Titulo = styled.h1`
   }
 `;
 
+const NoRequestsAvailable = styled.h1`
+  color: gray;
+  font-size: xx-large;
+  margin-left: 3%;
+
+`;
+
 const ListaSolicitudes = styled.div`
   display: flex;
   flex-wrap: wrap; /* Agrega "flex-wrap: wrap" para que los elementos hijos se distribuyan en varias filas en lugar de en una sola */
   gap: 10px;
 
 `;
+//Funcion que pide los datos al servidor de las solicitudes de un cliente especifico
+const solicitarMisSolicitudes = async (id_usuario) => {
+  const response = await fetch(`${URL_CIVILO}${RUTA_MIS_SOLICITUDES}${id_usuario}`);
+  const solicitudes = await response.json();
+  return solicitudes;
+}
+
 
 //Funcion para definir los estilos que tendrá el tag del resumen de la solicitud y otras propiedades del componente principal
 const showRequestResume = (solicitudes) => {
   return solicitudes.map((solicitud) => {
-    if (solicitud.status.toLowerCase() === "enviada") {
+    if (solicitud.status.statusName.toLowerCase() === "sin asignar") {
       return (
         <RequestResume
           key={solicitud.requestID}
           fecha={solicitud.admissionDate}
-          estado={solicitud.status}
+          estado={"Enviada"}
           colorLetraTag="white"
           colorFondoTag="#1f618d"
         />
       );
-    } else if (solicitud.status.toLowerCase() === "aceptada") {
+    } else if (solicitud.status.statusName.toLowerCase() === "asignada") {
       return (
         <RequestResume
           key={solicitud.requestID}
           fecha={solicitud.admissionDate}
-          estado={solicitud.status}
+          estado={solicitud.status.statusName}
           colorLetraTag="#134c2b"
           colorFondoTag="#53cfb6"
         />
       );
-    } else if (solicitud.status.toLowerCase() === "cancelada") {
+    } else if (solicitud.status.statusName.toLowerCase() === "finalizada y fallida") {
       return (
         <RequestResume
           key={solicitud.requestID}
           fecha={solicitud.admissionDate}
-          estado={solicitud.status}
+          estado={"Sin Éxito"}
           colorLetraTag="#9e1919"
           colorFondoTag="#f5b7b1"
         />
       );
-    } else if (solicitud.status.toLowerCase() === "completada") {
+    } else if (solicitud.status.statusName.toLowerCase() === "finalizada y exitosa") {
       return (
         <RequestResume
           key={solicitud.requestID}
           fecha={solicitud.admissionDate}
-          estado={solicitud.status}
+          estado={"Completada"}
           colorLetraTag="white"
           colorFondoTag=" #22653f "
         />
@@ -97,55 +113,37 @@ const showRequestResume = (solicitudes) => {
 
 export const ClientRequestList = () => {
 
+  const obtenerSolicitudes = async () => {
+    const solicitudes = await solicitarMisSolicitudes(IdUsuario);
+    return solicitudes;
+  };
+
+  const [solicitudes, setSolicitudes] = useState([]);
+
+  useEffect(() => {
+    obtenerSolicitudes().then((solicitudes) => setSolicitudes(solicitudes));
+  }, []);
+
+
   
   const usuario = JSON.parse(sessionStorage.getItem("user"));
   const IdUsuario = usuario.userID;
-  console.log("Hola CLIENTREQUESTLIST ",IdUsuario);
-  const obtenerMisSolicitudes = async () => {
-    //onst response = await fetch()
-  }
   
+  //Si no hay solicitudes
+  if(solicitudes.length === 0){
+    return(
 
-  let solicitudes = [
-    {
-      requestID: 1,
-      description: "necesito una cortina roller café",
-      admissionDate: "27-04-2023",
-      closingDate: "29-04-2023",
-      commune: "Puente Alto",
-      reason: "razon",
-      status: "Aceptada"
-    },
-    {
-      requestID: 2,
-      description: "necesito una cortina dúo rojo",
-      admissionDate: "21-01-2023",
-      closingDate: "04-02-2023",
-      commune: "Maipú",
-      reason: "razon 2" ,
-      status: "Enviada"
-    },{
-      requestID: 3,
-      description: "necesito una cortina roller amarilla",
-      admissionDate: "23-04-2023",
-      closingDate: "27-04-2023",
-      commune: "La Florida",
-      reason: "razon 3",
-      status: "Cancelada",
-    }
-    ,{
-      requestID: 4,
-      description: "necesito una cortina roller screen",
-      admissionDate: "20-03-23",
-      closingDate: "22-04-2023",
-      commune: "Providencia",
-      reason: "razon 4" ,
-      status: "Completada",
-    }
-  ]
+      <StyledDiv>
+        <Titulo>Mis Solicitudes</Titulo>
+        <NoRequestsAvailable>No Tienes Solicitudes Realizadas</NoRequestsAvailable>
+      
+      </StyledDiv>
+    );
+  }
 
-
-  return (
+  //Si hay solicitudes, se muestran
+  else{
+    return (
 
     <StyledDiv>
       <Titulo>Mis Solicitudes</Titulo>
@@ -153,11 +151,8 @@ export const ClientRequestList = () => {
         {showRequestResume(solicitudes)}
         
       </ListaSolicitudes>
-      
-
-
-
     </StyledDiv>
     
-  )
+  )}
+
 }
