@@ -172,7 +172,16 @@ const ExecutiveAssignment = () => {
             </Table>
             <ButtonContainer>
                 <Button onClick={() => (window.location.href = "/executive")}>Regresar</Button>
-                <Button onClick={() => alert("Automáticamente asignado")}>Asignar Automáticamente</Button>
+                <Button onClick={() => {
+                    fetch('http://localhost:8080/requests/automaticAssignment', {
+                        method: 'POST'
+                    }).then(() => {
+                        alert('Automáticamente asignado');
+                    }).catch((error) => {
+                        console.error('Error al enviar la solicitud:', error);
+                        alert('Error al asignadar automáticamente');
+                    });
+                }}>Asignar Automáticamente</Button>
             </ButtonContainer>
         </TableContainer>
     )
