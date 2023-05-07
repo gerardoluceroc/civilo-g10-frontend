@@ -4,9 +4,14 @@ import { useState, useEffect } from "react";
 
 const TableContainer = styled.div`
   margin-top: 50px;
+  margin: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-height: calc(75vh - 80px);
+  //width: 100%;
+
+
 `;
 
 const Title = styled.h1`
@@ -16,6 +21,8 @@ const Title = styled.h1`
 const Table = styled.table`
   border-collapse: collapse;
   margin-top: 20px;
+  width: 50%;
+
 `;
 
 

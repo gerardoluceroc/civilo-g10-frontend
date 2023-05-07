@@ -2,6 +2,10 @@
 import styled from 'styled-components'
 import { RequestResume } from './RequestResume';
 
+const URL_CIVILO = "http://localhost:8080";
+const RUTA_MIS_SOLICITUDES = "";
+
+
 const StyledDiv = styled.div`
     background-color: transparent;//#d0d3d4
     margin-top: -17px; //POR ALGUNA RAZON HAY UN ESPACIO vertical arriba ENTRE ESTE COMPONENTE Y SUS HERMANOS, ESTO LO SOLUCIONA.
@@ -93,7 +97,13 @@ const showRequestResume = (solicitudes) => {
 
 export const ClientRequestList = () => {
 
-  fetch("http://localhost:3000/seller/sellerInformation");
+  
+  const usuario = JSON.parse(sessionStorage.getItem("user"));
+  const IdUsuario = usuario.userID;
+  console.log("Hola CLIENTREQUESTLIST ",IdUsuario);
+  const obtenerMisSolicitudes = async () => {
+    //onst response = await fetch()
+  }
   
 
   let solicitudes = [
