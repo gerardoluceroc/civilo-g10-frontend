@@ -125,7 +125,7 @@ const ExecutiveLoginForm = () => {
             />
             <Button type="submit">Iniciar sesión</Button>
           </form>
-          <p>Ingresar como <a href="/login">cliente</a>, <a href="/loginSeller">vendedor</a></p>
+          <p>Ingresar como <a href="/login">cliente</a>, <a href="/loginSeller">vendedor</a> o <a href="/loginAdmin">administrador</a></p>
         </FormContainer>
       </Column>
     </LoginContainer>

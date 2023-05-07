@@ -56,7 +56,7 @@ const Image = styled.img`
 `;
 
 
-const SellerLoginForm = () => {
+const AdminLoginForm = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -73,7 +73,7 @@ const SellerLoginForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch("http://localhost:8080/sellers/login", {
+      const response = await fetch("http://localhost:8080/users/loginAdmin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -84,7 +84,7 @@ const SellerLoginForm = () => {
         const data = await userData.json();
         sessionStorage.setItem('user', JSON.stringify(data));
         console.log(sessionStorage.getItem('user'));
-        const url = `/seller?email=${encodeURIComponent(
+        const url = `/admin?email=${encodeURIComponent(
           formData.email
         )}&password=${encodeURIComponent(formData.password)}`;
         window.location.replace(url);
@@ -125,10 +125,10 @@ const SellerLoginForm = () => {
             />
             <Button type="submit">Iniciar sesión</Button>
           </form>
-          <p>Ingresar como <a href="/login">cliente</a>, <a href="/loginExecutive">ejecutivo</a> o <a href="/loginAdmin">administrador</a></p>
+          <p>Ingresar como <a href="/login">cliente</a>, <a href="/loginSeller">vendedor</a> o <a href="/loginExecutive">ejecutivo</a></p>
         </FormContainer>
       </Column>
     </LoginContainer>
   );
 };
-export default SellerLoginForm;
+export default AdminLoginForm;
