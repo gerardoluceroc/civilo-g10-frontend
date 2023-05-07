@@ -59,7 +59,7 @@ export const registrarUsuario = (usuario) => {
 
 
   //funcion para cerrar la sesion de un usuario tipo cliente
-  export const cerrarSesionCliente = () => {
+  export const cerrarSesionUsuario = () => {
     sessionStorage.removeItem('user');
     fetch(`${URL_CIVILO}${RUTA_LOGOUT_CLIENTE}`, {
       method: "POST",

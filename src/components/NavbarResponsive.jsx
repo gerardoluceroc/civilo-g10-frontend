@@ -16,12 +16,13 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Link, redirect, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { cerrarSesionCliente } from '../api/civilo_roller_api';
+import { cerrarSesionUsuario } from '../api/civilo_roller_api';
 
 const RUTA_LOGIN = "/login";
 const RUTA_HOME = "/";
 const RUTA_REGISTER = "/register";
-const RUTA_SOLICITUDES_CLIENTE = "/client/request"
+const RUTA_SOLICITUDES_CLIENTE = "/client/request";
+const RUTA_ASIGNACIONES_VENDEDOR = "/seller/assignnedRequest";
 
 
 function NavbarResponsive() {
@@ -29,7 +30,7 @@ function NavbarResponsive() {
   //const pages = ['Inicio','otra cosa', 'xd'];
   //const settings = ['Iniciar Sesion', 'Registrarse'];
 
-
+  console.log("acabo de entrar a NavbarResponsive");
   const pagesHome = ['Inicio','item 1', 'item xd'];
   const settingsHome = ['Iniciar Sesion', 'Registrarse'];
 
@@ -37,7 +38,7 @@ function NavbarResponsive() {
   const settingsCliente = ['Cerrar Sesión'];
 
   const pagesVendedor = ['Inicio', 'Mis Asignaciones'];
-  const settingsVendedor = ['Cerrar Sesion'];
+  const settingsVendedor = ['Cerrar Sesión'];
 
   let userLocalStorage = JSON.parse(sessionStorage.getItem('user'));
   const [pages, setPages] = useState(pagesHome);
@@ -47,8 +48,9 @@ function NavbarResponsive() {
   
   //En caso de cambiar el tipo de sesion, se actualizara la barra de navegacion
   useEffect(() => {
+    console.log("UseEffect. Acaba de cambiar sesionUsuario ahora es ",sesionUsuario);
     //Si no hay ninguna sesion activa, se muestran las siguientes opciones en la barra de navegacion
-    if (userLocalStorage === null) {
+    if (sesionUsuario === null) {
       setPages(pagesHome);
       setSettings(settingsHome);
     }
@@ -89,22 +91,34 @@ function NavbarResponsive() {
   const handleCloseNavMenu = (event) => {
     setAnchorElNav(null);
     const itemSeleccionado = event.target.textContent.toLowerCase();
+
+    console.log("El item seleccionado de la navbar es",itemSeleccionado);
     
   };
 
   //Evento cuando es presionado alguno de los items del menu de usuario
+  //AL FINAL NO CACHO QUE HACE ESTA FUNCION ya que cambie la funcion del onCLick del item del menu usuario
+  //la voy a dejar ahi por si acaso mas que nada,
+  //ya que venia en la plantilla de la navbar
   const handleCloseUserMenu = (event) => {
     setAnchorElUser(null);
     const itemSeleccionado = event.target.textContent.toLowerCase();
-
-    //si el item seleccionado es cerrar sesion (en la vista cliente)
-    if(itemSeleccionado === 'cerrar sesión'){
-      //Se cierra la sesion del cliente y se actualiza el valor de sesion usuario
-      //para actualizar las opciones de la barra de navegacion
-      cerrarSesionCliente();
-      setSesionUsuario(null);
-    }
   };
+
+  //Funcion que se activa al presionar algun item del menu del usuario
+  const itemUserPresionado = (event) => {
+    const itemSeleccionado = event.target.textContent.toLowerCase();
+    
+    //si el item seleccionado es cerrar sesion
+    if(itemSeleccionado === 'cerrar sesión'){
+      console.log("item seleccionado es cerrar sesion");
+      //Se cierra la sesion del cliente y se actualiza el valor de sesion usuario
+      //para actualizar las opciones de la barra de navegacion;
+      setAnchorElUser(null);
+      setSesionUsuario(null);
+      cerrarSesionUsuario();
+    }
+  }
 
 
   // //funcion para cerrar la sesion de un usuario tipo cliente
@@ -153,8 +167,16 @@ function NavbarResponsive() {
       }
       
     }
+    else if(itemSeleccionado === 'mis asignaciones'){
+      //Si existe una sesion activa
+      if(JSON.parse(sessionStorage.getItem('user')) !== null){
+        //Si es de tipo vendedor
+        if(JSON.parse(sessionStorage.getItem('user')).role.accountType.toLowerCase() === 'vendedor'){
+          return RUTA_ASIGNACIONES_VENDEDOR;
+        }
+      }
+    }
     else return "/";
-
   }
 
   //Configuracion del menu de hamburguesa disponibles en pantallas moviles
@@ -196,7 +218,7 @@ function NavbarResponsive() {
         ruta = definirRuta(setting);
         return(
           <Link to={ruta} style={{ textDecoration: 'none' }}>
-            <MenuItem key={setting} onClick={handleCloseUserMenu}>
+            <MenuItem key={setting} onClick={itemUserPresionado}>
               <Typography textAlign="center" color={"black"}>{setting}</Typography>
             </MenuItem>
           </Link>
