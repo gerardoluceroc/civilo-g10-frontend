@@ -6,7 +6,6 @@ import NavbarResponsive from "../components/NavbarResponsive";
 const SellerMyRequestsPage = () => {
     return (
         <>
-            <NavigationBarLogged />
             <NavbarResponsive/>
             <SellerMyRequests />
             <Footer />

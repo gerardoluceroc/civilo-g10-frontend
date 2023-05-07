@@ -23,6 +23,7 @@ const RUTA_HOME = "/";
 const RUTA_REGISTER = "/register";
 const RUTA_SOLICITUDES_CLIENTE = "/client/request";
 const RUTA_ASIGNACIONES_VENDEDOR = "/seller/assignnedRequest";
+const RUTA_SOLICITUDES_EJECUTIVO = "/executive/executiveAssignment";
 
 
 function NavbarResponsive() {
@@ -31,6 +32,7 @@ function NavbarResponsive() {
   //const settings = ['Iniciar Sesion', 'Registrarse'];
 
   console.log("acabo de entrar a NavbarResponsive");
+  console.log("LA SESION ES ",JSON.parse(sessionStorage.getItem('user')));
   const pagesHome = ['Inicio','item 1', 'item xd'];
   const settingsHome = ['Iniciar Sesion', 'Registrarse'];
 
@@ -39,6 +41,9 @@ function NavbarResponsive() {
 
   const pagesVendedor = ['Inicio', 'Mis Asignaciones'];
   const settingsVendedor = ['Cerrar Sesión'];
+
+  const pagesEjecutivo = ['Inicio', 'Solicitudes'];
+  const settingsEjecutivo = ['Cerrar Sesión'];
 
   let userLocalStorage = JSON.parse(sessionStorage.getItem('user'));
   const [pages, setPages] = useState(pagesHome);
@@ -66,6 +71,13 @@ function NavbarResponsive() {
       setSesionUsuario(userLocalStorage.role.accountType);
       setPages(pagesVendedor);
       setSettings(settingsVendedor);
+    }
+    //Si existe una sesion activa y es de tipo ejecutivo
+    else if(userLocalStorage.role.accountType.toLowerCase() === 'ejecutivo'){
+      //se muestran las siguientes opciones en la barra de navegacion
+      setSesionUsuario(userLocalStorage.role.accountType);
+      setPages(pagesEjecutivo);
+      setSettings(settingsEjecutivo);
     }
 
   }, [sesionUsuario]);
@@ -168,6 +180,15 @@ function NavbarResponsive() {
         //Si es de tipo vendedor
         if(JSON.parse(sessionStorage.getItem('user')).role.accountType.toLowerCase() === 'vendedor'){
           return RUTA_ASIGNACIONES_VENDEDOR;
+        }
+      }
+    }
+    else if(itemSeleccionado === 'solicitudes'){
+      //Si existe una sesion activa
+      if(JSON.parse(sessionStorage.getItem('user')) !== null){
+        //Si es de tipo ejecutivo
+        if(JSON.parse(sessionStorage.getItem('user')).role.accountType.toLowerCase() === 'ejecutivo'){
+          return RUTA_SOLICITUDES_EJECUTIVO;
         }
       }
     }

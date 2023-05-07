@@ -8,7 +8,7 @@ const TableContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: calc(75vh - 80px);
+  min-height: calc(90vh - 80px);
   //width: 100%;
 
 

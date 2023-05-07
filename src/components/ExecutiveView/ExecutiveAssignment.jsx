@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 const TableContainer = styled.div`
   margin-top: 50px;
   display: flex;
+  min-height: calc(80vh - 80px);
   flex-direction: column;
   align-items: center;
 `;

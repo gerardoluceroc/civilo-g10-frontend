@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
+const RUTA_HOME = "/";
+
 const LoginContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -87,7 +89,7 @@ const ExecutiveLoginForm = () => {
         const url = `/executive?email=${encodeURIComponent(
           formData.email
         )}&password=${encodeURIComponent(formData.password)}`;
-        window.location.replace(url);
+        window.location.replace(RUTA_HOME);
       } else {
         alert("Email o contraseña incorrectos");
       }

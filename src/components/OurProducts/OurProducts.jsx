@@ -56,7 +56,6 @@ export const OurProducts = () => {
   
   return (
     <>
-    <div>Div ejemplo para contrastar con fondo blanco (borrar dps)</div>
     <StyledDiv>
       <Titulo>Nuestros Productos</Titulo>
       <ListadoProductos>{mostrarProductos(productos)}</ListadoProductos>

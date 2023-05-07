@@ -1,11 +1,12 @@
 import ExecutiveAssignment from "../components/ExecutiveView/ExecutiveAssignment";
 import Footer from "../components/Footer"
+import NavbarResponsive from "../components/NavbarResponsive";
 import NavigationBarLogged from "../components/NavigationBarLogged";
 
 const ExecutiveAssignmentPage = () => {
     return (
         <>
-            <NavigationBarLogged />
+            <NavbarResponsive/>
             <ExecutiveAssignment />
             <Footer />
         </>
