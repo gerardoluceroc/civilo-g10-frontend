@@ -6,9 +6,9 @@ import ReadStatus from "../components/AdministratorView/AdministrateStatus/ReadS
 const AdminReadStatusPage = () => {
   return (
     <>
-      <NavigationBarLogged />;
-      <ReadStatus />;
-      <Footer />;
+      <NavigationBarLogged />
+      <ReadStatus />
+      <Footer />
     </>
   )
 };

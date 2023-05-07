@@ -6,9 +6,9 @@ import ReadRoles from "../components/AdministratorView/AdministrateRoles/ReadRol
 const AdminReadRolesPage = () => {
   return (
     <>
-      <NavigationBarLogged />;
-      <ReadRoles />;
-      <Footer />;
+      <NavigationBarLogged />
+      <ReadRoles />
+      <Footer />
     </>
   )
 };

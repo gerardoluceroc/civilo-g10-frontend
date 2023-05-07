@@ -8,8 +8,8 @@ const SellerLoginFormPage = () => {
   return (
     <>
       <NavbarResponsive/>
-      <SellerLoginForm />;
-      <Footer />;
+      <SellerLoginForm />
+      <Footer />
     </>
   )
 };

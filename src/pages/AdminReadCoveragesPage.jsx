@@ -6,9 +6,9 @@ import ReadCoverages from "../components/AdministratorView/AdministrateCoverages
 const AdminReadCoveragesPage = () => {
   return (
     <>
-      <NavigationBarLogged />;
-      <ReadCoverages />;
-      <Footer />;
+      <NavigationBarLogged />
+      <ReadCoverages />
+      <Footer />
     </>
   )
 };

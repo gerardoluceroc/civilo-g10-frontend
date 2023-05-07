@@ -20,6 +20,7 @@ import { cerrarSesionUsuario } from '../api/civilo_roller_api';
 
 const RUTA_LOGIN = "/login";
 const RUTA_HOME = "/";
+const RUTA_HOME_ADMIN = "/admin";
 const RUTA_REGISTER = "/register";
 const RUTA_SOLICITUDES_CLIENTE = "/client/request";
 const RUTA_ASIGNACIONES_VENDEDOR = "/seller/assignnedRequest";
@@ -44,6 +45,9 @@ function NavbarResponsive() {
 
   const pagesEjecutivo = ['Inicio', 'Solicitudes'];
   const settingsEjecutivo = ['Cerrar Sesión'];
+
+  const pagesAdmin = ['Inicio', 'Administrar'];
+  const settingsAdmin = ['Cerrar Sesión'];
 
   let userLocalStorage = JSON.parse(sessionStorage.getItem('user'));
   const [pages, setPages] = useState(pagesHome);
@@ -78,6 +82,13 @@ function NavbarResponsive() {
       setSesionUsuario(userLocalStorage.role.accountType);
       setPages(pagesEjecutivo);
       setSettings(settingsEjecutivo);
+    }
+    //Si existe una sesion activa y es de tipo administrador
+    else if(userLocalStorage.role.accountType.toLowerCase() === 'administrador'){
+      //se muestran las siguientes opciones en la barra de navegacion
+      setSesionUsuario(userLocalStorage.role.accountType);
+      setPages(pagesAdmin);
+      setSettings(settingsAdmin);
     }
 
   }, [sesionUsuario]);
@@ -189,6 +200,15 @@ function NavbarResponsive() {
         //Si es de tipo ejecutivo
         if(JSON.parse(sessionStorage.getItem('user')).role.accountType.toLowerCase() === 'ejecutivo'){
           return RUTA_SOLICITUDES_EJECUTIVO;
+        }
+      }
+    }
+    else if(itemSeleccionado === 'administrar'){
+      //Si existe una sesion activa
+      if(JSON.parse(sessionStorage.getItem('user')) !== null){
+        //Si es de tipo ejecutivo
+        if(JSON.parse(sessionStorage.getItem('user')).role.accountType.toLowerCase() === 'administrador'){
+          return RUTA_HOME_ADMIN;
         }
       }
     }

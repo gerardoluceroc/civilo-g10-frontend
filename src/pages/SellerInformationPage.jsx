@@ -8,8 +8,8 @@ const SellerInformationPage = () => {
   return (
     <>
       <NavbarResponsive/>
-      <SellerInformation />;
-      <Footer />;
+      <SellerInformation />
+      <Footer />
     </>
   )
 };

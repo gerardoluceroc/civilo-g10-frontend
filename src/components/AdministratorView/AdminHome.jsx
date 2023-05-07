@@ -10,6 +10,7 @@ const CardContainer = styled.div`
 
 const CardWrapper = styled.div`
   margin-bottom: 20px; /* Agrega un margen inferior a cada tarjeta */
+  
 `;
 
 const Card = styled.div`

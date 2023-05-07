@@ -106,7 +106,7 @@ const LoginForm = () => {
   return (
     <LoginContainer>
       <Column>
-        <Image src="https://via.placeholder.com/200x200" />
+        <Image src="https://fernapetcl.vtexassets.com/arquivos/ids/169337-800-auto?v=637677510279630000&width=800&height=auto&aspect=true" />
       </Column>
       <Column>
         <FormContainer>

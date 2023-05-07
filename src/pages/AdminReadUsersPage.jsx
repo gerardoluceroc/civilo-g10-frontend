@@ -6,9 +6,9 @@ import ReadUsers from "../components/AdministratorView/AdministrateUsers/ReadUse
 const AdminReadUsersPage = () => {
   return (
     <>
-      <NavigationBarLogged />;
-      <ReadUsers />;
-      <Footer />;
+      <NavigationBarLogged />
+      <ReadUsers />
+      <Footer />
     </>
   )
 };

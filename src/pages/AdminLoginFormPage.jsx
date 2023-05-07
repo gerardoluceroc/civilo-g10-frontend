@@ -2,13 +2,14 @@ import React from "react";
 import NavigationBar from '../components/NavigationBar'
 import Footer from '../components/Footer'
 import AdminLoginForm from "../components/AdministratorView/LoginAdminForm";
+import NavbarResponsive from "../components/NavbarResponsive";
 
 const AdminLoginFormPage = () => {
   return (
     <>
-      <NavigationBar />;
-      <AdminLoginForm />;
-      <Footer />;
+      <NavbarResponsive/>
+      <AdminLoginForm />
+      <Footer />
     </>
   )
 };

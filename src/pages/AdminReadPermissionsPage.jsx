@@ -6,9 +6,9 @@ import ReadPermissions from "../components/AdministratorView/AdministratePermiss
 const AdminReadPermissionsPage = () => {
   return (
     <>
-      <NavigationBarLogged />;
-      <ReadPermissions />;
-      <Footer />;
+      <NavigationBarLogged />
+      <ReadPermissions />
+      <Footer />
     </>
   )
 };

@@ -8,8 +8,8 @@ const ExecutiveLoginFormPage = () => {
   return (
     <>
       <NavbarResponsive/>
-      <ExecutiveLoginForm />;
-      <Footer />;
+      <ExecutiveLoginForm />
+      <Footer />
     </>
   )
 };

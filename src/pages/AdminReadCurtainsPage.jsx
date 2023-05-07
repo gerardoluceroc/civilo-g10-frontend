@@ -6,9 +6,9 @@ import ReadCurtains from "../components/AdministratorView/AdministrateCurtains/R
 const AdminReadCurtainsPage = () => {
   return (
     <>
-      <NavigationBarLogged />;
-      <ReadCurtains />;
-      <Footer />;
+      <NavigationBarLogged />
+      <ReadCurtains />
+      <Footer />
     </>
   )
 };

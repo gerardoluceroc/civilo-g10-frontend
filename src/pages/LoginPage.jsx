@@ -9,8 +9,8 @@ const LoginPage = () => {
   return (
     <>
       <NavbarResponsive/>
-      <LoginForm />;
-      <Footer />;
+      <LoginForm />
+      <Footer />
     </>
   )
 };

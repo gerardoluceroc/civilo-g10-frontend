@@ -6,9 +6,9 @@ import ReadRequests from "../components/AdministratorView/AdministrateRequests/R
 const AdminReadRequestsPage = () => {
   return (
     <>
-      <NavigationBarLogged />;
-      <ReadRequests />;
-      <Footer />;
+      <NavigationBarLogged />
+      <ReadRequests />
+      <Footer />
     </>
   )
 };
