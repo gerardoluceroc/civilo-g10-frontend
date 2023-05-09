@@ -1,6 +1,9 @@
 import { CalendarMonth, CalendarMonthOutlined, Info } from "@mui/icons-material";
-import React from "react"
+import React, { useState } from "react"
 import styled from "styled-components";
+import Modal from "../Modal";
+import ModalSellerInformation from "../ModalRequestDetails";
+import ModalRequestDetails from "../ModalRequestDetails";
 
 const StyledDiv = styled.div`
     background-color:  #7fb3d5;
@@ -98,20 +101,30 @@ const CalendarioIcono = styled(CalendarMonth)`
 
 `;
 
-export const RequestResume = ({fecha,estado, colorFondoTag, colorLetraTag}) => {
+export const RequestResume = ({fecha,estado, colorFondoTag, colorLetraTag, IdSolicitud}) => {
+
+const nuevaFecha = new Date(fecha);
+const fechaFormatoES = nuevaFecha.toLocaleDateString('es-ES').replace(/\//g, '-');
+
+const [modalOpen, setModalOpen] = useState(false);
+
+  const handleModalClose = () => {
+    setModalOpen(false);
+  };
 
   return (
     <StyledDiv>
           <InfoSolicitud>
-              <Titulo>Solicitud Cortina</Titulo>
+              <Titulo>{`Solicitud #${IdSolicitud}`}</Titulo>
               <Fecha>
                   <CalendarioIcono/>
-                  {fecha}
+                  {fechaFormatoES}
               </Fecha>
-              <VerDetalles>
+              <VerDetalles onClick={() => setModalOpen(true)}>
                   <Info/>
                   Ver Detalles
-              </VerDetalles>        
+              </VerDetalles>  
+              <ModalRequestDetails open={modalOpen} onClose={handleModalClose} />      
           </InfoSolicitud>
           <EstadoSolicitud backgroundColor={colorFondoTag} color={colorLetraTag}>{estado}</EstadoSolicitud>
 

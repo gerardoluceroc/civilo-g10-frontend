@@ -69,6 +69,7 @@ const showRequestResume = (solicitudes) => {
         <RequestResume
           key={solicitud.requestID}
           fecha={solicitud.admissionDate}
+          IdSolicitud={solicitud.requestID}
           estado={"Enviada"}
           colorLetraTag="white"
           colorFondoTag="#1f618d"
@@ -79,6 +80,7 @@ const showRequestResume = (solicitudes) => {
         <RequestResume
           key={solicitud.requestID}
           fecha={solicitud.admissionDate}
+          IdSolicitud={solicitud.requestID}
           estado={solicitud.status.statusName}
           colorLetraTag="#134c2b"
           colorFondoTag="#53cfb6"
@@ -89,6 +91,7 @@ const showRequestResume = (solicitudes) => {
         <RequestResume
           key={solicitud.requestID}
           fecha={solicitud.admissionDate}
+          IdSolicitud={solicitud.requestID}
           estado={"Sin Éxito"}
           colorLetraTag="#9e1919"
           colorFondoTag="#f5b7b1"
@@ -99,6 +102,7 @@ const showRequestResume = (solicitudes) => {
         <RequestResume
           key={solicitud.requestID}
           fecha={solicitud.admissionDate}
+          IdSolicitud={solicitud.requestID}
           estado={"Completada"}
           colorLetraTag="white"
           colorFondoTag=" #22653f "
