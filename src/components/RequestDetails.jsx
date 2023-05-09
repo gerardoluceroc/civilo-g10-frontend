@@ -115,7 +115,7 @@ export const RequestDetails = () => {
 
             <ItemInfoCotizacion>
                 <DescriptionIcon/>
-                <h3>Descripción:</h3> 
+                <h4>Descripción:</h4> 
             </ItemInfoCotizacion>
             <DescripcionCotización>
                 Hola buenas tardes necesito una cortina roller 7x8
@@ -135,7 +135,7 @@ export const RequestDetails = () => {
             </ItemInfoUsuario>
             <ItemInfoUsuario>
                 <BusinessIcon/>
-                Nombre: Empresas Del Sur
+                Empresa: Empresas Del Sur
             </ItemInfoUsuario>
             <ItemInfoUsuario>
                 <EmailIcon/>
