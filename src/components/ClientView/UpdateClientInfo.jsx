@@ -10,10 +10,12 @@ const Formulario = styled.form`
     display: flex;
     flex-direction: column;
     margin: auto; //Se centra el formulario
-    margin-top: 15px;
+    margin-top: 10%;
     margin-bottom: 15px;
     width: 43%;
     word-wrap: break-word; //Hace que el texto se ajuste de forma automática para evitar que se salga del botón.
+
+    
 
     @media (max-width: 950px){
       width: 70%;
@@ -243,27 +245,38 @@ export const UpdateClientInfo = () => {
         const id = user.userID;
         console.log(user.userID);
 
-        fetch(`http://localhost:8080/users/${id}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(usuarioActualizado)
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Error al actualizar usuario');
-                }
-                const url = `http://localhost:3000/`;
-                window.location.replace(url);
-                return response.json();
-            })
-            .then(data => {
-                console.log(data);
-            })
-            .catch(error => {
-                console.error(error);
-            });
+         const {name,surname,commune} = usuarioActualizado;
+
+        //Si alguno de los campos está vacío, se muestra una alerta indicando que no se ha podido realizar la actualización
+        if(name === "" || surname === "" || usuarioActualizado.email === "" || usuarioActualizado.password === "" || telefono === "" || commune === ""){
+          alert("Error: Debe completar todos los campos");
+
+        }
+
+        else{ 
+
+          fetch(`http://localhost:8080/users/${id}`, {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(usuarioActualizado)
+          })
+              .then(response => {
+                  if (!response.ok) {
+                      throw new Error('Error al actualizar usuario');
+                  }
+                  const url = `http://localhost:3000/`;
+                  window.location.replace(url);
+                  return response.json();
+              })
+              .then(data => {
+                  console.log(data);
+              })
+              .catch(error => {
+                  console.error(error);
+              });
+          }
     }
     return (
         <Formulario>

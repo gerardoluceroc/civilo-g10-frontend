@@ -25,6 +25,7 @@ const RUTA_REGISTER = "/register";
 const RUTA_SOLICITUDES_CLIENTE = "/client/request";
 const RUTA_ASIGNACIONES_VENDEDOR = "/seller/assignnedRequest";
 const RUTA_SOLICITUDES_EJECUTIVO = "/executive/executiveAssignment";
+const RUTA_UPDATE_INFO_CLIENTE = "/client/updateInfo";
 
 
 function NavbarResponsive() {
@@ -32,13 +33,13 @@ function NavbarResponsive() {
   //const pages = ['Inicio','otra cosa', 'xd'];
   //const settings = ['Iniciar Sesion', 'Registrarse'];
 
-  console.log("acabo de entrar a NavbarResponsive");
-  console.log("LA SESION ES ",JSON.parse(sessionStorage.getItem('user')));
-  const pagesHome = ['Inicio','item 1', 'item xd'];
+  //console.log("acabo de entrar a NavbarResponsive");
+  //console.log("LA SESION ES ",JSON.parse(sessionStorage.getItem('user')));
+  const pagesHome = ['Inicio'];
   const settingsHome = ['Iniciar Sesion', 'Registrarse'];
 
   const pagesCLiente = ['Inicio', 'Mis Solicitudes'];
-  const settingsCliente = ['Cerrar Sesión'];
+  const settingsCliente = ['Cerrar Sesión', 'Actualizar Información'];
 
   const pagesVendedor = ['Inicio', 'Mis Asignaciones'];
   const settingsVendedor = ['Cerrar Sesión'];
@@ -172,6 +173,9 @@ function NavbarResponsive() {
     }
     else if(itemSeleccionado === 'registrarse'){
       return RUTA_REGISTER
+    }
+    else if(itemSeleccionado === 'actualizar información'){
+      return RUTA_UPDATE_INFO_CLIENTE;
     }
 
     else if(itemSeleccionado === 'mis solicitudes'){
