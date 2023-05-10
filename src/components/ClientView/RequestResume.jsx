@@ -101,7 +101,7 @@ const CalendarioIcono = styled(CalendarMonth)`
 
 `;
 
-export const RequestResume = ({fecha,estado, colorFondoTag, colorLetraTag, IdSolicitud}) => {
+export const RequestResume = ({fecha,estado, colorFondoTag, colorLetraTag, IdSolicitud, requestDetails}) => {
 
 const nuevaFecha = new Date(fecha);
 const fechaFormatoES = nuevaFecha.toLocaleDateString('es-ES').replace(/\//g, '-');
@@ -124,7 +124,7 @@ const [modalOpen, setModalOpen] = useState(false);
                   <Info/>
                   Ver Detalles
               </VerDetalles>  
-              <ModalRequestDetails open={modalOpen} onClose={handleModalClose} />      
+              <ModalRequestDetails open={modalOpen} onClose={handleModalClose} requestDetails={requestDetails} />      
           </InfoSolicitud>
           <EstadoSolicitud backgroundColor={colorFondoTag} color={colorLetraTag}>{estado}</EstadoSolicitud>
 

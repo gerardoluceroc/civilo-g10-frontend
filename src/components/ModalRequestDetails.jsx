@@ -61,14 +61,14 @@ const Titulo = styled.h1`
 
 
 // Creamos el componente Modal que acepta una prop "open" que indica si debe mostrarse o no
-const ModalRequestDetails = ({ open, onClose }) => {
+const ModalRequestDetails = ({ open, onClose, requestDetails }) => {
   return (
     // Usamos un ternario para determinar si el Modal debe mostrarse o no
     open ? (
       <Overlay>
         <ModalContainer>
           <CloseButton onClick={onClose}>&times;</CloseButton>
-          <RequestDetails/>
+          <RequestDetails requestDetails={requestDetails}/>
         </ModalContainer>
       </Overlay>
     ) : null

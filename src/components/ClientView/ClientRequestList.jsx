@@ -73,6 +73,7 @@ const showRequestResume = (solicitudes) => {
           estado={"Enviada"}
           colorLetraTag="white"
           colorFondoTag="#1f618d"
+          requestDetails={solicitud}
         />
       );
     } else if (solicitud.status.statusName.toLowerCase() === "asignada") {
@@ -132,6 +133,8 @@ export const ClientRequestList = () => {
   
   const usuario = JSON.parse(sessionStorage.getItem("user"));
   const IdUsuario = usuario.userID;
+
+ //console.log("las solicitudes son: ",solicitudes);
   
   //Si no hay solicitudes
   if(solicitudes.length === 0){
