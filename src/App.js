@@ -22,6 +22,7 @@ import AdminReadRequestsPage from "./pages/AdminReadRequestsPage";
 import AdminReadRolesPage from "./pages/AdminReadRolesPage";
 import AdminReadStatusPage from "./pages/AdminReadStatusPage";
 import AdminReadUsersPage from "./pages/AdminReadUsersPage";
+import UpdateClientInfoPage from "./pages/UpdateClientInfoPage";
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
       <Route path="/" element={<HomePage/>} />
       <Route path="/client/request" element={<ClientRequestPage/>}/>
       <Route path="/register" element={<RegisterPage/>} />
+      <Route path="/client/updateInfo" element={<UpdateClientInfoPage/>} />
 
       <Route path="/loginAdmin" element={<AdminLoginFormPage />} />
       <Route path="/admin" element={<AdminHomePage />} />
