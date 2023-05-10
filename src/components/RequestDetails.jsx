@@ -9,11 +9,15 @@ import BlindsClosedIcon from '@mui/icons-material/BlindsClosed';
 import DescriptionIcon from '@mui/icons-material/Description';
 import PendingIcon from '@mui/icons-material/Pending';
 import BusinessIcon from '@mui/icons-material/Business';
+import { useState } from "react";
+import { useEffect } from "react";
+import { obtenerVendedor } from "../api/civilo_roller_api";
 
 const ContainerRequestDetails = styled.div`
-    background-color: red;
+    background-color: transparent;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     //align-items: center;
 `;
 
@@ -21,9 +25,11 @@ const ContainerRequestDetails = styled.div`
 const Titulo = styled.h1`
     font-size: x-large;
     margin: auto;
+    color: #525151;
 `;
 
 const H2 = styled.h2`
+    color: #525151;
 
 `;
 
@@ -33,13 +39,13 @@ const Label = styled.label`
 `;
 
 const InformacionUsuario = styled.div`
-    background-color: blue;
+    background-color: transparent;
     display: flex;
     flex-direction: column;
 `;
 
 const InformacionCotización = styled.div`
-    background-color: #08cc08;
+    background-color: transparent;
     display: flex;
     flex-direction: column;
 
@@ -73,25 +79,32 @@ const ItemInfoUsuario = styled.div`
 
 `;
 
+const NoSellerAvailable = styled.h2`
+    color: gray;
+    margin-top: -2%;
+    font-size: large;
+`;
+
 export const RequestDetails = ({requestDetails}) => {
 
-    console.log("Estoy en request ditails dentro del modal, la solicitud es ",requestDetails);
+    const {requestID,
+        sellerId,
+        description: descripcion,
+        deadline: fechaVencimiento,
+        admissionDate: fechaRealizacion,
+        coverage: cobertura,
+        curtain: cortina,
+        status: estado,
+        user: usuario
+    } = requestDetails;
+      const [vendedor, setVendedor] = useState({});
 
-    if(requestDetails === undefined){
-        return <div>undefined</div>
-    }
-
-    else{ 
-        const {requestID,
-                description: descripcion,
-                deadline: fechaVencimiento,
-                admissionDate: fechaRealizacion,
-                coverage: cobertura,
-                curtain: cortina,
-                status: estado,
-                user: usuario
-        } = requestDetails;
-
+      useEffect(() => {
+        //obtenerSolicitudes().then((solicitudes) => setSolicitudes(solicitudes));
+        obtenerVendedor(sellerId).then(data => setVendedor(data));
+      }, []);
+      
+        
 
         return (
             <ContainerRequestDetails>
@@ -169,35 +182,39 @@ export const RequestDetails = ({requestDetails}) => {
                 </InformacionCotización>
 
                 <H2>Vendedor Asignado:</H2>
-                <InformacionUsuario>
+                {estado.statusName.toLowerCase() !== 'sin asignar' ?
+                    <InformacionUsuario>
                     <ItemInfoUsuario>
                         <PersonIcon/>
                         <Label>Nombre: </Label>
-                        Vendedor 1
+                        {`${vendedor.name} ${vendedor.surname}`}
                     </ItemInfoUsuario>
                     <ItemInfoUsuario>
                         <BusinessIcon/>
                         <Label>Empresa: </Label>
-                        Empresas Del Sur
+                        {vendedor.companyName === null ? 'No Informada' : vendedor.companyName}
                     </ItemInfoUsuario>
                     <ItemInfoUsuario>
                         <EmailIcon/>
                         <Label>Correo Electrónico: </Label>
-                        vendedor@gmail.es
+                        {vendedor.email}
                     </ItemInfoUsuario>
                     <ItemInfoUsuario>
                         <LocalPhoneIcon/>
                         <Label>Número Telefónico: </Label>
-                        +569666
+                        {vendedor.phoneNumber}
                     </ItemInfoUsuario>
                     <ItemInfoUsuario>
                         <PlaceIcon/>
                         <Label>Comuna: </Label>
-                        Pudahuel
+                        {vendedor.commune}
                     </ItemInfoUsuario>
-
                 </InformacionUsuario>
+
+                :
+                <NoSellerAvailable>No tiene asignado un vendedor en estos momentos</NoSellerAvailable>    
+                }
             </ContainerRequestDetails>
         )
-  }
+  
 }

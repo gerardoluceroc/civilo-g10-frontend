@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import ClientRequestForm from "./ClientView/ClientRequestForm";
 import { RequestDetails } from "./RequestDetails";
+import DisabledByDefaultIcon from '@mui/icons-material/DisabledByDefault';
 
 // Creamos un overlay para oscurecer el fondo detrás del Modal
 const Overlay = styled.div`
@@ -23,11 +24,16 @@ const ModalContainer = styled.div`
   padding: 20px;
   position: relative;
   width: 50%;
+  height: 85%;
+  overflow-y: auto; /* añade esta línea para permitir el desplazamiento vertical */
+
 
   @media (max-width: 760px) {
     width: 80%;
     
   }
+
+
 `;
 
 // Creamos un botón para cerrar el Modal
@@ -41,23 +47,7 @@ const CloseButton = styled.button`
   cursor: pointer;
 `;
 
-const FormularioSolicitud = styled.div`
-    background-color: #e6e5e5;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-`;
 
-const CamposFormulario = styled.div`
-
-`;
-
-const Titulo = styled.h1`
-    font-size: x-large;
-    margin: auto;
-
-`;
- 
 
 
 // Creamos el componente Modal que acepta una prop "open" que indica si debe mostrarse o no
@@ -67,7 +57,7 @@ const ModalRequestDetails = ({ open, onClose, requestDetails }) => {
     open ? (
       <Overlay>
         <ModalContainer>
-          <CloseButton onClick={onClose}>&times;</CloseButton>
+          <CloseButton onClick={onClose}> <DisabledByDefaultIcon style={{ fontSize: 40 }}/> </CloseButton>
           <RequestDetails requestDetails={requestDetails}/>
         </ModalContainer>
       </Overlay>

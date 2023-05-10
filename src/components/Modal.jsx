@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import ClientRequestForm from "../components/ClientView/ClientRequestForm";
+import DisabledByDefaultIcon from '@mui/icons-material/DisabledByDefault';
 
 // Creamos un overlay para oscurecer el fondo detrás del Modal
 const Overlay = styled.div`
@@ -66,7 +67,7 @@ const Modal = ({ open, onClose }) => {
     open ? (
       <Overlay>
         <ModalContainer>
-          <CloseButton onClick={onClose}>&times;</CloseButton>
+          <CloseButton onClick={onClose}><DisabledByDefaultIcon style={{ fontSize: 40 }}/></CloseButton>
           <FormularioSolicitud>
             <ClientRequestForm/>
           </FormularioSolicitud>

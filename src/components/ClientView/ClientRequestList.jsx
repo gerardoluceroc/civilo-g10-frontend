@@ -85,6 +85,7 @@ const showRequestResume = (solicitudes) => {
           estado={solicitud.status.statusName}
           colorLetraTag="#134c2b"
           colorFondoTag="#53cfb6"
+          requestDetails={solicitud}
         />
       );
     } else if (solicitud.status.statusName.toLowerCase() === "finalizada y fallida") {

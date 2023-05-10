@@ -5,6 +5,13 @@ const RUTA_HOME = "/"
 const RUTA_LOGIN = "/users/login"
 const RUTA_REGISTER = "/users/register"
 const RUTA_LOGOUT_CLIENTE = "/users/logout"
+const RUTA_VENDEDORES = "/sellers"
+
+export const obtenerVendedor = async (idVendedor) => {
+  const respuesta = await fetch(`${URL_CIVILO}${RUTA_VENDEDORES}/${idVendedor}`);
+  const vendedor = await respuesta.json();
+  return vendedor;
+}
 
 
 export const iniciarSesion = (usuario) => {
