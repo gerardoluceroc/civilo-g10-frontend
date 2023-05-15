@@ -101,7 +101,9 @@ export const RequestDetails = ({requestDetails}) => {
 
       useEffect(() => {
         //obtenerSolicitudes().then((solicitudes) => setSolicitudes(solicitudes));
-        obtenerVendedor(sellerId).then(data => setVendedor(data));
+        obtenerVendedor(sellerId)
+        .then(data => setVendedor(data))
+        .catch((error) => console.log("Error al obtener el vendedor: ",error));
       }, []);
       
         

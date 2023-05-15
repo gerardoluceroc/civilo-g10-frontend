@@ -6,11 +6,26 @@ const RUTA_LOGIN = "/users/login"
 const RUTA_REGISTER = "/users/register"
 const RUTA_LOGOUT_CLIENTE = "/users/logout"
 const RUTA_VENDEDORES = "/sellers"
+const RUTA_COBERTURAS = "/coverages"
+const RUTA_ASIGNACIONES_VENDEDOR = "/requests/sellerRequest" // +`${ID DEL VENDEDOR}`
 
 export const obtenerVendedor = async (idVendedor) => {
   const respuesta = await fetch(`${URL_CIVILO}${RUTA_VENDEDORES}/${idVendedor}`);
   const vendedor = await respuesta.json();
   return vendedor;
+}
+
+export const obtenerCoberturas = async () => {
+  const respuesta = await fetch(`${URL_CIVILO}${RUTA_COBERTURAS}`)
+  const coberturasJSON = await respuesta.json();
+  return coberturasJSON; 
+
+}
+
+export const obtenerAsignacionesVendedor = async (id_vendedor) => {
+  const respuesta = await fetch(`${URL_CIVILO}${RUTA_ASIGNACIONES_VENDEDOR}/${id_vendedor}`);
+  const asignaciones = await respuesta.json();
+  return asignaciones;  
 }
 
 
@@ -112,4 +127,9 @@ export const registrarUsuario = (usuario) => {
       alert("Error al iniciar sesión");
     }
   };
+
+
+
+
+  
   

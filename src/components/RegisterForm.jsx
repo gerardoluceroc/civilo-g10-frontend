@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { registrarUsuario } from '../api/civilo_roller_api';
+import { obtenerCoberturas, registrarUsuario } from '../api/civilo_roller_api';
 import { useState, useEffect } from 'react';
 
 
@@ -222,16 +222,25 @@ export const RegisterForm = () => {
   };
 
   useEffect(() => {
-    fetch("http://localhost:8080/coverages")
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        setCommunes(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching communes: ", error);
-      });
-  }, []);
+    obtenerCoberturas()
+    .then((coberturas) => {
+      setCommunes(coberturas);
+    })
+    .catch((error) => console.log("Error al obtener las coberturas: ",error))
+
+  },[]);
+
+  // useEffect(() => {
+  //   fetch("http://localhost:8080/coverages")
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       console.log(data);
+  //       setCommunes(data);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching communes: ", error);
+  //     });
+  // }, []);
 
   const handleRolChange = (event) => {
     setRolUsuario(event.target.value);

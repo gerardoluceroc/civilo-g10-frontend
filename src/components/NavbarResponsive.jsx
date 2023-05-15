@@ -18,14 +18,14 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { cerrarSesionUsuario } from '../api/civilo_roller_api';
 
-const RUTA_LOGIN = "/login";
-const RUTA_HOME = "/";
-const RUTA_HOME_ADMIN = "/admin";
-const RUTA_REGISTER = "/register";
-const RUTA_SOLICITUDES_CLIENTE = "/client/request";
-const RUTA_ASIGNACIONES_VENDEDOR = "/seller/assignnedRequest";
-const RUTA_SOLICITUDES_EJECUTIVO = "/executive/executiveAssignment";
-const RUTA_UPDATE_INFO_CLIENTE = "/client/updateInfo";
+const RUTA_PAGE_LOGIN = "/login";
+const RUTA_PAGE_HOME = "/";
+const RUTA_PAGE_HOME_ADMIN = "/admin";
+const RUTA_PAGE_REGISTER = "/register";
+const RUTA_PAGE_SOLICITUDES_CLIENTE = "/client/request";
+const RUTA_PAGE_ASIGNACIONES_VENDEDOR = "/seller/assignnedRequest";
+const RUTA_PAGE_SOLICITUDES_EJECUTIVO = "/executive/executiveAssignment";
+const RUTA_PAGE_UPDATE_INFO_CLIENTE = "/client/updateInfo";
 
 
 function NavbarResponsive() {
@@ -166,16 +166,16 @@ function NavbarResponsive() {
     const itemSeleccionado = item.toLowerCase();
 
     if(itemSeleccionado === 'inicio'){
-      return RUTA_HOME;
+      return RUTA_PAGE_HOME;
     }
     else if(itemSeleccionado === 'iniciar sesion'){
-      return RUTA_LOGIN
+      return RUTA_PAGE_LOGIN;
     }
     else if(itemSeleccionado === 'registrarse'){
-      return RUTA_REGISTER
+      return RUTA_PAGE_REGISTER;
     }
     else if(itemSeleccionado === 'actualizar información'){
-      return RUTA_UPDATE_INFO_CLIENTE;
+      return RUTA_PAGE_UPDATE_INFO_CLIENTE;
     }
 
     else if(itemSeleccionado === 'mis solicitudes'){
@@ -183,7 +183,7 @@ function NavbarResponsive() {
       if(JSON.parse(sessionStorage.getItem('user')) !== null){
         //Si es de tipo cliente
         if(JSON.parse(sessionStorage.getItem('user')).role.accountType.toLowerCase() === 'cliente'){
-          return RUTA_SOLICITUDES_CLIENTE
+          return RUTA_PAGE_SOLICITUDES_CLIENTE;
         }
 
       }
@@ -194,7 +194,7 @@ function NavbarResponsive() {
       if(JSON.parse(sessionStorage.getItem('user')) !== null){
         //Si es de tipo vendedor
         if(JSON.parse(sessionStorage.getItem('user')).role.accountType.toLowerCase() === 'vendedor'){
-          return RUTA_ASIGNACIONES_VENDEDOR;
+          return RUTA_PAGE_ASIGNACIONES_VENDEDOR;
         }
       }
     }
@@ -203,7 +203,7 @@ function NavbarResponsive() {
       if(JSON.parse(sessionStorage.getItem('user')) !== null){
         //Si es de tipo ejecutivo
         if(JSON.parse(sessionStorage.getItem('user')).role.accountType.toLowerCase() === 'ejecutivo'){
-          return RUTA_SOLICITUDES_EJECUTIVO;
+          return RUTA_PAGE_SOLICITUDES_EJECUTIVO;
         }
       }
     }
@@ -212,11 +212,11 @@ function NavbarResponsive() {
       if(JSON.parse(sessionStorage.getItem('user')) !== null){
         //Si es de tipo ejecutivo
         if(JSON.parse(sessionStorage.getItem('user')).role.accountType.toLowerCase() === 'administrador'){
-          return RUTA_HOME_ADMIN;
+          return RUTA_PAGE_HOME_ADMIN;
         }
       }
     }
-    else return "/";
+    else return RUTA_PAGE_HOME;
   }
 
   //Configuracion del menu de hamburguesa disponibles en pantallas moviles
@@ -278,7 +278,7 @@ function NavbarResponsive() {
             variant="h6"
             noWrap
             component={Link}
-            to={RUTA_HOME}
+            to={RUTA_PAGE_HOME}
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -330,7 +330,7 @@ function NavbarResponsive() {
               variant="h5"
               noWrap
               component={Link}
-              to={RUTA_HOME}
+              to={RUTA_PAGE_HOME}
               sx={{
                 mr: 2,
                 display: { xs: 'flex', md: 'none' },

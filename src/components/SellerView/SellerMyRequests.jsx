@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useState, useEffect } from "react";
+import { obtenerAsignacionesVendedor } from "../../api/civilo_roller_api";
 
 const TableContainer = styled.div`
   margin-top: 50px;
@@ -52,21 +53,31 @@ const SellerMyRequests = () => {
 
   const [requests, setRequests] = useState([]);
   const user = JSON.parse(sessionStorage.getItem("user"));
+  const id_vendedor = user.userID;
   console.log(user.userID);
 
   useEffect(() => {
-    const fetchRequests = async () => {
-      try {
-        const response = await fetch(`http://localhost:8080/requests/sellerRequest/${user.userID}`);
-        const data = await response.json();
-        console.log(data);
-        setRequests(data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchRequests();
-  }, [user.userID]);
+    obtenerAsignacionesVendedor(id_vendedor)
+    .then((asignaciones) => setRequests(asignaciones))
+    .catch((error) => console.log("Error al obtener las asignaciones: ",error));
+
+  },[id_vendedor])
+
+  
+
+  // useEffect(() => {
+  //   const fetchRequests = async () => {
+  //     try {
+  //       const response = await fetch(`http://localhost:8080/requests/sellerRequest/${user.userID}`);
+  //       const data = await response.json();
+  //       console.log(data);
+  //       setRequests(data);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
+  //   fetchRequests();
+  // }, [user.userID]);
 
   return (
     <TableContainer>
