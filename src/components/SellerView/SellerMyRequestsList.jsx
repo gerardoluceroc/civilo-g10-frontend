@@ -1,12 +1,9 @@
 
 import styled from 'styled-components'
-import { RequestResume } from './RequestResume';
+import { RequestResume } from '../ClientView/RequestResume';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { solicitarMisSolicitudes } from '../../api/civilo_roller_api';
-
-// const URL_CIVILO = "http://localhost:8080";
-// const RUTA_MIS_SOLICITUDES = "/requests/clientRequest/";
+import { obtenerAsignacionesVendedor } from '../../api/civilo_roller_api';
 
 
 const StyledDiv = styled.div`
@@ -54,12 +51,7 @@ const ListaSolicitudes = styled.div`
   gap: 10px;
 
 `;
-// //Funcion que pide los datos al servidor de las solicitudes de un cliente especifico
-// const solicitarMisSolicitudes = async (id_usuario) => {
-//   const response = await fetch(`${URL_CIVILO}${RUTA_MIS_SOLICITUDES}${id_usuario}`);
-//   const solicitudes = await response.json();
-//   return solicitudes;
-// }
+
 
 
 //Funcion para definir los estilos que tendrá el tag del resumen de la solicitud y otras propiedades del componente principal
@@ -118,34 +110,27 @@ const showRequestResume = (solicitudes) => {
 
 
 
-export const ClientRequestList = () => {
-
-  // const obtenerSolicitudes = async () => {
-  //   const solicitudes = await solicitarMisSolicitudes(IdUsuario);
-  //   return solicitudes;
-  // };
-
-  const [solicitudes, setSolicitudes] = useState([]);
-  const usuario = JSON.parse(sessionStorage.getItem("user"));
-  const IdUsuario = usuario.userID;
-
-  useEffect(() => {
-    //obtenerSolicitudes().then((solicitudes) => setSolicitudes(solicitudes));
-    solicitarMisSolicitudes(IdUsuario)
-    .then((solicitudes) => setSolicitudes(solicitudes))
-    .catch((error) => (console.log("Error al obtener solicitudes:",error)));
-  }, [IdUsuario]);
+export const SellerMyRequestsList = () => {
 
 
- //console.log("las solicitudes son: ",solicitudes);
-  
+const [requests, setRequests] = useState([]);
+const user = JSON.parse(sessionStorage.getItem("user"));
+const id_vendedor = user.userID;
+console.log(user.userID);
+
+useEffect(() => {
+    obtenerAsignacionesVendedor(id_vendedor)
+    .then((asignaciones) => setRequests(asignaciones))
+    .catch((error) => console.log("Error al obtener las asignaciones: ",error));
+},[id_vendedor])
+
   //Si no hay solicitudes
-  if(solicitudes.length === 0){
+  if(requests.length === 0){
     return(
 
       <StyledDiv>
-        <Titulo>Mis Solicitudes</Titulo>
-        <NoRequestsAvailable>No Tienes Solicitudes Realizadas</NoRequestsAvailable>
+        <Titulo>Mis Asignaciones</Titulo>
+        <NoRequestsAvailable>No Tienes Solicitudes Asignadas</NoRequestsAvailable>
       
       </StyledDiv>
     );
@@ -156,9 +141,9 @@ export const ClientRequestList = () => {
     return (
 
     <StyledDiv>
-      <Titulo>Mis Solicitudes</Titulo>
+      <Titulo>Mis Asignaciones</Titulo>
       <ListaSolicitudes>
-        {showRequestResume(solicitudes)}
+        {showRequestResume(requests)}
         
       </ListaSolicitudes>
     </StyledDiv>

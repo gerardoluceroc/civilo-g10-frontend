@@ -5,6 +5,7 @@ const RUTA_HOME = "/"
 const RUTA_LOGIN = "/users/login"
 const RUTA_REGISTER = "/users/register"
 const RUTA_LOGOUT_CLIENTE = "/users/logout"
+const RUTA_MIS_SOLICITUDES_CLIENTE = "/requests/clientRequest/";
 const RUTA_VENDEDORES = "/sellers"
 const RUTA_COBERTURAS = "/coverages"
 const RUTA_ASIGNACIONES_VENDEDOR = "/requests/sellerRequest" // +`${ID DEL VENDEDOR}`
@@ -127,6 +128,14 @@ export const registrarUsuario = (usuario) => {
       alert("Error al iniciar sesión");
     }
   };
+
+//Funcion que pide los datos al servidor de las solicitudes de un cliente especifico
+export const solicitarMisSolicitudes = async (id_usuario) => {
+  const response = await fetch(`${URL_CIVILO}${RUTA_MIS_SOLICITUDES_CLIENTE}${id_usuario}`);
+  const solicitudes = await response.json();
+  return solicitudes;
+}
+
 
 
 

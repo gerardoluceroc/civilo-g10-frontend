@@ -60,7 +60,7 @@ const SellerMyRequests = () => {
     obtenerAsignacionesVendedor(id_vendedor)
     .then((asignaciones) => setRequests(asignaciones))
     .catch((error) => console.log("Error al obtener las asignaciones: ",error));
-
+    console.log("las solicitudes del seller son",requests);
   },[id_vendedor])
 
   
