@@ -4,13 +4,22 @@ import NavigationBar from '../components/NavigationBar'
 import Footer from '../components/Footer'
 import LoginForm from "../components/LoginForm";
 import NavbarResponsive from "../components/NavbarResponsive";
+import SignIn from "../components/SignIn";
+import styled from "styled-components";
+
+const StyledDiv = styled.div`
+  min-height: 700px;
+`;
 
 const LoginPage = () => {
   return (
     <>
       <NavbarResponsive/>
-      <LoginForm />
+      <StyledDiv>
+        <SignIn/>
+      </StyledDiv>
       <Footer />
+
     </>
   )
 };

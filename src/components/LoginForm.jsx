@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { iniciarSesionCliente } from "../api/civilo_roller_api";
+import SignIn from "./SignIn";
 
 const LoginContainer = styled.div`
   display: flex;
@@ -104,6 +105,7 @@ const LoginForm = () => {
 
 
   return (
+    <>
     <LoginContainer>
       <Column>
         <Image src="https://fernapetcl.vtexassets.com/arquivos/ids/169337-800-auto?v=637677510279630000&width=800&height=auto&aspect=true" />
@@ -134,6 +136,7 @@ const LoginForm = () => {
         </FormContainer>
       </Column>
     </LoginContainer>
+    </>
   );
 };
 export default LoginForm;
