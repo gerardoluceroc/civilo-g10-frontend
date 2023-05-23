@@ -38,6 +38,18 @@ export const OurProducts = () => {
       titulo: "Roller Dúo",
       imagen: "https://homeseven.cl/wp-content/uploads/2021/03/ca1c1a368db2beba448a28a09ac69cf.jpg",
       descripcion: "La cortina roller duo combina dos telas en una sola, permitiéndote controlar la entrada de luz y privacidad. Con su diseño elegante y minimalista, es una opción versátil y práctica para cualquier habitación."
+    },
+    {
+      id: 3,
+      titulo: "Roller Screen",
+      imagen: "https://aluprof.cl/wp-content/uploads/2015/05/Cortinas-roller-.jpg",
+      descripcion: "Descubre la elegancia y funcionalidad de nuestras cortinas roller screen. Con tejidos de alta calidad y un diseño moderno, estas cortinas ofrecen el equilibrio perfecto entre privacidad y luminosidad. Transforma tus espacios y dale a tus ventanas ese toque de distinción que se merecen."
+    },
+    {
+      id: 4,
+      titulo: "Roller Dúo Transparente",
+      imagen: "https://static2.elcontainer.cl/8515-big_default/cortina-roller-duo-blanca.jpg",
+      descripcion: "Con su diseño innovador, estas cortinas ofrecen una combinación única de privacidad y luminosidad. La doble capa de tejido permite controlar la entrada de luz y mantener una conexión visual con el exterior. Transforma tus espacios con un toque moderno y sofisticado."
     }
   ];
 

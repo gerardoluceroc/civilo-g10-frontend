@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 
 const StyledDiv = styled.div`
@@ -31,9 +31,13 @@ const Descripcion = styled.p`
     font-size: medium;
     max-width: 100%; /* Ajustamos el ancho máximo de la descripción al 100% */
     word-wrap: break-word; /* Permitimos que las palabras se dividan en varias líneas si exceden el ancho disponible */
+    overflow: hidden; /* Ocultamos cualquier contenido que exceda el tamaño fijo del componente */
+    //text-overflow: ellipsis; /* Agregamos puntos suspensivos (...) al final del texto si se recorta debido al tamaño fijo */
+    //white-space: nowrap; /* Evitamos que el texto se divida en varias líneas */
 `;
 
 export const ProductItem = ({title,image,description}) => {
+
     
 
     return (
