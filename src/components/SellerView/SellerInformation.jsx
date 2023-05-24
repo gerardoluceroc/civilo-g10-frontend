@@ -48,6 +48,8 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
+const RUTA_PAGE_LOGIN = "/login";
+
 const SellerInformation = () => {
     const [coverages, setCoverages] = useState([]);
     const [selectedCoverages, setSelectedCoverages] = useState([]);
@@ -95,7 +97,7 @@ const SellerInformation = () => {
             .then((response) => {
                 if (response.ok) {
                     alert("Información actualizada con exito");
-                    window.location.replace("http://localhost:3000/loginSeller");
+                    window.location.replace(RUTA_PAGE_LOGIN);
                 } else {
                     alert("Complete todos los campos");
                 }
