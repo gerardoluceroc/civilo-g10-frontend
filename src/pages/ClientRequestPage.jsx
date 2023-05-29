@@ -2,7 +2,7 @@ import styled from "styled-components"
 import { ClientRequestList } from "../components/ClientView/ClientRequestList"
 import Footer from "../components/Footer"
 import NavbarResponsive from "../components/NavbarResponsive"
-import NavigationBar from "../components/NavigationBar"
+import NavigationBar from "../components/Papelera/NavigationBar"
 import ClientRequestForm from "../components/ClientView/ClientRequestForm";
 import { Button } from "@mui/material"
 import AddIcon from '@mui/icons-material/Add';

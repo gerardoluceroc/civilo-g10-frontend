@@ -1,6 +1,6 @@
-import ExecutiveHome from "../components/ExecutiveView/ExecutiveHome";
-import Footer from "../components/Footer"
-import NavigationBarLogged from "../components/NavigationBarLogged";
+import ExecutiveHome from "../../components/Papelera/ExecutiveHome";
+import Footer from "../../components/Footer"
+import NavigationBarLogged from "../../components/Papelera/NavigationBarLogged";
 
 const ExecutiveHomePage = () => {
     return (

@@ -12,6 +12,8 @@ import { Link} from 'react-router-dom';
 import { useState } from "react";
 import { iniciarSesionCliente } from "../api/civilo_roller_api";
 
+
+//Componente que representa el login de la plataforma
 export default function SignIn() {
 
     const [formData, setFormData] = useState({

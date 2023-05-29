@@ -1,5 +1,5 @@
 import React from "react";
-import NavigationBar from '../components/NavigationBar'
+import NavigationBar from '../components/Papelera/NavigationBar'
 import Footer from '../components/Footer'
 import SellerInformation from "../components/SellerView/SellerInformation";
 import NavbarResponsive from "../components/NavbarResponsive";

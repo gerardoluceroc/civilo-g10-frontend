@@ -26,6 +26,7 @@ const RUTA_PAGE_SOLICITUDES_CLIENTE = "/client/request";
 const RUTA_PAGE_ASIGNACIONES_VENDEDOR = "/seller/assignnedRequest";
 const RUTA_PAGE_SOLICITUDES_EJECUTIVO = "/executive/executiveAssignment";
 const RUTA_PAGE_UPDATE_INFO_CLIENTE = "/client/updateInfo";
+const RUTA_PAGE_ADMIN_READUSERS = "/admin/readUsers";
 
 
 function NavbarResponsive() {
@@ -47,7 +48,7 @@ function NavbarResponsive() {
   const pagesEjecutivo = ['Inicio', 'Solicitudes'];
   const settingsEjecutivo = ['Cerrar Sesión'];
 
-  const pagesAdmin = ['Inicio', 'Administrar'];
+  const pagesAdmin = ['Inicio', 'Administrar', 'Cotizaciones', 'Usuarios', 'Productos', 'Solicitudes'];
   const settingsAdmin = ['Cerrar Sesión'];
 
   let userLocalStorage = JSON.parse(sessionStorage.getItem('user'));
@@ -210,12 +211,24 @@ function NavbarResponsive() {
     else if(itemSeleccionado === 'administrar'){
       //Si existe una sesion activa
       if(JSON.parse(sessionStorage.getItem('user')) !== null){
-        //Si es de tipo ejecutivo
+        //Si es de tipo administrador
         if(JSON.parse(sessionStorage.getItem('user')).role.accountType.toLowerCase() === 'administrador'){
           return RUTA_PAGE_HOME_ADMIN;
         }
       }
     }
+    else if(itemSeleccionado === 'usuarios'){
+      //Si existe una sesion activa
+      if(JSON.parse(sessionStorage.getItem('user')) !== null){
+        //Si es de tipo ejecutivo
+        if(JSON.parse(sessionStorage.getItem('user')).role.accountType.toLowerCase() === 'administrador'){
+          return RUTA_PAGE_ADMIN_READUSERS;
+        }
+      }
+    }
+
+
+
     else return RUTA_PAGE_HOME;
   }
 

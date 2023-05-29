@@ -1,6 +1,6 @@
 import SellerMyRequests from "../components/SellerView/SellerMyRequests"; 
 import Footer from "../components/Footer"
-import NavigationBarLogged from "../components/NavigationBarLogged";
+import NavigationBarLogged from "../components/Papelera/NavigationBarLogged";
 import NavbarResponsive from "../components/NavbarResponsive";
 import { SellerMyRequestsList } from "../components/SellerView/SellerMyRequestsList";
 import styled from "styled-components";

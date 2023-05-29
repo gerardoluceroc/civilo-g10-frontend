@@ -1,4 +1,4 @@
-import NavigationBar from '../components/NavigationBar'
+import NavigationBar from '../components/Papelera/NavigationBar'
 import { RegisterForm } from '../components/RegisterForm'
 import Footer from '../components/Footer'
 import NavbarResponsive from '../components/NavbarResponsive'

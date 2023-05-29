@@ -4,13 +4,13 @@ import { ClientRequestPage } from "./pages/ClientRequestPage";
 import {RegisterPage } from "./pages/Register";
 //import LoginPage from "./Pages/LoginPage";
 import LoginPage from "./pages/LoginPage";
-import ClientHomePage from "./pages/ClientHomePage";
+import ClientHomePage from "./pages/Papelera/ClientHomePage";
 import ClientRequestFormPage from "./pages/ClientRequestFormPage";
-import SellerLoginFormPage from "./pages/SellerLoginFormPage";
-import SellerHomePage from "./pages/SellerHomePage";
+import SellerLoginFormPage from "./pages/Papelera/SellerLoginFormPage";
+import SellerHomePage from "./pages/Papelera/SellerHomePage";
 import SellerMyRequestsPage from "./pages/SellerMyRequestsPage";
-import ExecutiveLoginFormPage from "./pages/ExecutiveLoginFormPage";
-import ExecutiveHomePage from "./pages/ExecutiveHomePage";
+import ExecutiveLoginFormPage from "./pages/Papelera/ExecutiveLoginFormPage";
+import ExecutiveHomePage from "./pages/Papelera/ExecutiveHomePage";
 import ExecutiveAssignmentPage from "./pages/ExecutiveAssignmentPage";
 import SellerInformationPage from "./pages/SellerInformationPage";
 import AdminLoginFormPage from "./pages/AdminLoginFormPage";
@@ -23,6 +23,7 @@ import AdminReadRolesPage from "./pages/AdminReadRolesPage";
 import AdminReadStatusPage from "./pages/AdminReadStatusPage";
 import AdminReadUsersPage from "./pages/AdminReadUsersPage";
 import UpdateClientInfoPage from "./pages/UpdateClientInfoPage";
+import { UsersListPage } from "./pages/UsersListPage";
 
 
 function App() {
@@ -44,7 +45,7 @@ function App() {
       <Route path="/admin/readRequests" element={<AdminReadRequestsPage />} />
       <Route path="/admin/readRoles" element={<AdminReadRolesPage />} />
       <Route path="/admin/readStatus" element={<AdminReadStatusPage />} />
-      <Route path="/admin/readUsers" element={<AdminReadUsersPage />} />
+      <Route path="/admin/readUsers" element={<UsersListPage/>} />
 
       <Route path="/executive/executiveAssignment" element={<ExecutiveAssignmentPage />} />
       <Route path="/executive" element={<ExecutiveHomePage />} />

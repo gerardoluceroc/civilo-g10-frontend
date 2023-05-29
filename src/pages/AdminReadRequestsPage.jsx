@@ -1,5 +1,5 @@
 import React from "react";
-import NavigationBarLogged from "../components/NavigationBarLogged";
+import NavigationBarLogged from "../components/Papelera/NavigationBarLogged";
 import Footer from '../components/Footer'
 import ReadRequests from "../components/AdministratorView/AdministrateRequests/ReadRequests";
 
