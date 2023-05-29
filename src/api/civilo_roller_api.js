@@ -77,12 +77,22 @@ export const registrarUsuario = (usuario) => {
             localStorage.setItem('email', JSON.stringify(usuario.email));
             console.log(usuario);
             window.location.href = 'http://localhost:3000/seller/sellerInformation';
+          } 
+          //si el usuario registrado es de tipo ejecutivo o administrador
+          else if((usuario.role.accountType.toLowerCase() === "ejecutivo") || (usuario.role.accountType.toLowerCase() === "administrador")){
+            alert("Usuario agregado con exito");
+            setTimeout(()=>{
+              //Se recarga la pagina luego de 2 segundos
+            window.location.reload();
+
+            },2000);
           }
         } else {
           console.log("Registro fallido");
         }
       })
       .catch((error) => {
+        alert("Error al registrar usuario");
         console.error("Error:", error);
       });
   }

@@ -1,8 +1,73 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import InfoIcon from '@mui/icons-material/Info';
-import { IconButton } from '@mui/material';
+import { Button, IconButton } from '@mui/material';
 import { getAllUsers } from '../api/civilo_roller_api';
+import AddIcon from '@mui/icons-material/Add';
+import ModalRegister from './ModalRegister';
+
+
+const StyledDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-left: 1%;
+  margin-top: -10px;
+  width: 50%;
+  align-items: center;
+
+  @media (max-width: 828px) {
+    width: 80%;
+    
+  }
+`;
+
+const BotonCrearUsuario = styled.button` 
+  background-color: #1010b3;
+  border-radius: 5px;
+  border-color: #1010b3;
+  color: white;
+  font-size: xx-large;
+  margin-left: 1.5%;
+  width: 15%;
+  height: 2.3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  //Animación para cuando el cursor pase por encima del botón.
+  &:hover {
+      box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.25); /* Agrega una sombra */
+      transform: scale(0.95); /* Reduzca ligeramente el tamaño */
+    }
+
+  /* sombra del botón */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.3s ease-in-out;
+  
+  /* estilo cuando se presiona el botón */
+  &:active {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
+  }
+  
+  & > * {
+    margin-left: 4%;
+  }
+
+  @media (max-width: 950px) {
+    width: 30%;
+    
+  }
+
+  @media (max-width: 540px) {
+    width: 50%;
+    margin: auto;
+    
+  }
+
+`;
+
+const LogoAdd = styled(AddIcon)`
+  width: 100px;
+`;
 
 const TableContainer = styled.div`
   width: 100%;
@@ -37,15 +102,61 @@ const SortIcon = styled.span`
 `;
 
 export const UsersTable = ({ tipoUsuario }) => {
+
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const handleModalClose = () => {
+    setModalOpen(false);
+  };
+
+const crearUsuario = (tipoUsuario) => {
+
+  if(tipoUsuario.toLowerCase() === "ejecutivo"){
+    return(
+      <StyledDiv>
+        <h3>Crear Nuevo Ejecutivo</h3>
+        <BotonCrearUsuario onClick={() => setModalOpen(true)}>
+          Crear
+          <AddIcon sx={{ fontSize: 40 }}/>
+        </BotonCrearUsuario> 
+      </StyledDiv>
+    )
+  }
+  if(tipoUsuario.toLowerCase() === "administrador"){
+    return(
+      <StyledDiv>
+        <h3>Crear Nuevo Administrador</h3>
+        <BotonCrearUsuario onClick={() => setModalOpen(true)}>
+          Crear
+          <AddIcon sx={{ fontSize: 40 }}/>
+        </BotonCrearUsuario> 
+      </StyledDiv>
+    )
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
   const [usuarios, setUsuarios] = useState([]);
   const [usuariosEspecificos, setUsuariosEspecificos] = useState([]);
   const [orderBy, setOrderBy] = useState('');
   const [order, setOrder] = useState('asc');
 
   useEffect(() => {
+    //Se hace la peticion al servidor de todos los usuarios
     getAllUsers()
       .then((data) => {
         setUsuarios(data);
+        //se guarda en listado, los usuarios con un rol especifico, el cual se recibe por props
         let listado = data.filter(
           (usuario) =>
             usuario.role.accountType.toLowerCase() === tipoUsuario
@@ -84,6 +195,8 @@ export const UsersTable = ({ tipoUsuario }) => {
 
   return (
     <TableContainer>
+      <ModalRegister open={modalOpen} onClose={handleModalClose} />
+      {crearUsuario(tipoUsuario)}
       <TableWrapper>
         <thead>
           <tr>
