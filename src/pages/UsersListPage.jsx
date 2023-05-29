@@ -1,13 +1,13 @@
 import React from 'react'
 import NavbarResponsive from '../components/NavbarResponsive'
 import Footer from '../components/Footer'
-import { ClienList } from '../components/ClientList'
+import { UsersList } from '../components/UsersList'
 
 export const UsersListPage = () => {
   return (
     <>
         <NavbarResponsive/>
-        <ClienList/>
+        <UsersList/>
         <Footer/>
     </>
   )

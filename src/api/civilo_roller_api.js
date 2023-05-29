@@ -1,6 +1,7 @@
 //Archivo donde se definirán todas las conexiones a la api de civilo_roller
 
 const URL_CIVILO = "http://localhost:8080"
+const RUTA_GET_USERS = "/users"
 const RUTA_HOME = "/"
 const RUTA_LOGIN = "/users/login"
 const RUTA_REGISTER = "/users/register"
@@ -9,6 +10,12 @@ const RUTA_MIS_SOLICITUDES_CLIENTE = "/requests/clientRequest/";
 const RUTA_VENDEDORES = "/sellers"
 const RUTA_COBERTURAS = "/coverages"
 const RUTA_ASIGNACIONES_VENDEDOR = "/requests/sellerRequest" // +`${ID DEL VENDEDOR}`
+
+export const getAllUsers = async () => {
+  const respuesta = await fetch(`${URL_CIVILO}${RUTA_GET_USERS}`);
+  const usuarios = await respuesta.json();
+  return usuarios;
+}
 
 export const obtenerVendedor = async (idVendedor) => {
   const respuesta = await fetch(`${URL_CIVILO}${RUTA_VENDEDORES}/${idVendedor}`);
