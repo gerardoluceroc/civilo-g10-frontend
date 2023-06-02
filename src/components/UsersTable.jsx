@@ -5,6 +5,8 @@ import { Button, IconButton } from '@mui/material';
 import { getAllUsers } from '../api/civilo_roller_api';
 import AddIcon from '@mui/icons-material/Add';
 import ModalRegister from './ModalRegister';
+import DeleteIcon from '@mui/icons-material/Delete';
+import ModalDeleteUser from './Modals/ModalDeleteUser';
 
 
 const StyledDiv = styled.div`
@@ -70,8 +72,9 @@ const LogoAdd = styled(AddIcon)`
 `;
 
 const TableContainer = styled.div`
-  width: 100%;
+  width: 90%;
   overflow-x: auto;
+  margin: auto;
 `;
 
 const TableWrapper = styled.table`
@@ -103,38 +106,38 @@ const SortIcon = styled.span`
 
 export const UsersTable = ({ tipoUsuario }) => {
 
+  //Para manejar el modal para registrar un ejecutivo o admin nuevo
   const [modalOpen, setModalOpen] = useState(false);
-
   const handleModalClose = () => {
     setModalOpen(false);
   };
 
-const crearUsuario = (tipoUsuario) => {
+  const crearUsuario = (tipoUsuario) => {
 
-  if(tipoUsuario.toLowerCase() === "ejecutivo"){
-    return(
-      <StyledDiv>
-        <h3>Crear Nuevo Ejecutivo</h3>
-        <BotonCrearUsuario onClick={() => setModalOpen(true)}>
-          Crear
-          <AddIcon sx={{ fontSize: 40 }}/>
-        </BotonCrearUsuario> 
-      </StyledDiv>
-    )
-  }
-  if(tipoUsuario.toLowerCase() === "administrador"){
-    return(
-      <StyledDiv>
-        <h3>Crear Nuevo Administrador</h3>
-        <BotonCrearUsuario onClick={() => setModalOpen(true)}>
-          Crear
-          <AddIcon sx={{ fontSize: 40 }}/>
-        </BotonCrearUsuario> 
-      </StyledDiv>
-    )
-  }
+    if(tipoUsuario.toLowerCase() === "ejecutivo"){
+      return(
+        <StyledDiv>
+          <h3>Crear Nuevo Ejecutivo</h3>
+          <BotonCrearUsuario onClick={() => setModalOpen(true)}>
+            Crear
+            <AddIcon sx={{ fontSize: 40 }}/>
+          </BotonCrearUsuario> 
+        </StyledDiv>
+      )
+    }
+    if(tipoUsuario.toLowerCase() === "administrador"){
+      return(
+        <StyledDiv>
+          <h3>Crear Nuevo Administrador</h3>
+          <BotonCrearUsuario onClick={() => setModalOpen(true)}>
+            Crear
+            <AddIcon sx={{ fontSize: 40 }}/>
+          </BotonCrearUsuario> 
+        </StyledDiv>
+      )
+    }
 
-}
+  }
 
 
 
@@ -150,6 +153,26 @@ const crearUsuario = (tipoUsuario) => {
   const [usuariosEspecificos, setUsuariosEspecificos] = useState([]);
   const [orderBy, setOrderBy] = useState('');
   const [order, setOrder] = useState('asc');
+
+
+  // Estado para controlar la apertura y cierre del modal para cada usuario
+  const [modalDeleteUserOpen, setModalDeleteUserOpen] = useState({});
+
+  // Función para abrir el modal de eliminación para un usuario específico
+  const handleModalDeleteUserOpen = (userID) => {
+    setModalDeleteUserOpen((prevState) => ({
+      ...prevState,
+      [userID]: true,
+    }));
+  };
+
+  // Función para cerrar el modal de eliminación para un usuario específico
+  const handleModalDeleteUserClose = (userID) => {
+    setModalDeleteUserOpen((prevState) => ({
+      ...prevState,
+      [userID]: false,
+    }));
+  };
 
   useEffect(() => {
     //Se hace la peticion al servidor de todos los usuarios
@@ -167,11 +190,14 @@ const crearUsuario = (tipoUsuario) => {
   }, [tipoUsuario]);
 
   const headers = [
+    {id: 'id user', label: 'ID de Usuario'},
     { id: 'name', label: 'Nombre' },
     { id: 'surname', label: 'Apellido' },
+    {id: 'Fecha de Nacimiento', label: 'Fecha de Nacimiento'},
     { id: 'email', label: 'Email' },
     { id: 'phoneNumber', label: 'Contacto' },
     { id: 'commune', label: 'Comuna' },
+    {id: 'empresa', label: 'Empresa'},
     { id: 'acciones', label: 'Acciones' }
   ];
 
@@ -182,13 +208,41 @@ const crearUsuario = (tipoUsuario) => {
   };
 
   const compareValues = (a, b) => {
-    if (a[orderBy] < b[orderBy]) {
-      return order === 'asc' ? -1 : 1;
+    if (orderBy === 'Fecha de Nacimiento') {
+      const dateA = new Date(a.birthDate);
+      const dateB = new Date(b.birthDate);
+      if (dateA < dateB) {
+        return order === 'asc' ? -1 : 1;
+      }
+      if (dateA > dateB) {
+        return order === 'asc' ? 1 : -1;
+      }
+      return 0;
+    } else if (orderBy === 'id user') {
+      if (a.userID < b.userID) {
+        return order === 'asc' ? -1 : 1;
+      }
+      if (a.userID > b.userID) {
+        return order === 'asc' ? 1 : -1;
+      }
+      return 0;
+    } else if (orderBy === 'empresa') {
+      if (a.empresa < b.empresa) {
+        return order === 'asc' ? -1 : 1;
+      }
+      if (a.empresa > b.empresa) {
+        return order === 'asc' ? 1 : -1;
+      }
+      return 0;
+    } else {
+      if (a[orderBy] < b[orderBy]) {
+        return order === 'asc' ? -1 : 1;
+      }
+      if (a[orderBy] > b[orderBy]) {
+        return order === 'asc' ? 1 : -1;
+      }
+      return 0;
     }
-    if (a[orderBy] > b[orderBy]) {
-      return order === 'asc' ? 1 : -1;
-    }
-    return 0;
   };
 
   const sortedUsuarios = [...usuariosEspecificos].sort(compareValues);
@@ -216,15 +270,28 @@ const crearUsuario = (tipoUsuario) => {
         <TableBody>
           {sortedUsuarios.map((usuario) => (
             <TableRow key={usuario.userID}>
+              <TableCell>{usuario.userID}</TableCell>
               <TableCell>{usuario.name}</TableCell>
               <TableCell>{usuario.surname}</TableCell>
+              <TableCell>{usuario.birthDate}</TableCell>
               <TableCell>{usuario.email}</TableCell>
               <TableCell>{usuario.phoneNumber}</TableCell>
               <TableCell>{usuario.commune}</TableCell>
+              {usuario.role.accountType.toLowerCase() === 'vendedor' ? 
+              <TableCell>{usuario.companyName}</TableCell>
+              : <TableCell><p style={{ fontStyle: 'italic' }}>No Aplica</p></TableCell>
+              }
               <TableCell>
-                <IconButton>
-                  <InfoIcon />
+                <IconButton onClick={() => handleModalDeleteUserOpen(usuario.userID)}>
+                  <DeleteIcon/>
                 </IconButton>
+                <ModalDeleteUser
+                  open={modalDeleteUserOpen[usuario.userID]}
+                  onClose={() => handleModalDeleteUserClose(usuario.userID)}
+                  nombreUsuario={usuario.name}
+                  apellidoUsuario={usuario.surname}
+                  userID={usuario.userID}
+                />
               </TableCell>
             </TableRow>
           ))}

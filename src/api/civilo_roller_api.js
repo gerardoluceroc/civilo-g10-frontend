@@ -2,6 +2,7 @@
 
 const URL_CIVILO = "http://localhost:8080"
 const RUTA_GET_USERS = "/users"
+const RUTA_DELETE_USERS = "/users"
 const RUTA_HOME = "/"
 const RUTA_LOGIN = "/users/login"
 const RUTA_REGISTER = "/users/register"
@@ -11,6 +12,53 @@ const RUTA_VENDEDORES = "/sellers"
 const RUTA_COBERTURAS = "/coverages"
 const RUTA_ASIGNACIONES_VENDEDOR = "/requests/sellerRequest" // +`${ID DEL VENDEDOR}`
 
+//Funcion para pedirle al servidor que elimine un usuario especifico
+export const deleteUser = async (userID) => {
+
+  let usuario = sessionStorage.getItem('user');
+  usuario = JSON.parse(usuario);
+
+  //SI el usuario a eliminar es el mismo que se encuentra con la cuenta activa
+  if(usuario.userID === userID){
+    alert("Error: No puede eliminar su propia cuenta");
+  }
+
+  else{
+    const respuesta = fetch(`${URL_CIVILO}${RUTA_DELETE_USERS}/${userID}`, {
+      method: 'DELETE'
+    })
+      .then(response => {
+        if (response.ok) {
+          alert("Usuario eliminado con exito");
+          setTimeout(()=>{
+            //Se recarga la pagina luego de 1 segundo
+            window.location.reload();
+          },1000);
+        } else {
+          alert("Error: Ha ocurrido un problema el eliminar a este usuario");
+          setTimeout(()=>{
+            //Se recarga la pagina luego de 1 segundo
+            window.location.reload();
+          },1000);
+        }
+      })
+      .catch(error => {
+        console.error('Error al eliminar el usuario:', error);
+        alert("Error: Ha ocurrido un problema el eliminar a este usuario");
+          setTimeout(()=>{
+            //Se recarga la pagina luego de 1 segundo
+            window.location.reload();
+          },1000);
+        // Hacer algo en caso de que ocurra un error en la solicitud
+      });
+
+
+
+  }
+
+  
+}
+//Funcion que permite obtener todos los usuarios
 export const getAllUsers = async () => {
   const respuesta = await fetch(`${URL_CIVILO}${RUTA_GET_USERS}`);
   const usuarios = await respuesta.json();
@@ -34,6 +82,13 @@ export const obtenerAsignacionesVendedor = async (id_vendedor) => {
   const respuesta = await fetch(`${URL_CIVILO}${RUTA_ASIGNACIONES_VENDEDOR}/${id_vendedor}`);
   const asignaciones = await respuesta.json();
   return asignaciones;  
+}
+
+//Funcion que pide los datos al servidor de las solicitudes de un cliente especifico
+export const solicitarMisSolicitudes = async (id_usuario) => {
+  const response = await fetch(`${URL_CIVILO}${RUTA_MIS_SOLICITUDES_CLIENTE}${id_usuario}`);
+  const solicitudes = await response.json();
+  return solicitudes;
 }
 
 
@@ -82,10 +137,10 @@ export const registrarUsuario = (usuario) => {
           else if((usuario.role.accountType.toLowerCase() === "ejecutivo") || (usuario.role.accountType.toLowerCase() === "administrador")){
             alert("Usuario agregado con exito");
             setTimeout(()=>{
-              //Se recarga la pagina luego de 2 segundos
+              //Se recarga la pagina luego de 1 segundo
             window.location.reload();
 
-            },2000);
+            },1000);
           }
         } else {
           console.log("Registro fallido");
@@ -146,12 +201,6 @@ export const registrarUsuario = (usuario) => {
     }
   };
 
-//Funcion que pide los datos al servidor de las solicitudes de un cliente especifico
-export const solicitarMisSolicitudes = async (id_usuario) => {
-  const response = await fetch(`${URL_CIVILO}${RUTA_MIS_SOLICITUDES_CLIENTE}${id_usuario}`);
-  const solicitudes = await response.json();
-  return solicitudes;
-}
 
 
 

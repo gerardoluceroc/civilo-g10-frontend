@@ -16,7 +16,10 @@ const TipoUsuario = styled.h2`
   font-size: x-large;
   display: flex;
   margin-left: 3%;
-  margin-top: 7%;
+  margin-top: 3%;
+  width: 90%;
+  margin: auto;
+  padding: 1%;
 
 `;
 

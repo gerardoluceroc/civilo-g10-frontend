@@ -204,7 +204,7 @@ export const AdminExecutiveRegister = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [, setPasswordRepetida] = useState('');
-  const [rolUsuario, setRolUsuario] = useState('Cliente');
+  const [rolUsuario, setRolUsuario] = useState('ejecutivo');
   const [birthDate, setBirthDate] = useState('');
   const [communes, setCommunes] = useState([]);
   const [coverage, setCoverage] = useState({
