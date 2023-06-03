@@ -1,16 +1,18 @@
 //Archivo donde se definirán todas las conexiones a la api de civilo_roller
 
 const URL_CIVILO = "http://localhost:8080"
-const RUTA_GET_USERS = "/users"
+
+const RUTA_ASIGNACIONES_VENDEDOR = "/requests/sellerRequest" // +`${ID DEL VENDEDOR}`
+const RUTA_COBERTURAS = "/coverages"
 const RUTA_DELETE_USERS = "/users"
+const RUTA_GET_USERS = "/users"
 const RUTA_HOME = "/"
 const RUTA_LOGIN = "/users/login"
-const RUTA_REGISTER = "/users/register"
 const RUTA_LOGOUT_CLIENTE = "/users/logout"
 const RUTA_MIS_SOLICITUDES_CLIENTE = "/requests/clientRequest/";
+const RUTA_REGISTER = "/users/register"
+const RUTA_ROLES = "/roles";
 const RUTA_VENDEDORES = "/sellers"
-const RUTA_COBERTURAS = "/coverages"
-const RUTA_ASIGNACIONES_VENDEDOR = "/requests/sellerRequest" // +`${ID DEL VENDEDOR}`
 
 //Funcion para pedirle al servidor que elimine un usuario especifico
 export const deleteUser = async (userID) => {
@@ -89,6 +91,14 @@ export const solicitarMisSolicitudes = async (id_usuario) => {
   const response = await fetch(`${URL_CIVILO}${RUTA_MIS_SOLICITUDES_CLIENTE}${id_usuario}`);
   const solicitudes = await response.json();
   return solicitudes;
+}
+
+//Funcion para obtener los roles disponibles en la pagina
+export const getAllRoles = async () => {
+  const respuesta = await fetch(`${URL_CIVILO}${RUTA_ROLES}`);
+  const roles = await respuesta.json();
+  return roles;
+
 }
 
 

@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const PAGE_READ_USERS = "/admin/readUsers";
+const PAGE_READ_ROLES = "/admin/readRoles";
+const PAGE_READ_CURTAINS = "/admin/readCurtains";
 
 const CardContainer = styled.div`
   display: flex;
@@ -239,7 +241,7 @@ const AdminHome = () => {
 
               <InformationItem>
                 <Titulo>Roles Disponibles</Titulo>
-                <Link to={"/"} style={{ textDecoration: 'none' }}>
+                <Link to={PAGE_READ_ROLES} style={{ textDecoration: 'none' }}>
                   <Boton>Ver Detalles</Boton>
                 </Link>
               </InformationItem>
