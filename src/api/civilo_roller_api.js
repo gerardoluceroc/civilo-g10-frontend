@@ -8,12 +8,14 @@ const RUTA_CORTINAS = "/curtains"
 const RUTA_COVERAGES = "/coverages"
 const RUTA_DELETE_USERS = "/users"
 const RUTA_GET_USERS = "/users"
+const RUTA_GET_REQUESTS = "/requests"
 const RUTA_HOME = "/"
 const RUTA_LOGIN = "/users/login"
 const RUTA_LOGOUT_CLIENTE = "/users/logout"
 const RUTA_MIS_SOLICITUDES_CLIENTE = "/requests/clientRequest/";
 const RUTA_REGISTER = "/users/register"
 const RUTA_ROLES = "/roles";
+const RUTA_STATUS = "/status";
 const RUTA_VENDEDORES = "/sellers"
 
 //Funcion para pedirle al servidor que elimine un usuario especifico
@@ -114,8 +116,24 @@ export const getAllCurtains = async () => {
 //Funcion para obtener las comunas de cobertura disponibles en la pagina
 export const getAllCoverages = async () => {
   const respuesta = await fetch(`${URL_CIVILO}${RUTA_COVERAGES}`);
-  const cortinas = await respuesta.json();
-  return cortinas;
+  const comunas = await respuesta.json();
+  return comunas;
+
+}
+
+//Funcion para obtener los estados posibles de las solicitudes disponibles en la pagina
+export const getAllStatus = async () => {
+  const respuesta = await fetch(`${URL_CIVILO}${RUTA_STATUS}`);
+  const status = await respuesta.json();
+  return status;
+
+}
+
+//Funcion para obtener todas las solicitudes realizadas en la pagina
+export const getAllRequests = async () => {
+  const respuesta = await fetch(`${URL_CIVILO}${RUTA_GET_REQUESTS}`);
+  const solicitudes = await respuesta.json();
+  return solicitudes;
 
 }
 

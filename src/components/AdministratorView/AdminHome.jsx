@@ -4,7 +4,9 @@ import styled from 'styled-components';
 
 const PAGE_COVERAGES = "/admin/readCoverages";
 const PAGE_READ_USERS = "/admin/readUsers";
+const PAGE_READ_REQUESTS = "/admin/readRequests";
 const PAGE_READ_ROLES = "/admin/readRoles";
+const PAGE_READ_STATUS = "/admin/readStatus";
 const PAGE_READ_CURTAINS = "/admin/readCurtains";
 
 const CardContainer = styled.div`
@@ -14,26 +16,18 @@ const CardContainer = styled.div`
   justify-content: center; /* Centra las tarjetas horizontalmente */
 `;
 
-const CardWrapper = styled.div`
-  margin-bottom: 20px; /* Agrega un margen inferior a cada tarjeta */
-  
-`;
-
-const Card = styled.div`
-  width: 25%;
-  padding: 10px;
-  border: 1px solid black; /* Agrega un borde de 1px de grosor */
-`;
-
-const Title = styled.h2`
-  font-size: 1.5rem;
-`;
-
-const ButtonContainer = styled.div`
+const Header = styled.h1`
   display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
+  justify-content: center;
+  align-items: center;
+  margin-top: -3%;
+
+  @media (max-width: 456px) {
+    font-size: x-large;
+    
+  }
 `;
+
 
 const Button = styled.a`
   background-color: #0074D9;
@@ -47,41 +41,6 @@ const Button = styled.a`
     background-color: #004a8e;
   }
 `;
-
-const CreateButton = styled.a`
-  background-color: #8BC34A; /* Verde pastel */
-  color: #fff;
-  padding: 10px;
-  border-radius: 5px;
-  text-align: center;
-  text-decoration: none;
-  cursor: pointer;
-  &:hover {
-    background-color: #7CB342; /* Verde pastel oscuro */
-  }
-`;
-
-const DeleteButton = styled(Button)`
-  background-color: #FF8A80; /* Rojo pastel */
-  &:hover {
-    background-color: #FF5252; /* Rojo pastel oscuro */
-  }
-`;
-
-const UpdateButton = styled(Button)`
-  background-color: #BA68C8; /* Morado pastel */
-  &:hover {
-    background-color: #9C27B0; /* Morado pastel oscuro */
-  }
-`;
-
-const ReadButton = styled(Button)`
-  background-color: #80D8FF; /* Azul pastel */
-  &:hover {
-    background-color: #40C4FF; /* Azul pastel oscuro */
-  }
-`;
-
 
 const InformationItem = styled.div`
   background-color: #1976d2;
@@ -158,81 +117,11 @@ const Boton = styled.button`
 
 const AdminHome = () => {
     return (
-        <CardContainer>
-            <Card>
-                <Title>Administración de Coberturas</Title>
-                <ButtonContainer>
-                    <CreateButton href="http://localhost:3000/admin/create">Crear</CreateButton>
-                    <ReadButton href="http://localhost:3000/admin/readCoverages">Leer</ReadButton>
-                    <UpdateButton href="http://localhost:3000/admin/update">Actualizar</UpdateButton>
-                    <DeleteButton href="http://localhost:3000/admin/delete">Borrar</DeleteButton>
-                </ButtonContainer>
-            </Card>
-            <Card>
-                <Title>Administración de Cortinas</Title>
-                <ButtonContainer>
-                    <CreateButton href="http://localhost:3000/admin/create">Crear</CreateButton>
-                    <ReadButton href="http://localhost:3000/admin/readCurtains">Leer</ReadButton>
-                    <UpdateButton href="http://localhost:3000/admin/update">Actualizar</UpdateButton>
-                    <DeleteButton href="http://localhost:3000/admin/delete">Borrar</DeleteButton>
-                </ButtonContainer>
-            </Card>
-            <Card>
-                <Title>Administración de Permisos</Title>
-                <ButtonContainer>
-                    <CreateButton href="http://localhost:3000/admin/create">Crear</CreateButton>
-                    <ReadButton href="http://localhost:3000/admin/readPermissions">Leer</ReadButton>
-                    <UpdateButton href="http://localhost:3000/admin/update">Actualizar</UpdateButton>
-                    <DeleteButton href="http://localhost:3000/admin/delete">Borrar</DeleteButton>
-                </ButtonContainer>
-            </Card>
-            <Card>
-                <Title>Administración de Cotizaciones (en desarrollo)</Title>
-                <ButtonContainer>
-                    <CreateButton href="http://localhost:3000/admin/create">Crear</CreateButton>
-                    <ReadButton href="http://localhost:3000/admin/read">Leer</ReadButton>
-                    <UpdateButton href="http://localhost:3000/admin/update">Actualizar</UpdateButton>
-                    <DeleteButton href="http://localhost:3000/admin/delete">Borrar</DeleteButton>
-                </ButtonContainer>
-            </Card>
-            <Card>
-                <Title>Administración de Solicitudes</Title>
-                <ButtonContainer>
-                    <CreateButton href="http://localhost:3000/admin/create">Crear</CreateButton>
-                    <ReadButton href="http://localhost:3000/admin/readRequests">Leer</ReadButton>
-                    <UpdateButton href="http://localhost:3000/admin/update">Actualizar</UpdateButton>
-                    <DeleteButton href="http://localhost:3000/admin/delete">Borrar</DeleteButton>
-                </ButtonContainer>
-            </Card>
-            <Card>
-                <Title>Administración de Roles</Title>
-                <ButtonContainer>
-                    <CreateButton href="http://localhost:3000/admin/create">Crear</CreateButton>
-                    <ReadButton href="http://localhost:3000/admin/readRoles">Leer</ReadButton>
-                    <UpdateButton href="http://localhost:3000/admin/update">Actualizar</UpdateButton>
-                    <DeleteButton href="http://localhost:3000/admin/delete">Borrar</DeleteButton>
-                </ButtonContainer>
-            </Card>
-            <Card>
-                <Title>Administración de Status</Title>
-                <ButtonContainer>
-                    <CreateButton href="http://localhost:3000/admin/create">Crear</CreateButton>
-                    <ReadButton href="http://localhost:3000/admin/readStatus">Leer</ReadButton>
-                    <UpdateButton href="http://localhost:3000/admin/update">Actualizar</UpdateButton>
-                    <DeleteButton href="http://localhost:3000/admin/delete">Borrar</DeleteButton>
-                </ButtonContainer>
-            </Card>
-            <Card>
-                <Title>Administración de Usuarios</Title>
-                <ButtonContainer>
-                    <CreateButton href="http://localhost:3000/admin/create">Crear</CreateButton>
-                    <ReadButton href="http://localhost:3000/admin/readUsers">Leer</ReadButton>
-                    <UpdateButton href="http://localhost:3000/admin/update">Actualizar</UpdateButton>
-                    <DeleteButton href="http://localhost:3000/admin/delete">Borrar</DeleteButton>
-                </ButtonContainer>
-            </Card>
-
-            
+        <>
+        <Header>Información de Plataforma</Header>
+        <p style={{ textAlign: 'center' }}>Acceda y administre los distintos aspectos que existen en la plataforma</p>
+        <CardContainer>    
+              
               <InformationItem>
                 <Titulo>Usuarios Registrados</Titulo>
                 <Link to={PAGE_READ_USERS} style={{ textDecoration: 'none' }}>
@@ -262,20 +151,28 @@ const AdminHome = () => {
               </InformationItem>
 
               <InformationItem>
-                <Titulo>Solicitudes de Cotización</Titulo>
-                <Link to={"/"} style={{ textDecoration: 'none' }}>
+                <Titulo>Estados Posibles de Solicitudes</Titulo>
+                <Link to={PAGE_READ_STATUS} style={{ textDecoration: 'none' }}>
                   <Boton>Ver Detalles</Boton>
                 </Link>
               </InformationItem>
 
               <InformationItem>
-                <Titulo>Cotizaciones</Titulo>
+                <Titulo>Solicitudes de Cotización</Titulo>
+                <Link to={PAGE_READ_REQUESTS} style={{ textDecoration: 'none' }}>
+                  <Boton>Ver Detalles</Boton>
+                </Link>
+              </InformationItem>
+
+              <InformationItem>
+                <Titulo>Cotizaciones (en desarrollo) </Titulo>
                 <Link to={"/"} style={{ textDecoration: 'none' }}>
                   <Boton>Ver Detalles</Boton>
                 </Link>
               </InformationItem>
             
         </CardContainer>
+        </>
     )};
 
 export default AdminHome;

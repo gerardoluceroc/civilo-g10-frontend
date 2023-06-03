@@ -27,6 +27,7 @@ const RUTA_PAGE_ASIGNACIONES_VENDEDOR = "/seller/assignnedRequest";
 const RUTA_PAGE_SOLICITUDES_EJECUTIVO = "/executive/executiveAssignment";
 const RUTA_PAGE_UPDATE_INFO_CLIENTE = "/client/updateInfo";
 const RUTA_PAGE_ADMIN_READUSERS = "/admin/readUsers";
+const RUTA_PAGE_READ_CURTAINS = "/admin/readCurtains";
 
 
 function NavbarResponsive() {
@@ -223,6 +224,16 @@ function NavbarResponsive() {
         //Si es de tipo ejecutivo
         if(JSON.parse(sessionStorage.getItem('user')).role.accountType.toLowerCase() === 'administrador'){
           return RUTA_PAGE_ADMIN_READUSERS;
+        }
+      }
+    }
+
+    else if(itemSeleccionado === 'productos'){
+      //Si existe una sesion activa
+      if(JSON.parse(sessionStorage.getItem('user')) !== null){
+        //Si es de tipo ejecutivo
+        if(JSON.parse(sessionStorage.getItem('user')).role.accountType.toLowerCase() === 'administrador'){
+          return RUTA_PAGE_READ_CURTAINS;
         }
       }
     }

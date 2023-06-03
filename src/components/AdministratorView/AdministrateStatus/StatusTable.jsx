@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { getAllCoverages, getAllCurtains } from '../../../api/civilo_roller_api';
+import { getAllStatus } from '../../../api/civilo_roller_api';
+
 
 
 
@@ -37,15 +38,15 @@ const SortIcon = styled.span`
   margin-left: 5px;
 `;
 
-export const CoveragesTable = () => {
+export const StatusTable = () => {
 
-    const [coverages, setCoverages] = useState([]);
+    const [status, setStatus] = useState([]);
 
     useEffect(() => {
 
-        getAllCoverages()
-        .then((data) => {setCoverages(data);})
-        .catch((error) => {console.log("Error al obtener las comunas de cobertura", error)})
+        getAllStatus()
+        .then((data) => {setStatus(data);})
+        .catch((error) => {console.log("Error al obtener los estados", error)})
     }, []);
 
 
@@ -81,8 +82,8 @@ export const CoveragesTable = () => {
 //   };
 
   const headers = [
-    {id: 'coverageID', label: 'ID de Comuna'},
-    {id: 'commune', label: 'Nombre de Comuna'},
+    {id: 'statusID', label: 'ID de Estado'},
+    {id: 'statusName', label: 'Tipo de Estado'},
     // { id: 'acciones', label: 'Acciones' }
   ];
 
@@ -102,7 +103,7 @@ export const CoveragesTable = () => {
     return 0;
   };
 
-  const sortedCoverages = [...coverages].sort(compareValues);
+  const sortedStatus = [...status].sort(compareValues);
 
   
 
@@ -125,10 +126,10 @@ export const CoveragesTable = () => {
           </tr>
         </thead>
         <TableBody>
-          {sortedCoverages.map((coverage) => (
-            <TableRow key={coverage.coverageID}>
-              <TableCell>{coverage.coverageID}</TableCell>
-              <TableCell>{coverage.commune}</TableCell> 
+          {sortedStatus.map((status) => (
+            <TableRow key={status.statusID}>
+              <TableCell>{status.statusID}</TableCell>
+              <TableCell>{status.statusName}</TableCell> 
               {/* <TableCell>
                 <IconButton onClick={() => handleModalDeleteUserOpen(usuario.userID)}>
                   <DeleteIcon/>
