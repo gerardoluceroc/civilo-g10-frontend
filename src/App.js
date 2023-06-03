@@ -21,7 +21,7 @@ import AdminReadPermissionsPage from "./pages/AdminReadPermissionsPage";
 import AdminReadRequestsPage from "./pages/AdminReadRequestsPage";
 import AdminReadRolesPage from "./pages/AdminReadRolesPage";
 import AdminReadStatusPage from "./pages/AdminReadStatusPage";
-import AdminReadUsersPage from "./pages/AdminReadUsersPage";
+import AdminReadUsersPage from "./pages/Papelera/AdminReadUsersPage";
 import UpdateClientInfoPage from "./pages/UpdateClientInfoPage";
 import { UsersListPage } from "./pages/UsersListPage";
 
