@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { getAllRoles } from '../../../api/civilo_roller_api';
+import { getAllCurtains} from '../../../api/civilo_roller_api';
 
 
 
@@ -37,15 +37,15 @@ const SortIcon = styled.span`
   margin-left: 5px;
 `;
 
-export const RolesTable = () => {
+export const CurtainsTable = () => {
 
-    const [roles, setRoles] = useState([]);
+    const [curtains, setCurtains] = useState([]);
 
     useEffect(() => {
 
-        getAllRoles()
-        .then((data) => {setRoles(data);})
-        .catch((error) => {console.log("Error al obtener los roles", error)})
+        getAllCurtains()
+        .then((data) => {setCurtains(data);})
+        .catch((error) => {console.log("Error al obtener las cortinas", error)})
     }, []);
 
 
@@ -81,8 +81,8 @@ export const RolesTable = () => {
 //   };
 
   const headers = [
-    {id: 'roleID', label: 'ID de Rol'},
-    {id: 'accountType', label: 'Tipo de Rol'},
+    {id: 'curtainID', label: 'ID de Cortina'},
+    {id: 'curtainType', label: 'Tipo de Cortina'},
     // { id: 'acciones', label: 'Acciones' }
   ];
 
@@ -102,7 +102,7 @@ export const RolesTable = () => {
     return 0;
   };
 
-  const sortedRoles = [...roles].sort(compareValues);
+  const sortedCurtains = [...curtains].sort(compareValues);
 
   
 
@@ -125,10 +125,10 @@ export const RolesTable = () => {
           </tr>
         </thead>
         <TableBody>
-          {sortedRoles.map((rol) => (
-            <TableRow key={rol.roleID}>
-              <TableCell>{rol.roleID}</TableCell>
-              <TableCell>{rol.accountType}</TableCell> 
+          {sortedCurtains.map((curtain) => (
+            <TableRow key={curtain.curtainID}>
+              <TableCell>{curtain.curtainID}</TableCell>
+              <TableCell>{curtain.curtainType}</TableCell> 
               {/* <TableCell>
                 <IconButton onClick={() => handleModalDeleteUserOpen(usuario.userID)}>
                   <DeleteIcon/>

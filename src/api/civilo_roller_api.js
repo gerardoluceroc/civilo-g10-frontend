@@ -4,6 +4,8 @@ const URL_CIVILO = "http://localhost:8080"
 
 const RUTA_ASIGNACIONES_VENDEDOR = "/requests/sellerRequest" // +`${ID DEL VENDEDOR}`
 const RUTA_COBERTURAS = "/coverages"
+const RUTA_CORTINAS = "/curtains"
+const RUTA_COVERAGES = "/coverages"
 const RUTA_DELETE_USERS = "/users"
 const RUTA_GET_USERS = "/users"
 const RUTA_HOME = "/"
@@ -98,6 +100,22 @@ export const getAllRoles = async () => {
   const respuesta = await fetch(`${URL_CIVILO}${RUTA_ROLES}`);
   const roles = await respuesta.json();
   return roles;
+
+}
+
+//Funcion para obtener las cortinas disponibles en la pagina
+export const getAllCurtains = async () => {
+  const respuesta = await fetch(`${URL_CIVILO}${RUTA_CORTINAS}`);
+  const cortinas = await respuesta.json();
+  return cortinas;
+
+}
+
+//Funcion para obtener las comunas de cobertura disponibles en la pagina
+export const getAllCoverages = async () => {
+  const respuesta = await fetch(`${URL_CIVILO}${RUTA_COVERAGES}`);
+  const cortinas = await respuesta.json();
+  return cortinas;
 
 }
 

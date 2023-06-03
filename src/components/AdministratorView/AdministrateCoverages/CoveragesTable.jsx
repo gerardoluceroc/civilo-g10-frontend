@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { getAllRoles } from '../../../api/civilo_roller_api';
+import { getAllCoverages, getAllCurtains } from '../../../api/civilo_roller_api';
 
 
 
@@ -37,15 +37,15 @@ const SortIcon = styled.span`
   margin-left: 5px;
 `;
 
-export const RolesTable = () => {
+export const CoveragesTable = () => {
 
-    const [roles, setRoles] = useState([]);
+    const [coverages, setCoverages] = useState([]);
 
     useEffect(() => {
 
-        getAllRoles()
-        .then((data) => {setRoles(data);})
-        .catch((error) => {console.log("Error al obtener los roles", error)})
+        getAllCoverages()
+        .then((data) => {setCoverages(data);})
+        .catch((error) => {console.log("Error al obtener las cortinas", error)})
     }, []);
 
 
@@ -81,8 +81,8 @@ export const RolesTable = () => {
 //   };
 
   const headers = [
-    {id: 'roleID', label: 'ID de Rol'},
-    {id: 'accountType', label: 'Tipo de Rol'},
+    {id: 'coverageID', label: 'ID de Comuna'},
+    {id: 'commune', label: 'Nombre de Comuna'},
     // { id: 'acciones', label: 'Acciones' }
   ];
 
@@ -102,7 +102,7 @@ export const RolesTable = () => {
     return 0;
   };
 
-  const sortedRoles = [...roles].sort(compareValues);
+  const sortedCoverages = [...coverages].sort(compareValues);
 
   
 
@@ -125,10 +125,10 @@ export const RolesTable = () => {
           </tr>
         </thead>
         <TableBody>
-          {sortedRoles.map((rol) => (
-            <TableRow key={rol.roleID}>
-              <TableCell>{rol.roleID}</TableCell>
-              <TableCell>{rol.accountType}</TableCell> 
+          {sortedCoverages.map((coverage) => (
+            <TableRow key={coverage.coverageID}>
+              <TableCell>{coverage.coverageID}</TableCell>
+              <TableCell>{coverage.commune}</TableCell> 
               {/* <TableCell>
                 <IconButton onClick={() => handleModalDeleteUserOpen(usuario.userID)}>
                   <DeleteIcon/>

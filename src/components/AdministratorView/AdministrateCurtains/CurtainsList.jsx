@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-
-import { getAllRoles } from '../../../api/civilo_roller_api';
-import { RolesTable } from './RolesTable';
-
+import { CurtainsTable } from './CurtainsTable';
 
 
 
@@ -27,16 +24,16 @@ const Container = styled.div`
 `;
 
 
-const RolesList = () => {
+const CurtainsList = () => {
 
 
   return (
     <Container>
-        <Titulo>Roles Disponibles</Titulo>
-        <RolesTable/>
+        <Titulo>Cortinas Registradas</Titulo>
+        <CurtainsTable/>
     </Container>
     
   );
 }
 
-export default RolesList;
+export default CurtainsList;

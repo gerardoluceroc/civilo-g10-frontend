@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-
-import { getAllRoles } from '../../../api/civilo_roller_api';
-import { RolesTable } from './RolesTable';
-
+import { CurtainsTable } from '../AdministrateCurtains/CurtainsTable';
+import { CoveragesTable } from './CoveragesTable';
 
 
 
@@ -27,16 +25,16 @@ const Container = styled.div`
 `;
 
 
-const RolesList = () => {
+const CoveragesList = () => {
 
 
   return (
     <Container>
-        <Titulo>Roles Disponibles</Titulo>
-        <RolesTable/>
+        <Titulo>Comunas de Cobertura</Titulo>
+        <CoveragesTable/>
     </Container>
     
   );
 }
 
-export default RolesList;
+export default CoveragesList;

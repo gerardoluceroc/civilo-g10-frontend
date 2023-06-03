@@ -1,13 +1,13 @@
 import React from "react";
-import NavigationBarLogged from "../components/Papelera/NavigationBarLogged";
 import Footer from '../components/Footer'
-import ReadCoverages from "../components/AdministratorView/AdministrateCoverages/ReadCoverages";
+import NavbarResponsive from "../components/NavbarResponsive";
+import CoveragesList from "../components/AdministratorView/AdministrateCoverages/CoveragesList";
 
 const AdminReadCoveragesPage = () => {
   return (
     <>
-      <NavigationBarLogged />
-      <ReadCoverages />
+      <NavbarResponsive/>
+      <CoveragesList />
       <Footer />
     </>
   )

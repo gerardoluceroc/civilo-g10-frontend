@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
+const PAGE_COVERAGES = "/admin/readCoverages";
 const PAGE_READ_USERS = "/admin/readUsers";
 const PAGE_READ_ROLES = "/admin/readRoles";
 const PAGE_READ_CURTAINS = "/admin/readCurtains";
@@ -248,14 +249,14 @@ const AdminHome = () => {
 
               <InformationItem>
                 <Titulo>Cortinas Registradas</Titulo>
-                <Link to={"/"} style={{ textDecoration: 'none' }}>
+                <Link to={PAGE_READ_CURTAINS} style={{ textDecoration: 'none' }}>
                   <Boton>Ver Detalles</Boton>
                 </Link>
               </InformationItem>
 
               <InformationItem>
                 <Titulo>Comunas de Cobertura</Titulo>
-                <Link to={"/"} style={{ textDecoration: 'none' }}>
+                <Link to={PAGE_COVERAGES} style={{ textDecoration: 'none' }}>
                   <Boton>Ver Detalles</Boton>
                 </Link>
               </InformationItem>

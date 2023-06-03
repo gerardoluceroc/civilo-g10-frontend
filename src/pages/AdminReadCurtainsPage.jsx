@@ -1,13 +1,14 @@
 import React from "react";
-import NavigationBarLogged from "../components/Papelera/NavigationBarLogged";
+
 import Footer from '../components/Footer'
-import ReadCurtains from "../components/AdministratorView/AdministrateCurtains/ReadCurtains";
+import NavbarResponsive from "../components/NavbarResponsive";
+import CurtainsList from "../components/AdministratorView/AdministrateCurtains/CurtainsList";
 
 const AdminReadCurtainsPage = () => {
   return (
     <>
-      <NavigationBarLogged />
-      <ReadCurtains />
+      <NavbarResponsive/>
+      <CurtainsList />
       <Footer />
     </>
   )
