@@ -5,9 +5,8 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start; /* Modificado: Comenzar desde la parte superior */
+  justify-content: center;
   height: 100vh;
-  overflow-y: scroll; /* Modificado: Agregado desplazamiento vertical */
 `;
 
 const Title = styled.h1`
@@ -16,7 +15,6 @@ const Title = styled.h1`
 
 const Subtitle = styled.h2`
   font-size: 18px;
-  margin-top: 20px;
 `;
 
 const Table = styled.table`
@@ -36,31 +34,13 @@ const TableCell = styled.td`
   border: 1px solid black;
 `;
 
-const ButtonContainer = styled.div`
-  margin-top: 20px;
-`;
-
-const Button = styled.button`
-  margin-right: 10px;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  color: white;
-  cursor: pointer;
-`;
-
-const RedButton = styled(Button)`
-  background-color: #ff7575;
-`;
-
-const GreenButton = styled(Button)`
-  background-color: #75ff75;
-`;
-
 const SellerQuote = () => {
     const [iva, setIva] = useState(0);
     const [curtains, setCurtains] = useState([]);
+    const [quantities, setQuantities] = useState([]);
+    const [values, setValues] = useState([]);
+    const [widths, setWidths] = useState([]);
+    const [heights, setHeights] = useState([]);
 
     useEffect(() => {
         const fetchIva = async () => {
@@ -87,8 +67,32 @@ const SellerQuote = () => {
         fetchCurtains();
     }, []);
 
-    const handleRegresarClick = () => {
-        window.location.href = 'http://localhost:3000/';
+    const handleQuantityChange = (index, value) => {
+        const parsedValue = parseInt(value);
+        const updatedQuantities = [...quantities];
+        updatedQuantities[index] = parsedValue >= 0 ? parsedValue : 0;
+        setQuantities(updatedQuantities);
+    };
+
+    const handleValueChange = (index, value) => {
+        const parsedValue = parseInt(value);
+        const updatedValues = [...values];
+        updatedValues[index] = parsedValue >= 0 ? parsedValue : 0;
+        setValues(updatedValues);
+    };
+
+    const handleWidthChange = (index, value) => {
+        const parsedValue = parseFloat(value);
+        const updatedWidths = [...widths];
+        updatedWidths[index] = parsedValue >= 0 ? parsedValue : 0;
+        setWidths(updatedWidths);
+    };
+
+    const handleHeightChange = (index, value) => {
+        const parsedValue = parseFloat(value);
+        const updatedHeights = [...heights];
+        updatedHeights[index] = parsedValue >= 1 ? parsedValue : 1;
+        setHeights(updatedHeights);
     };
 
     return (
@@ -98,11 +102,11 @@ const SellerQuote = () => {
             <Table>
                 <tbody>
                     <TableRow>
-                        <TableHeader>Costo (CLP)</TableHeader>
-                        <TableHeader>Valor venta (CLP)</TableHeader>
-                        <TableHeader>Descuento (CLP)</TableHeader>
-                        <TableHeader>IVA (CLP)</TableHeader>
-                        <TableHeader>Total (CLP)</TableHeader>
+                        <TableHeader>Costo</TableHeader>
+                        <TableHeader>Valor venta</TableHeader>
+                        <TableHeader>Descuento</TableHeader>
+                        <TableHeader>IVA</TableHeader>
+                        <TableHeader>Total</TableHeader>
                     </TableRow>
                     <TableRow>
                         <TableCell>-</TableCell>
@@ -118,84 +122,68 @@ const SellerQuote = () => {
             <Table>
                 <tbody>
                     <TableRow>
-                        <TableHeader colSpan="2">Cortinas roller</TableHeader>
+                        <TableHeader rowSpan="3">Cortinas roller</TableHeader>
+                        <TableHeader>Tipo de cortina</TableHeader>
+                        {curtains.map((curtain) => (
+                            <TableHeader key={curtain.curtainID}>{curtain.curtainType}</TableHeader>
+                        ))}
                     </TableRow>
                     <TableRow>
-                        <TableCell>Tipo de cortina</TableCell>
-                        <TableCell>
-                            {curtains.map((curtain) => (
-                                <span key={curtain.curtainID}>{curtain.curtainType}</span>
-                            ))}
-                        </TableCell>
+                        <TableHeader>Cantidad por cortina</TableHeader>
+                        {curtains.map((curtain, index) => (
+                            <TableCell key={curtain.curtainID}>
+                                <input
+                                    type="number"
+                                    value={quantities[index] || '0'}
+                                    onChange={(e) => handleQuantityChange(index, e.target.value)}
+                                />
+                            </TableCell>
+                        ))}
                     </TableRow>
                     <TableRow>
-                        <TableCell>Cantidad de cortinas</TableCell>
-                        <TableCell>-</TableCell>
+                        <TableHeader>Valor por cortina (CLP)</TableHeader>
+                        {curtains.map((curtain, index) => (
+                            <TableCell key={curtain.curtainID}>
+                                <input
+                                    type="number"
+                                    value={values[index] || '0'}
+                                    onChange={(e) => handleValueChange(index, e.target.value)}
+                                />
+                            </TableCell>
+                        ))}
                     </TableRow>
                     <TableRow>
-                        <TableCell>Valor por cortina</TableCell>
-                        <TableCell>-</TableCell>
+                        <TableHeader rowSpan="2">Telas</TableHeader>
+                        <TableHeader>Ancho (metros)</TableHeader>
+                        {curtains.map((curtain, index) => (
+                            <TableCell key={curtain.curtainID}>
+                                <input
+                                    type="number"
+                                    step="0.10"
+                                    min="1"
+                                    value={widths[index] || '1.00'}
+                                    onChange={(e) => handleWidthChange(index, e.target.value)}
+                                />
+                            </TableCell>
+                        ))}
                     </TableRow>
                     <TableRow>
-                        <TableHeader colSpan="2">Telas</TableHeader>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell>Ancho (metros)</TableCell>
-                        <TableCell>-</TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell>Alto (metros)</TableCell>
-                        <TableCell>-</TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableHeader colSpan="2">Materiales</TableHeader>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell>Valor por Bracket (CLP)</TableCell>
-                        <TableCell>-</TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell>Valor por Tapa (CLP)</TableCell>
-                        <TableCell>-</TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell>Valor por Contrapeso (CLP)</TableCell>
-                        <TableCell>-</TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell>Valor por Zuncho (CLP)</TableCell>
-                        <TableCell>-</TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell>Valor por Cadena (CLP)</TableCell>
-                        <TableCell>-</TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell>Tipo de Tubo</TableCell>
-                        <TableCell>-</TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell>Valor por Tubo (CLP)</TableCell>
-                        <TableCell>-</TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableHeader colSpan="2">Mano de obra</TableHeader>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell>Armado (CLP)</TableCell>
-                        <TableCell>-</TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell>Instalación (CLP)</TableCell>
-                        <TableCell>-</TableCell>
+                        <TableHeader>Alto (metros)</TableHeader>
+                        {curtains.map((curtain, index) => (
+                            <TableCell key={curtain.curtainID}>
+                                <input
+                                    type="number"
+                                    step="0.10"
+                                    min="1"
+                                    value={heights[index] || '1.00'}
+                                    onChange={(e) => handleHeightChange(index, e.target.value)}
+                                />
+                            </TableCell>
+                        ))}
                     </TableRow>
                 </tbody>
             </Table>
 
-            <ButtonContainer>
-                <RedButton onClick={handleRegresarClick}>Regresar</RedButton>
-                <GreenButton>Cotizar</GreenButton>
-            </ButtonContainer>
         </Container>
     );
 };
