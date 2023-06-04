@@ -24,6 +24,7 @@ import AdminReadStatusPage from "./pages/AdminReadStatusPage";
 import AdminReadUsersPage from "./pages/Papelera/AdminReadUsersPage";
 import UpdateClientInfoPage from "./pages/UpdateClientInfoPage";
 import { UsersListPage } from "./pages/UsersListPage";
+import SellerQuotePage from "./pages/SellerQuotePage";
 
 
 function App() {
@@ -55,6 +56,7 @@ function App() {
       <Route path="/seller/assignnedRequest" element={<SellerMyRequestsPage />} />
       <Route path="/loginSeller" element={<SellerLoginFormPage/>} />
       <Route path="/seller" element={<SellerHomePage />} />
+      <Route path="/seller/quote" element={<SellerQuotePage />} />
 
       <Route path="/request" element={<ClientRequestFormPage />} />
       {/*<Route path="/client" element={<ClientHomePage/>} />*/}
