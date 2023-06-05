@@ -37,10 +37,7 @@ const TableCell = styled.td`
 const SellerQuote = () => {
     const [iva, setIva] = useState(0);
     const [curtains, setCurtains] = useState([]);
-    const [quantities, setQuantities] = useState([]);
-    const [values, setValues] = useState([]);
-    const [widths, setWidths] = useState([]);
-    const [heights, setHeights] = useState([]);
+    const [quoteData, setQuoteData] = useState([]);
 
     useEffect(() => {
         const fetchIva = async () => {
@@ -58,6 +55,7 @@ const SellerQuote = () => {
                 const response = await fetch('http://localhost:8080/curtains');
                 const data = await response.json();
                 setCurtains(data);
+                setQuoteData(createInitialQuoteData(data.length));
             } catch (error) {
                 console.log(error);
             }
@@ -67,33 +65,68 @@ const SellerQuote = () => {
         fetchCurtains();
     }, []);
 
+    const createInitialQuoteData = (length) => {
+        const initialData = [];
+        for (let i = 0; i < length; i++) {
+            initialData.push(['', 0, 0, 0, 0]);
+        }
+        return initialData;
+    };
+
     const handleQuantityChange = (index, value) => {
         const parsedValue = parseInt(value);
-        const updatedQuantities = [...quantities];
-        updatedQuantities[index] = parsedValue >= 0 ? parsedValue : 0;
-        setQuantities(updatedQuantities);
+        const updatedData = [...quoteData];
+        updatedData[index][1] = parsedValue >= 0 ? parsedValue : 0;
+        setQuoteData(updatedData);
     };
 
     const handleValueChange = (index, value) => {
         const parsedValue = parseInt(value);
-        const updatedValues = [...values];
-        updatedValues[index] = parsedValue >= 0 ? parsedValue : 0;
-        setValues(updatedValues);
+        const updatedData = [...quoteData];
+        updatedData[index][2] = parsedValue >= 0 ? parsedValue : 0;
+        setQuoteData(updatedData);
     };
 
     const handleWidthChange = (index, value) => {
         const parsedValue = parseFloat(value);
-        const updatedWidths = [...widths];
-        updatedWidths[index] = parsedValue >= 0 ? parsedValue : 0;
-        setWidths(updatedWidths);
+        const updatedData = [...quoteData];
+        updatedData[index][3] = parsedValue >= 0 ? parsedValue : 0;
+        setQuoteData(updatedData);
     };
 
     const handleHeightChange = (index, value) => {
         const parsedValue = parseFloat(value);
-        const updatedHeights = [...heights];
-        updatedHeights[index] = parsedValue >= 1 ? parsedValue : 1;
-        setHeights(updatedHeights);
+        const updatedData = [...quoteData];
+        updatedData[index][4] = parsedValue >= 1 ? parsedValue : 1;
+        setQuoteData(updatedData);
     };
+
+    useEffect(() => {
+        // Guardar los datos por columna
+        const saveData = () => {
+            // Verificar si se han ingresado datos suficientes en todas las columnas
+            if (quoteData.length === curtains.length) {
+                const data = [];
+
+                // Crear un objeto por cada columna y guardar los valores
+                for (let i = 0; i < quoteData.length; i++) {
+                    const rowData = {
+                        curtainType: curtains[i].curtainType,
+                        quantity: quoteData[i][1],
+                        value: quoteData[i][2],
+                        width: quoteData[i][3],
+                        height: quoteData[i][4],
+                    };
+                    data.push(rowData);
+                }
+
+                // Aquí puedes enviar los datos a la API o realizar cualquier otra acción necesaria
+                console.log(data);
+            }
+        };
+
+        saveData();
+    }, [quoteData, curtains]);
 
     return (
         <Container>
@@ -117,7 +150,6 @@ const SellerQuote = () => {
                     </TableRow>
                 </tbody>
             </Table>
-
             <Subtitle>Ingreso de costos y variables</Subtitle>
             <Table>
                 <tbody>
@@ -134,7 +166,7 @@ const SellerQuote = () => {
                             <TableCell key={curtain.curtainID}>
                                 <input
                                     type="number"
-                                    value={quantities[index] || '0'}
+                                    value={quoteData[index][1]}
                                     onChange={(e) => handleQuantityChange(index, e.target.value)}
                                 />
                             </TableCell>
@@ -146,7 +178,7 @@ const SellerQuote = () => {
                             <TableCell key={curtain.curtainID}>
                                 <input
                                     type="number"
-                                    value={values[index] || '0'}
+                                    value={quoteData[index][2]}
                                     onChange={(e) => handleValueChange(index, e.target.value)}
                                 />
                             </TableCell>
@@ -161,7 +193,7 @@ const SellerQuote = () => {
                                     type="number"
                                     step="0.10"
                                     min="1"
-                                    value={widths[index] || '1.00'}
+                                    value={quoteData[index][3]}
                                     onChange={(e) => handleWidthChange(index, e.target.value)}
                                 />
                             </TableCell>
@@ -175,7 +207,7 @@ const SellerQuote = () => {
                                     type="number"
                                     step="0.10"
                                     min="1"
-                                    value={heights[index] || '1.00'}
+                                    value={quoteData[index][4]}
                                     onChange={(e) => handleHeightChange(index, e.target.value)}
                                 />
                             </TableCell>
@@ -183,7 +215,6 @@ const SellerQuote = () => {
                     </TableRow>
                 </tbody>
             </Table>
-
         </Container>
     );
 };
