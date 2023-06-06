@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { RUTA_COBERTURAS, RUTA_UPDATE_COBERTURAS_VENDEDOR, URL_CIVILO } from "../../api/civilo_roller_api";
 
 const Container = styled.div`
   display: flex;
@@ -10,6 +11,11 @@ const Container = styled.div`
 const Table = styled.table`
   border-collapse: collapse;
   margin-top: 30px;
+`;
+
+const Title = styled.h1`
+    font-size: x-large;
+    margin-top: 3%;
 `;
 
 const TableHeader = styled.th`
@@ -38,15 +44,51 @@ const Input = styled.input`
 `;
 
 const Button = styled.button`
-  margin-top: 20px;
-  padding: 10px;
-  width: 200px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-`;
+    background-color: #1010b3;
+    border-radius: 5px;
+    border-color: #1010b3;
+    color: white;
+    font-size: xx-large;
+    margin-top: 1%;
+    margin-bottom: 2%;
+    width: 15%;
+    height: 2.3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    //Animación para cuando el cursor pase por encima del botón.
+    &:hover {
+        box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.25); /* Agrega una sombra */
+        transform: scale(0.95); /* Reduzca ligeramente el tamaño */
+        }
+
+    /* sombra del botón */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s ease-in-out;
+    
+    /* estilo cuando se presiona el botón */
+    &:active {
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
+    }
+
+
+    @media (max-width: 950px) {
+        width: 30%;
+        
+    }
+
+    @media (max-width: 540px) {
+        width: 50%;
+
+        
+    }
+
+    @media (max-width: 312px) {
+        width: 80%;
+
+        
+    }
+    `;
 
 const RUTA_PAGE_LOGIN = "/login";
 
@@ -56,13 +98,13 @@ const SellerInformation = () => {
     const [companyName, setCompanyName] = useState("");
 
     useEffect(() => {
-        fetch("http://localhost:8080/coverages")
+        fetch(`${URL_CIVILO}${RUTA_COBERTURAS}`)
             .then((response) => response.json())
             .then((data) => {
                 setCoverages(data);
             })
             .catch((error) => {
-                console.error("Error:", error);
+                console.error("Error al obtener las coberturas:", error);
             });
     }, []);
 
@@ -87,7 +129,7 @@ const SellerInformation = () => {
         };
         console.log(data);
 
-        fetch("http://localhost:8080/sellers/sellerInformation", {
+        fetch(`${URL_CIVILO}${RUTA_UPDATE_COBERTURAS_VENDEDOR}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -103,18 +145,20 @@ const SellerInformation = () => {
                 }
             })
             .catch((error) => {
-                console.error("Error:", error);
+                console.error("Error al enviar la petición de actualización:", error);
             });
     };
 
     return (
         <Container>
+            <Title>Indique el nombre de su empresa</Title>
             <Input
                 type="text"
                 placeholder="Nombre empresa"
                 value={companyName}
                 onChange={handleCompanyNameChange}
             />
+            <Title>Indique las comunas a las cuales le realiza cobertura</Title>
             <Table>
                 <thead>
                     <tr>
