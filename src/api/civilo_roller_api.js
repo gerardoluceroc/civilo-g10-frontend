@@ -4,9 +4,10 @@ export const URL_CIVILO = "http://localhost:8080"
 
 const RUTA_ASIGNACIONES_VENDEDOR = "/requests/sellerRequest" // +`${ID DEL VENDEDOR}`
 export const RUTA_COBERTURAS = "/coverages"
-const RUTA_CORTINAS = "/curtains"
+export const RUTA_CORTINAS = "/curtains"
 const RUTA_COVERAGES = "/coverages"
 const RUTA_DELETE_USERS = "/users"
+export const RUTA_GET_IVA = "/iva";
 const RUTA_GET_USERS = "/users"
 const RUTA_GET_REQUESTS = "/requests"
 const RUTA_HOME = "/"

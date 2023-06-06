@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { RUTA_CORTINAS, RUTA_GET_IVA, URL_CIVILO, getAllCurtains } from '../../api/civilo_roller_api';
 
 const Container = styled.div`
   display: flex;
@@ -42,22 +43,22 @@ const SellerQuote = () => {
     useEffect(() => {
         const fetchIva = async () => {
             try {
-                const response = await fetch('http://localhost:8080/iva');
+                const response = await fetch(`${URL_CIVILO}${RUTA_GET_IVA}`);
                 const data = await response.json();
                 setIva(data);
             } catch (error) {
-                console.log(error);
+                console.log("Error al obtener IVA:", error);
             }
         };
 
         const fetchCurtains = async () => {
             try {
-                const response = await fetch('http://localhost:8080/curtains');
+                const response = await fetch(`${URL_CIVILO}${RUTA_CORTINAS}`);
                 const data = await response.json();
                 setCurtains(data);
                 setQuoteData(createInitialQuoteData(data.length));
             } catch (error) {
-                console.log(error);
+                console.log("Error al obtener las cortinas: ",error);
             }
         };
 
@@ -72,6 +73,7 @@ const SellerQuote = () => {
         }
         return initialData;
     };
+
 
     const handleQuantityChange = (index, value) => {
         const parsedValue = parseInt(value);
