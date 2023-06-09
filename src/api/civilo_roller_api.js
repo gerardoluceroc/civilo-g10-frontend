@@ -1,6 +1,7 @@
 //Archivo donde se definirán todas las conexiones a la api de civilo_roller
 
 export const URL_CIVILO = "http://localhost:8080"
+export const URL_HOME = "http://localhost:3000"
 
 const RUTA_ASIGNACIONES_VENDEDOR = "/requests/sellerRequest" // +`${ID DEL VENDEDOR}`
 export const RUTA_COBERTURAS = "/coverages"
@@ -20,6 +21,7 @@ const RUTA_STATUS = "/status";
 export const RUTA_UPDATE_COBERTURAS_VENDEDOR = "/sellers/sellerInformation" //PETICION TIPO POST
 const RUTA_VENDEDORES = "/sellers"
 export const RUTA_TUBOS = "/pipes"
+export const RUTA_COTIZACIONES = "/quotes"
 
 //Funcion para pedirle al servidor que elimine un usuario especifico
 export const deleteUser = async (userID) => {

@@ -1,45 +1,82 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { RUTA_CORTINAS, RUTA_GET_IVA, URL_CIVILO, RUTA_TUBOS } from '../../api/civilo_roller_api';
+import { RUTA_CORTINAS, RUTA_GET_IVA, URL_CIVILO, RUTA_TUBOS, RUTA_COTIZACIONES, URL_HOME } from '../../api/civilo_roller_api';
 
 const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-`;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    `;
 
 const Title = styled.h1`
-  font-size: 24px;
-`;
+    font-size: 24px;
+    `;
 
 const Subtitle = styled.h2`
-  font-size: 18px;
-`;
+    font-size: 18px;
+    `;
 
 const Table = styled.table`
-  border-collapse: collapse;
-  margin-top: 20px;
-`;
+    border-collapse: collapse;
+    margin-top: 20px;
+    `;
 
 const TableRow = styled.tr``;
 
 const TableHeader = styled.th`
-  padding: 8px;
-  border: 1px solid black;
-`;
+    padding: 8px;
+    border: 1px solid black;
+    `;
 
 const TableCell = styled.td`
-  padding: 8px;
-  border: 1px solid black;
+    padding: 8px;
+    border: 1px solid black;
+    `;
+
+const Button = styled.button`
+    margin: 0 10px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    `;
+
+const ButtonContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    `;
+
+const RedButton = styled(Button)`
+    background-color: #ff5a5f;
+    `;
+
+const GreenButton = styled(Button)`
+    background-color: #5fa463;
+    `;
+
+const DescriptionInput = styled.textarea`
+    width: 800px; /* Ajusta el ancho según tus necesidades */
+    height: 400px; /* Ajusta el alto según tus necesidades */
+    font-size: 18px; /* Ajusta el tamaño de la letra según tus necesidades */
 `;
+
+
+
+
 
 const SellerQuote = () => {
     const [iva, setIva] = useState(0);
     const [curtains, setCurtains] = useState([]);
     const [quoteData, setQuoteData] = useState([]);
     const [pipes, setPipes] = useState([]);
+    const [description, setDescription] = useState('');
+    const [discount, setDiscount] = useState(0); // Nuevo estado para el descuento
 
     useEffect(() => {
         const fetchIva = async () => {
@@ -83,11 +120,19 @@ const SellerQuote = () => {
     const createInitialQuoteData = (length) => {
         const initialData = [];
         for (let i = 0; i < length; i++) {
-            initialData.push(['', 0, 0, 0, 0]);
+            initialData.push([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]);
         }
         return initialData;
     };
 
+    const handleDiscountChange = (e) => {
+        const parsedValue = parseFloat(e.target.value);
+        setDiscount(parsedValue >= 0 ? parsedValue : 0); // Actualizar el descuento
+    };
+
+    const handleDescriptionChange = (e) => {
+        setDescription(e.target.value);
+    };
 
     const handleQuantityChange = (index, value) => {
         const parsedValue = parseInt(value);
@@ -161,9 +206,10 @@ const SellerQuote = () => {
 
     const handlePipeTypeChange = (index, value) => {
         const updatedData = [...quoteData];
-        updatedData[index][10] = value;
+        updatedData[index][10] = value ? JSON.parse(value) : null;
         setQuoteData(updatedData);
     };
+
 
     const handleAssemblyChange = (index, value) => {
         const updatedData = [...quoteData];
@@ -187,21 +233,36 @@ const SellerQuote = () => {
                 // Crear un objeto por cada columna y guardar los valores
                 for (let i = 0; i < quoteData.length; i++) {
                     const rowData = {
-                        curtainType: curtains[i].curtainType,
-                        quantity: quoteData[i][1],
-                        value: quoteData[i][2],
-                        width: quoteData[i][3],
-                        height: quoteData[i][4],
-                        bracket: quoteData[i][5],
-                        cap: quoteData[i][6],
-                        counterWeight: quoteData[i][7],
-                        band: quoteData[i][8],
-                        chain: quoteData[i][9],
-                        pipeType: quoteData[i][10],
-                        pipe: quoteData[i][11],
-                        assembly: quoteData[i][12],
-                        installation: quoteData[i][13],
+                        //curtainType: curtains[i].curtainType,
+                        amount: quoteData[i][1], // Cantidad
+                        valueSquareMeters: quoteData[i][2], // Valor por cortina
+                        width: quoteData[i][3], // Ancho
+                        height: quoteData[i][4], // Alto
+                        bracketValue: quoteData[i][5], // Valor por bracket
+                        capValue: quoteData[i][6], // Valor por bracket
+                        counterweightValue: quoteData[i][7], // Valor por contrapeso
+                        bandValue: quoteData[i][8], // Valor por zuncho
+                        chainValue: quoteData[i][9], // Valor por cadena
+                        pipe: quoteData[i][10],
+                        pipeValue: quoteData[i][11], // Valor por tubo
+                        assemblyValue: quoteData[i][12], // Valor por armado
+                        installationValue: quoteData[i][13], // Valor por instalación
+                        description: description, // Descripción
+                        totalSquareMeters: null, // Por calcular
+                        totalFabrics: null, // Por calcular
+                        totalMaterials: null, // Por calcular
+                        totalLabor: null, // Por calcular
+                        productionCost: null, // Por calcular
+                        saleValue: null, // Por calcular
+                        percentageDiscount: discount, // Por calcular
+                        iva: iva, // Por asignar
+                        total: null, // Por calcular
+                        date: null, // Por asignar
+                        seller: JSON.parse(sessionStorage.getItem('user')), // Por determinar
+                        curtain: curtains[i], // Por determinar
+                        currentIVA: null, // Por determinar
                     };
+                    console.log(rowData.pipe)
                     data.push(rowData);
                 }
                 console.log(data);
@@ -209,7 +270,64 @@ const SellerQuote = () => {
         };
 
         saveData();
-    }, [quoteData, curtains]);
+    }, [quoteData, curtains, discount]);
+
+    const handleQuote = async () => {
+        try {
+            for (let i = 0; i < quoteData.length; i++) {
+                const data = quoteData[i];
+                const curtain = curtains[i];
+                const payload = {
+                    // Propiedades necesarias del objeto
+                    amount: data[1],
+                    valueSquareMeters: data[2],
+                    width: data[3],
+                    height: data[4],
+                    bracketValue: data[5],
+                    capValue: data[6],
+                    counterweightValue: data[7],
+                    bandValue: data[8],
+                    chainValue: data[9],
+                    pipe: data[10],
+                    pipeValue: data[11],
+                    assemblyValue: data[12],
+                    installationValue: data[13],
+                    description: description,
+                    totalSquareMeters: null,
+                    totalFabrics: null,
+                    totalMaterials: null,
+                    totalLabor: null,
+                    productionCost: null,
+                    saleValue: null,
+                    percentageDiscount: discount,
+                    iva: iva,
+                    total: null,
+                    date: null,
+                    seller: JSON.parse(sessionStorage.getItem('user')),
+                    curtain: curtain,
+                    currentIVA: null,
+                };
+
+                const response = await fetch(`${URL_CIVILO}${RUTA_COTIZACIONES}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(payload),
+                });
+                console.log(payload)
+
+                if (response.ok) {
+                    console.log('Cotización enviada');
+                } else {
+                    console.error('Error al enviar la cotización');
+                }
+            }
+        } catch (error) {
+            console.error('Error al enviar la cotización:', error);
+        }
+    };
+
 
     return (
         <Container>
@@ -227,12 +345,26 @@ const SellerQuote = () => {
                     <TableRow>
                         <TableCell>-</TableCell>
                         <TableCell>-</TableCell>
-                        <TableCell>-</TableCell>
+                        <TableCell>
+                            <input
+                                type="number"
+                                step="0.1"
+                                min="0"
+                                value={discount} // Usar el estado del descuento
+                                onChange={handleDiscountChange} // Manejar cambios en el descuento
+                            />
+                        </TableCell>
                         <TableCell>{iva}%</TableCell>
                         <TableCell>-</TableCell>
                     </TableRow>
                 </tbody>
             </Table>
+            <Subtitle>Descripción</Subtitle>
+            <DescriptionInput
+                type="text"
+                value={description}
+                onChange={handleDescriptionChange}
+            />
             <Subtitle>Ingreso de costos y variables</Subtitle>
             <Table>
                 <tbody>
@@ -362,12 +494,12 @@ const SellerQuote = () => {
                         {curtains.map((curtain, index) => (
                             <TableCell key={curtain.curtainID}>
                                 <select
-                                    value={quoteData[index][10]}
+                                    value={quoteData[index][10] ? JSON.stringify(quoteData[index][10]) : ""}
                                     onChange={(e) => handlePipeTypeChange(index, e.target.value)}
                                 >
                                     <option value="">Seleccionar</option> {/* Opción por defecto */}
                                     {pipes.map((pipe) => (
-                                        <option key={pipe.pipeID} value={pipe.pipeName}>
+                                        <option key={pipe.pipeID} value={JSON.stringify({ pipeID: pipe.pipeID, pipeName: pipe.pipeName })}>
                                             {pipe.pipeName}
                                         </option>
                                     ))}
@@ -375,6 +507,7 @@ const SellerQuote = () => {
                             </TableCell>
                         ))}
                     </TableRow>
+
                     <TableRow>
                         <TableHeader>Valor por Tubo (CLP)</TableHeader>
                         {curtains.map((curtain, index) => (
@@ -414,6 +547,10 @@ const SellerQuote = () => {
                     </TableRow>
                 </tbody>
             </Table>
+            <ButtonContainer>
+                <RedButton onClick={() => window.location.href = `${URL_HOME}`}>Regresa</RedButton>
+                <GreenButton onClick={handleQuote}>Cotizar</GreenButton>
+            </ButtonContainer>
         </Container>
     );
 };

@@ -13,6 +13,7 @@ const SellerQuotePage = () => {
         <Div>
             <NavbarResponsive/>
             <Div>
+            <Div></Div>
             <SellerQuote />
             </Div>
             <Div></Div>
