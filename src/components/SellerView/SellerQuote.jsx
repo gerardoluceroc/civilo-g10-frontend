@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { RUTA_CORTINAS, RUTA_GET_IVA, URL_CIVILO, getAllCurtains } from '../../api/civilo_roller_api';
+import { RUTA_CORTINAS, RUTA_GET_IVA, URL_CIVILO, RUTA_TUBOS } from '../../api/civilo_roller_api';
 
 const Container = styled.div`
   display: flex;
@@ -39,6 +39,7 @@ const SellerQuote = () => {
     const [iva, setIva] = useState(0);
     const [curtains, setCurtains] = useState([]);
     const [quoteData, setQuoteData] = useState([]);
+    const [pipes, setPipes] = useState([]);
 
     useEffect(() => {
         const fetchIva = async () => {
@@ -58,12 +59,25 @@ const SellerQuote = () => {
                 setCurtains(data);
                 setQuoteData(createInitialQuoteData(data.length));
             } catch (error) {
-                console.log("Error al obtener las cortinas: ",error);
+                console.log("Error al obtener las cortinas: ", error);
             }
         };
 
+        const fetchPipes = async () => {
+            try {
+                const response = await fetch(`${URL_CIVILO}${RUTA_TUBOS}`);
+                const data = await response.json();
+                setPipes(data)
+                console.log(pipes)
+            } catch (error) {
+                console.log("Error al obtener las tuberías:", error);
+            }
+        };
+
+
         fetchIva();
         fetchCurtains();
+        fetchPipes();
     }, []);
 
     const createInitialQuoteData = (length) => {
@@ -103,6 +117,66 @@ const SellerQuote = () => {
         setQuoteData(updatedData);
     };
 
+    const handleBracketChange = (index, value) => {
+        const parsedValue = parseFloat(value);
+        const updatedData = [...quoteData];
+        updatedData[index][5] = parsedValue >= 1 ? parsedValue : 1;
+        setQuoteData(updatedData);
+    };
+
+    const handleCapChange = (index, value) => {
+        const parsedValue = parseFloat(value);
+        const updatedData = [...quoteData];
+        updatedData[index][6] = parsedValue >= 1 ? parsedValue : 1;
+        setQuoteData(updatedData);
+    };
+
+    const handleCounterWeightChange = (index, value) => {
+        const parsedValue = parseFloat(value);
+        const updatedData = [...quoteData];
+        updatedData[index][7] = parsedValue >= 1 ? parsedValue : 1;
+        setQuoteData(updatedData);
+    };
+
+    const handleBandChange = (index, value) => {
+        const parsedValue = parseFloat(value);
+        const updatedData = [...quoteData];
+        updatedData[index][8] = parsedValue >= 1 ? parsedValue : 1;
+        setQuoteData(updatedData);
+    };
+
+    const handleChainChange = (index, value) => {
+        const parsedValue = parseFloat(value);
+        const updatedData = [...quoteData];
+        updatedData[index][9] = parsedValue >= 1 ? parsedValue : 1;
+        setQuoteData(updatedData);
+    };
+
+    const handlePipeChange = (index, value) => {
+        const parsedValue = parseFloat(value);
+        const updatedData = [...quoteData];
+        updatedData[index][11] = parsedValue >= 1 ? parsedValue : 1;
+        setQuoteData(updatedData);
+    };
+
+    const handlePipeTypeChange = (index, value) => {
+        const updatedData = [...quoteData];
+        updatedData[index][10] = value;
+        setQuoteData(updatedData);
+    };
+
+    const handleAssemblyChange = (index, value) => {
+        const updatedData = [...quoteData];
+        updatedData[index][12] = value;
+        setQuoteData(updatedData);
+    };
+
+    const handleInstallationChange = (index, value) => {
+        const updatedData = [...quoteData];
+        updatedData[index][13] = value;
+        setQuoteData(updatedData);
+    };
+
     useEffect(() => {
         // Guardar los datos por columna
         const saveData = () => {
@@ -118,11 +192,18 @@ const SellerQuote = () => {
                         value: quoteData[i][2],
                         width: quoteData[i][3],
                         height: quoteData[i][4],
+                        bracket: quoteData[i][5],
+                        cap: quoteData[i][6],
+                        counterWeight: quoteData[i][7],
+                        band: quoteData[i][8],
+                        chain: quoteData[i][9],
+                        pipeType: quoteData[i][10],
+                        pipe: quoteData[i][11],
+                        assembly: quoteData[i][12],
+                        installation: quoteData[i][13],
                     };
                     data.push(rowData);
                 }
-
-                // Aquí puedes enviar los datos a la API o realizar cualquier otra acción necesaria
                 console.log(data);
             }
         };
@@ -211,6 +292,122 @@ const SellerQuote = () => {
                                     min="1"
                                     value={quoteData[index][4]}
                                     onChange={(e) => handleHeightChange(index, e.target.value)}
+                                />
+                            </TableCell>
+                        ))}
+                    </TableRow>
+                    <TableRow>
+                        <TableHeader rowSpan="7">Materiales</TableHeader>
+                        <TableHeader>Valor por Bracket (CLP)</TableHeader>
+                        {curtains.map((curtain, index) => (
+                            <TableCell key={curtain.curtainID}>
+                                <input
+                                    type="number"
+                                    value={quoteData[index][5]}
+                                    onChange={(e) => handleBracketChange(index, e.target.value)}
+                                />
+                            </TableCell>
+                        ))}
+                    </TableRow>
+                    <TableRow>
+                        <TableHeader>Valor por Tapa (CLP)</TableHeader>
+                        {curtains.map((curtain, index) => (
+                            <TableCell key={curtain.curtainID}>
+                                <input
+                                    type="number"
+                                    value={quoteData[index][6]}
+                                    onChange={(e) => handleCapChange(index, e.target.value)}
+                                />
+                            </TableCell>
+                        ))}
+                    </TableRow>
+                    <TableRow>
+                        <TableHeader>Valor por Contrapeso (CLP)</TableHeader>
+                        {curtains.map((curtain, index) => (
+                            <TableCell key={curtain.curtainID}>
+                                <input
+                                    type="number"
+                                    value={quoteData[index][7]}
+                                    onChange={(e) => handleCounterWeightChange(index, e.target.value)}
+                                />
+                            </TableCell>
+                        ))}
+                    </TableRow>
+                    <TableRow>
+                        <TableHeader>Valor por Zuncho (CLP)</TableHeader>
+                        {curtains.map((curtain, index) => (
+                            <TableCell key={curtain.curtainID}>
+                                <input
+                                    type="number"
+                                    value={quoteData[index][8]}
+                                    onChange={(e) => handleBandChange(index, e.target.value)}
+                                />
+                            </TableCell>
+                        ))}
+                    </TableRow>
+                    <TableRow>
+                        <TableHeader>Valor por Cadena (CLP)</TableHeader>
+                        {curtains.map((curtain, index) => (
+                            <TableCell key={curtain.curtainID}>
+                                <input
+                                    type="number"
+                                    value={quoteData[index][9]}
+                                    onChange={(e) => handleChainChange(index, e.target.value)}
+                                />
+                            </TableCell>
+                        ))}
+                    </TableRow>
+                    <TableRow>
+                        <TableHeader>Tipo de Tubo</TableHeader>
+                        {curtains.map((curtain, index) => (
+                            <TableCell key={curtain.curtainID}>
+                                <select
+                                    value={quoteData[index][10]}
+                                    onChange={(e) => handlePipeTypeChange(index, e.target.value)}
+                                >
+                                    <option value="">Seleccionar</option> {/* Opción por defecto */}
+                                    {pipes.map((pipe) => (
+                                        <option key={pipe.pipeID} value={pipe.pipeName}>
+                                            {pipe.pipeName}
+                                        </option>
+                                    ))}
+                                </select>
+                            </TableCell>
+                        ))}
+                    </TableRow>
+                    <TableRow>
+                        <TableHeader>Valor por Tubo (CLP)</TableHeader>
+                        {curtains.map((curtain, index) => (
+                            <TableCell key={curtain.curtainID}>
+                                <input
+                                    type="number"
+                                    value={quoteData[index][11]}
+                                    onChange={(e) => handlePipeChange(index, e.target.value)}
+                                />
+                            </TableCell>
+                        ))}
+                    </TableRow>
+                    <TableRow>
+                        <TableHeader rowSpan="2">Mano de obra</TableHeader>
+                        <TableHeader>Valor del armado (CLP)</TableHeader>
+                        {curtains.map((curtain, index) => (
+                            <TableCell key={curtain.curtainID}>
+                                <input
+                                    type="number"
+                                    value={quoteData[index][12]}
+                                    onChange={(e) => handleAssemblyChange(index, e.target.value)}
+                                />
+                            </TableCell>
+                        ))}
+                    </TableRow>
+                    <TableRow>
+                        <TableHeader>Valor de la instalación (CLP)</TableHeader>
+                        {curtains.map((curtain, index) => (
+                            <TableCell key={curtain.curtainID}>
+                                <input
+                                    type="number"
+                                    value={quoteData[index][13]}
+                                    onChange={(e) => handleInstallationChange(index, e.target.value)}
                                 />
                             </TableCell>
                         ))}

@@ -19,6 +19,7 @@ const RUTA_ROLES = "/roles";
 const RUTA_STATUS = "/status";
 export const RUTA_UPDATE_COBERTURAS_VENDEDOR = "/sellers/sellerInformation" //PETICION TIPO POST
 const RUTA_VENDEDORES = "/sellers"
+export const RUTA_TUBOS = "/pipes"
 
 //Funcion para pedirle al servidor que elimine un usuario especifico
 export const deleteUser = async (userID) => {

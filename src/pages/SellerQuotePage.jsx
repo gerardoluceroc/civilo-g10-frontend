@@ -7,6 +7,7 @@ import SellerQuote from "../components/SellerView/SellerQuote";
 const Div = styled.div`
     min-height: calc(85vh - 80px);
 `;
+
 const SellerQuotePage = () => {
     return (
         <Div>
@@ -14,6 +15,7 @@ const SellerQuotePage = () => {
             <Div>
             <SellerQuote />
             </Div>
+            <Div></Div>
             <Footer />
         </Div>
     )
