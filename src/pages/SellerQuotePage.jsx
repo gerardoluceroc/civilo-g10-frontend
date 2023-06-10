@@ -11,10 +11,10 @@ const Div = styled.div`
 const SellerQuotePage = () => {
     return (
         <Div>
-            <NavbarResponsive/>
+            <NavbarResponsive />
             <Div>
-            <Div></Div>
-            <SellerQuote />
+                <Div></Div>
+                <SellerQuote />
             </Div>
             <Div></Div>
             <Footer />

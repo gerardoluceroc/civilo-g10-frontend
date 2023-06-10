@@ -30,36 +30,36 @@ export const deleteUser = async (userID) => {
   usuario = JSON.parse(usuario);
 
   //SI el usuario a eliminar es el mismo que se encuentra con la cuenta activa
-  if(usuario.userID === userID){
+  if (usuario.userID === userID) {
     alert("Error: No puede eliminar su propia cuenta");
   }
 
-  else{
+  else {
     const respuesta = fetch(`${URL_CIVILO}${RUTA_DELETE_USERS}/${userID}`, {
       method: 'DELETE'
     })
       .then(response => {
         if (response.ok) {
           alert("Usuario eliminado con exito");
-          setTimeout(()=>{
+          setTimeout(() => {
             //Se recarga la pagina luego de 1 segundo
             window.location.reload();
-          },1000);
+          }, 1000);
         } else {
           alert("Error: Ha ocurrido un problema el eliminar a este usuario");
-          setTimeout(()=>{
+          setTimeout(() => {
             //Se recarga la pagina luego de 1 segundo
             window.location.reload();
-          },1000);
+          }, 1000);
         }
       })
       .catch(error => {
         console.error('Error al eliminar el usuario:', error);
         alert("Error: Ha ocurrido un problema el eliminar a este usuario");
-          setTimeout(()=>{
-            //Se recarga la pagina luego de 1 segundo
-            window.location.reload();
-          },1000);
+        setTimeout(() => {
+          //Se recarga la pagina luego de 1 segundo
+          window.location.reload();
+        }, 1000);
         // Hacer algo en caso de que ocurra un error en la solicitud
       });
 
@@ -67,7 +67,7 @@ export const deleteUser = async (userID) => {
 
   }
 
-  
+
 }
 //Funcion que permite obtener todos los usuarios
 export const getAllUsers = async () => {
@@ -85,14 +85,14 @@ export const obtenerVendedor = async (idVendedor) => {
 export const obtenerCoberturas = async () => {
   const respuesta = await fetch(`${URL_CIVILO}${RUTA_COBERTURAS}`)
   const coberturasJSON = await respuesta.json();
-  return coberturasJSON; 
+  return coberturasJSON;
 
 }
 
 export const obtenerAsignacionesVendedor = async (id_vendedor) => {
   const respuesta = await fetch(`${URL_CIVILO}${RUTA_ASIGNACIONES_VENDEDOR}/${id_vendedor}`);
   const asignaciones = await respuesta.json();
-  return asignaciones;  
+  return asignaciones;
 }
 
 //Funcion que pide los datos al servidor de las solicitudes de un cliente especifico
@@ -144,118 +144,117 @@ export const getAllRequests = async () => {
 
 
 export const iniciarSesion = (usuario) => {
-    //Se envia la peticion POST al servidor
-    fetch(`${URL_CIVILO}${RUTA_LOGIN}`, {
-        method: "POST",
-        headers: {
-        "Content-Type": "application/json",
+  //Se envia la peticion POST al servidor
+  fetch(`${URL_CIVILO}${RUTA_LOGIN}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
     },
-        body: JSON.stringify(usuario),
+    body: JSON.stringify(usuario),
+  })
+    .then((response) => {
+      if (response.ok) {
+        console.log("Login successful");
+      } else {
+        console.log("Login failed");
+      }
     })
-        .then((response) => {
-        if (response.ok) {
-            console.log("Login successful");
-        }else {
-          console.log("Login failed");
-        }
-      })
-        .catch((error) => {
-            console.error("Error:", error);
-      });
+    .catch((error) => {
+      console.error("Error:", error);
+    });
 }
 
 
 export const registrarUsuario = (usuario) => {
-    fetch(`${URL_CIVILO}${RUTA_REGISTER}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(usuario),
-    })
-      .then((response) => {
-        if (response.ok) {
-          console.log("Registro exitoso");
-          console.log(usuario.role.accountType);
-          if (usuario.role.accountType === "Cliente") {
-            window.location.href = '/login';
-          } else if (usuario.role.accountType === "Vendedor") {
-            localStorage.setItem('email', JSON.stringify(usuario.email));
-            console.log(usuario);
-            window.location.href = '/seller/sellerInformation';
-          } 
-          //si el usuario registrado es de tipo ejecutivo o administrador
-          else if((usuario.role.accountType.toLowerCase() === "ejecutivo") || (usuario.role.accountType.toLowerCase() === "administrador")){
-            alert("Usuario agregado con exito");
-            setTimeout(()=>{
-              //Se recarga la pagina luego de 1 segundo
+  fetch(`${URL_CIVILO}${RUTA_REGISTER}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(usuario),
+  })
+    .then((response) => {
+      if (response.ok) {
+        console.log("Registro exitoso");
+        console.log(usuario.role.accountType);
+        if (usuario.role.accountType === "Cliente") {
+          window.location.href = '/login';
+        } else if (usuario.role.accountType === "Vendedor") {
+          localStorage.setItem('email', JSON.stringify(usuario.email));
+          console.log(usuario);
+          window.location.href = '/seller/sellerInformation';
+        }
+        //si el usuario registrado es de tipo ejecutivo o administrador
+        else if ((usuario.role.accountType.toLowerCase() === "ejecutivo") || (usuario.role.accountType.toLowerCase() === "administrador")) {
+          alert("Usuario agregado con exito");
+          setTimeout(() => {
+            //Se recarga la pagina luego de 1 segundo
             window.location.reload();
 
-            },1000);
-          }
-        } else {
-          console.log("Registro fallido");
+          }, 1000);
         }
-      })
-      .catch((error) => {
-        alert("Error al registrar usuario");
-        console.error("Error:", error);
-      });
-  }
-
-
-  //funcion para cerrar la sesion de un usuario tipo cliente
-  export const cerrarSesionUsuario = () => {
-    sessionStorage.removeItem('user');
-    fetch(`${URL_CIVILO}${RUTA_LOGOUT_CLIENTE}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({}),
-    })
-      .then((res) => {
-        if (res.ok) {
-          window.location.href = RUTA_HOME;
-        } else {
-          throw new Error("Error en la solicitud de logout");
-        }
-      })
-      .catch((err) => console.error(err));
-  };
-
-
-  export const iniciarSesionCliente = async (event, formData) => {
-    event.preventDefault();
-    try {
-      const response = await fetch(`${URL_CIVILO}${RUTA_LOGIN}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-      if (response.ok) {
-        const email = formData.email;
-        const userData = await fetch(`${URL_CIVILO}/users/${email}`);
-        const data = await userData.json();
-        sessionStorage.setItem('user', JSON.stringify(data));
-        console.log(sessionStorage.getItem('user'));
-        const url = `/client?email=${encodeURIComponent(
-          formData.email
-        )}&password=${encodeURIComponent(formData.password)}`;
-        window.location.replace(RUTA_HOME);
       } else {
-        alert("Email o contraseña incorrectos");
+        console.log("Registro fallido");
       }
-    } catch (error) {
-      console.error(error);
-      alert("Error al iniciar sesión");
+    })
+    .catch((error) => {
+      alert("Error al registrar usuario");
+      console.error("Error:", error);
+    });
+}
+
+
+//funcion para cerrar la sesion de un usuario tipo cliente
+export const cerrarSesionUsuario = () => {
+  sessionStorage.removeItem('user');
+  fetch(`${URL_CIVILO}${RUTA_LOGOUT_CLIENTE}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({}),
+  })
+    .then((res) => {
+      if (res.ok) {
+        window.location.href = RUTA_HOME;
+      } else {
+        throw new Error("Error en la solicitud de logout");
+      }
+    })
+    .catch((err) => console.error(err));
+};
+
+
+export const iniciarSesionCliente = async (event, formData) => {
+  event.preventDefault();
+  try {
+    const response = await fetch(`${URL_CIVILO}${RUTA_LOGIN}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    });
+    if (response.ok) {
+      const email = formData.email;
+      const userData = await fetch(`${URL_CIVILO}/users/${email}`);
+      const data = await userData.json();
+      sessionStorage.setItem('user', JSON.stringify(data));
+      console.log(sessionStorage.getItem('user'));
+      const url = `/client?email=${encodeURIComponent(
+        formData.email
+      )}&password=${encodeURIComponent(formData.password)}`;
+      window.location.replace(RUTA_HOME);
+    } else {
+      alert("Email o contraseña incorrectos");
     }
-  };
+  } catch (error) {
+    console.error(error);
+    alert("Error al iniciar sesión");
+  }
+};
 
 
 
 
 
 
-  
-  
+
