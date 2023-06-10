@@ -274,59 +274,58 @@ const SellerQuote = () => {
 
     const handleQuote = async () => {
         try {
-            for (let i = 0; i < quoteData.length; i++) {
-                const data = quoteData[i];
-                const curtain = curtains[i];
-                const payload = {
-                    // Propiedades necesarias del objeto
-                    amount: data[1],
-                    valueSquareMeters: data[2],
-                    width: data[3],
-                    height: data[4],
-                    bracketValue: data[5],
-                    capValue: data[6],
-                    counterweightValue: data[7],
-                    bandValue: data[8],
-                    chainValue: data[9],
-                    pipe: data[10],
-                    pipeValue: data[11],
-                    assemblyValue: data[12],
-                    installationValue: data[13],
-                    description: description,
-                    totalSquareMeters: null,
-                    totalFabrics: null,
-                    totalMaterials: null,
-                    totalLabor: null,
-                    productionCost: null,
-                    saleValue: null,
-                    percentageDiscount: discount,
-                    iva: iva,
-                    total: null,
-                    date: null,
-                    seller: JSON.parse(sessionStorage.getItem('user')),
-                    curtain: curtain,
-                    currentIVA: null,
-                };
-
-                const response = await fetch(`${URL_CIVILO}${RUTA_COTIZACIONES}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(payload),
-                });
-                console.log(payload)
-
-                if (response.ok) {
-                    console.log('Cotización enviada');
-                } else {
-                    console.error('Error al enviar la cotización');
-                }
-            }
+          const payload = quoteData.map((data, i) => ({
+            amount: data[1],
+            valueSquareMeters: data[2],
+            width: data[3],
+            height: data[4],
+            bracketValue: data[5],
+            capValue: data[6],
+            counterweightValue: data[7],
+            bandValue: data[8],
+            chainValue: data[9],
+            pipe: data[10],
+            pipeValue: data[11],
+            assemblyValue: data[12],
+            installationValue: data[13],
+            description: description,
+            totalSquareMeters: null,
+            totalFabrics: null,
+            totalMaterials: null,
+            totalLabor: null,
+            productionCost: null,
+            saleValue: null,
+            percentageDiscount: discount,
+            iva: iva,
+            total: null,
+            date: null,
+            seller: JSON.parse(sessionStorage.getItem('user')),
+            curtain: curtains[i],
+            currentIVA: null
+          }));
+      
+          const response = await fetch(`${URL_CIVILO}${RUTA_COTIZACIONES}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload),
+          });
+          console.log(payload);
+      
+          if (response.ok) {
+            console.log('Cotización enviada');
+          } else {
+            console.error('Error al enviar la cotización');
+          }
         } catch (error) {
-            console.error('Error al enviar la cotización:', error);
+          console.error('Error al enviar la cotización:', error);
         }
-    };
+      };
+      
+      
+      
+      
 
 
     return (
