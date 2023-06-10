@@ -178,11 +178,11 @@ export const registrarUsuario = (usuario) => {
           console.log("Registro exitoso");
           console.log(usuario.role.accountType);
           if (usuario.role.accountType === "Cliente") {
-            window.location.href = 'http://localhost:3000/login';
+            window.location.href = '/login';
           } else if (usuario.role.accountType === "Vendedor") {
             localStorage.setItem('email', JSON.stringify(usuario.email));
             console.log(usuario);
-            window.location.href = 'http://localhost:3000/seller/sellerInformation';
+            window.location.href = '/seller/sellerInformation';
           } 
           //si el usuario registrado es de tipo ejecutivo o administrador
           else if((usuario.role.accountType.toLowerCase() === "ejecutivo") || (usuario.role.accountType.toLowerCase() === "administrador")){
