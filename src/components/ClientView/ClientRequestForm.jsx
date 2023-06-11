@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { RUTA_COBERTURAS, RUTA_CORTINAS, URL_CIVILO } from "../../api/civilo_roller_api";
 
 const Container = styled.div`
   display: flex;
@@ -90,7 +91,7 @@ const ClientRequestForm = () => {
     });
 
     useEffect(() => {
-        fetch("http://localhost:8080/curtains")
+        fetch(`${URL_CIVILO}${RUTA_CORTINAS}`)
         .then((responseCurtain) => responseCurtain.json())
         .then((dataCurtain) => {
             console.log(dataCurtain);
@@ -102,7 +103,7 @@ const ClientRequestForm = () => {
     }, []);
 
     useEffect(() => {
-        fetch("http://localhost:8080/coverages")
+        fetch(`${URL_CIVILO}${RUTA_COBERTURAS}`)
             .then((response) => response.json())
             .then((data) => {
                 console.log(data);
@@ -152,7 +153,7 @@ const ClientRequestForm = () => {
         console.log("sesion storage es ",sessionStorage.getItem('user'));
         console.log("data: ", data);
         try {
-            const response = await fetch("http://localhost:8080/requests/clientRequest", {
+            const response = await fetch(`${URL_CIVILO}/requests/clientRequest`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
