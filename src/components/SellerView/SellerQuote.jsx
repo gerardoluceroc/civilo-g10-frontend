@@ -77,6 +77,10 @@ const SellerQuote = () => {
     const [pipes, setPipes] = useState([]);
     const [description, setDescription] = useState('');
     const [discount, setDiscount] = useState(0); // Nuevo estado para el descuento
+    const [cost, setCost] = useState(null);
+    const [saleValue, setSaleValue] = useState(null);
+    const [total, setTotal] = useState(null);
+
 
     useEffect(() => {
         const fetchIva = async () => {
@@ -303,7 +307,6 @@ const SellerQuote = () => {
                 curtain: curtains[i],
                 currentIVA: null
             }));
-
             const response = await fetch(`${URL_CIVILO}${RUTA_COTIZACIONES}`, {
                 method: 'POST',
                 headers: {
@@ -312,23 +315,20 @@ const SellerQuote = () => {
                 body: JSON.stringify(payload),
             });
             console.log(payload);
-
             if (response.ok) {
+                const quoteSummary = await response.json(); // Esperar la respuesta como JSON
+                console.log(quoteSummary);
+                setCost(quoteSummary.totalCostOfProduction);
+                setSaleValue(quoteSummary.totalSaleValue);
+                setTotal(quoteSummary.total);
                 alert('Cotización enviada');
             } else {
                 alert('Error al enviar la cotización');
             }
-
         } catch (error) {
             console.error('Error al enviar la cotización:', error);
         }
     };
-
-
-
-
-
-
     return (
         <Container>
             <Title>Cotización</Title>
@@ -343,19 +343,19 @@ const SellerQuote = () => {
                         <TableHeader>Total</TableHeader>
                     </TableRow>
                     <TableRow>
-                        <TableCell>-</TableCell>
-                        <TableCell>-</TableCell>
+                        <TableCell>{cost !== null ? cost.toFixed(2) : '-'}</TableCell>
+                        <TableCell>{saleValue !== null ? saleValue.toFixed(2) : '-'}</TableCell>
                         <TableCell>
                             <input
                                 type="number"
                                 step="0.1"
                                 min="0"
-                                value={discount} // Usar el estado del descuento
-                                onChange={handleDiscountChange} // Manejar cambios en el descuento
+                                value={discount}
+                                onChange={handleDiscountChange}
                             />
                         </TableCell>
                         <TableCell>{iva}%</TableCell>
-                        <TableCell>-</TableCell>
+                        <TableCell>{total !== null ? total.toFixed(2) : '-'}</TableCell>
                     </TableRow>
                 </tbody>
             </Table>
