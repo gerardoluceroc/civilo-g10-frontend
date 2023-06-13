@@ -159,6 +159,34 @@ const Birthday = styled.div`
   }
 `;
 
+const StartTime = styled.div`
+border-color: transparent;
+display: flex;
+flex-direction: column;
+margin: auto;
+width: 80%;
+label {
+  margin-bottom: 6px;
+}
+${EspacioVertical} {
+  margin-bottom: 20px;
+}
+`;
+
+const EndTime = styled.div`
+border-color: transparent;
+display: flex;
+flex-direction: column;
+margin: auto;
+width: 80%;
+label {
+  margin-bottom: 6px;
+}
+${EspacioVertical} {
+  margin-bottom: 20px;
+}
+`;
+
 const SubmitButton = styled.button`
   background-color: #1f618d;
   border-radius: 10px;
@@ -206,6 +234,8 @@ export const RegisterForm = () => {
   const [, setPasswordRepetida] = useState('');
   const [rolUsuario, setRolUsuario] = useState('Cliente');
   const [birthDate, setBirthDate] = useState('');
+  const [startTime, setStartTime] = useState('');
+  const [endTime, setEndTime] = useState('');
   const [communes, setCommunes] = useState([]);
   const [coverage, setCoverage] = useState({
     coverageID: "",
@@ -263,6 +293,8 @@ export const RegisterForm = () => {
       "phoneNumber": `${codigoInternacional}${telefono}`,
       "commune": coverage.commune,
       "birthDate": birthDate,
+      "startTime": startTime,
+      "endTime": endTime,
       "age": "",
       "role": {
         "accountType": rolUsuario
@@ -342,7 +374,24 @@ export const RegisterForm = () => {
         <label>Ingrese Su Fecha de Nacimiento</label>
         <input type="date" onChange={(e) => setBirthDate(e.target.value)} />
       </Birthday>
+
       <EspacioVertical />
+
+      <StartTime>
+        <label>Horario disponible:</label> 
+        <label>Horario inicio:</label>
+        <input type="time" onChange={(e) => setStartTime(e.target.value)} />
+      </StartTime>
+
+      <EspacioVertical />
+      
+      <EndTime>
+        <label>Horario fin:</label>
+        <input type="time" onChange={(e) => setEndTime(e.target.value)} />
+      </EndTime>
+
+      <EspacioVertical />
+      
       <SubmitButton onClick={handleClick}>Registrarse</SubmitButton>
       {/* lo ultimo que hice fue configurar que al presionar el boton no se haga nada, pq antes se hacia eso de enviar la info al swervidor
     pero ahora no hace nada, por lo que yo puedo configurar lo que se hace*/}

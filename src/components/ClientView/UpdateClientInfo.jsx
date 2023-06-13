@@ -158,6 +158,34 @@ const Birthday = styled.div`
   }
 `;
 
+const StartTime = styled.div`
+border-color: transparent;
+display: flex;
+flex-direction: column;
+margin: auto;
+width: 80%;
+label {
+  margin-bottom: 6px;
+}
+${EspacioVertical} {
+  margin-bottom: 20px;
+}
+`;
+
+const EndTime = styled.div`
+border-color: transparent;
+display: flex;
+flex-direction: column;
+margin: auto;
+width: 80%;
+label {
+  margin-bottom: 6px;
+}
+${EspacioVertical} {
+  margin-bottom: 20px;
+}
+`;
+
 const SubmitButton = styled.button`
   background-color: #1f618d;
   border-radius: 10px;
@@ -197,6 +225,8 @@ export const UpdateClientInfo = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [communes, setCommunes] = useState([]);
+    const [startTime, setStartTime] = useState('');
+    const [endTime, setEndTime] = useState('');
     const [coverage, setCoverage] = useState({
         coverageID: "",
         commune: "",
@@ -235,6 +265,8 @@ export const UpdateClientInfo = () => {
             "password": password,
             "phoneNumber": `${codigoInternacional}${telefono}`,
             "commune": coverage.commune,
+            "startTime": startTime,
+            "endTime": endTime,
         }
 
         //borrar estos print despues
@@ -248,7 +280,7 @@ export const UpdateClientInfo = () => {
          const {name,surname,commune} = usuarioActualizado;
 
         //Si alguno de los campos está vacío, se muestra una alerta indicando que no se ha podido realizar la actualización
-        if(name === "" || surname === "" || usuarioActualizado.email === "" || usuarioActualizado.password === "" || telefono === "" || commune === ""){
+        if(name === "" || surname === "" || usuarioActualizado.email === "" || usuarioActualizado.password === "" || telefono === "" || commune === "" || startTime === "" || endTime === ""){
           alert("Error: Debe completar todos los campos");
 
         }
@@ -323,6 +355,19 @@ export const UpdateClientInfo = () => {
             </RegionComuna>
 
             <EspacioVertical />
+
+            <StartTime>
+              <label>Horario disponible:</label> 
+              <label>Horario inicio:</label>
+              <input type="time" onChange={(e) => setStartTime(e.target.value)} />
+            </StartTime>   
+
+            <EspacioVertical />   
+
+            <EndTime>
+              <label>Horario fin:</label>
+              <input type="time" onChange={(e) => setEndTime(e.target.value)} />
+            </EndTime>      
 
             <EspacioVertical />
             <SubmitButton onClick={handleClick}>Actualizar</SubmitButton>
