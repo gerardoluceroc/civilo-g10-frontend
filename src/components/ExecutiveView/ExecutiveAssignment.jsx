@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useState, useEffect } from "react";
+import { URL_CIVILO, getAllRequests, getAllSellers } from "../../api/civilo_roller_api";
 
 const TableContainer = styled.div`
   margin-top: 50px;
@@ -67,34 +68,14 @@ const ExecutiveAssignment = () => {
     console.log(user.userID);
 
     useEffect(() => {
-        const fetchRequests = async () => {
-            try {
-                const response = await fetch(`http://localhost:8080/requests`);
-                const data = await response.json();
-                console.log(data);
-                setRequests(
-                    data.map((request) => ({
-                        ...request,
-                        selectedSeller: "",
-                    }))
-                );
-            } catch (error) {
-                console.error(error);
-            }
-        };
-        fetchRequests();
 
-        const fetchSellers = async () => {
-            try {
-                const response = await fetch(`http://localhost:8080/sellers`);
-                const data = await response.json();
-                console.log(data);
-                setSellers(data);
-            } catch (error) {
-                console.error(error);
-            }
-        };
-        fetchSellers();
+        getAllRequests()
+        .then((data) => {setRequests(data)})
+        .catch((error) => {console.log("Error al obtener las solicitudes ",error)})
+
+        getAllSellers()
+        .then((data) => {setSellers(data)})
+        .catch((error) => {console.log("Error al obtener los vendedores ",error)})
     }, [user.userID]);
 
     const handleSellerChange = async (requestID, sellerID) => {
@@ -107,7 +88,7 @@ const ExecutiveAssignment = () => {
         );
         try {
             console.log(requestID, sellerID);
-            const response = await fetch(`http://localhost:8080/requests/updateRequest/${requestID}/${sellerID}`, {
+            const response = await fetch(`${URL_CIVILO}/requests/updateRequest/${requestID}/${sellerID}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -174,13 +155,13 @@ const ExecutiveAssignment = () => {
             <ButtonContainer>
                 <Button onClick={() => (window.location.href = "/executive")}>Regresar</Button>
                 <Button onClick={() => {
-                    fetch('http://localhost:8080/requests/automaticAssignment', {
+                    fetch(`${URL_CIVILO}/requests/automaticAssignment`, {
                         method: 'POST'
                     }).then(() => {
-                        alert('Automáticamente asignado');
+                        alert('Asignación automática realizada con éxito');
                     }).catch((error) => {
                         console.error('Error al enviar la solicitud:', error);
-                        alert('Error al asignadar automáticamente');
+                        alert('Error al asignar automáticamente');
                     });
                 }}>Asignar Automáticamente</Button>
             </ButtonContainer>

@@ -10,11 +10,15 @@ const RUTA_COVERAGES = "/coverages"
 const RUTA_DELETE_USERS = "/users"
 export const RUTA_GET_IVA = "/iva";
 const RUTA_GET_USERS = "/users"
-const RUTA_GET_REQUESTS = "/requests"
+export const RUTA_GET_PERMISSIONS = "/permissions";
+export const RUTA_GET_REQUESTS = "/requests";
+const RUTA_GET_SELLERS = "/sellers";
 const RUTA_HOME = "/"
 const RUTA_LOGIN = "/users/login"
+export const RUTA_LOGIN_ADMIN = "/users/loginAdmin";
 const RUTA_LOGOUT_CLIENTE = "/users/logout"
 const RUTA_MIS_SOLICITUDES_CLIENTE = "/requests/clientRequest/";
+export const RUTA_POST_SOLICITUDES_CLIENTE = "/requests/clientRequest"; //Peticion POST para crear solicitud del cliente
 const RUTA_REGISTER = "/users/register"
 const RUTA_ROLES = "/roles";
 const RUTA_STATUS = "/status";
@@ -139,7 +143,13 @@ export const getAllRequests = async () => {
   const respuesta = await fetch(`${URL_CIVILO}${RUTA_GET_REQUESTS}`);
   const solicitudes = await respuesta.json();
   return solicitudes;
+}
 
+//Funcion para obtener todas los solicitudes registradas en la pagina
+export const getAllSellers = async () => {
+  const respuesta = await fetch(`${URL_CIVILO}${RUTA_GET_SELLERS}`);
+  const vendedores = await respuesta.json();
+  return vendedores;
 }
 
 

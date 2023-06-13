@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { useState, useEffect } from 'react';
-import { registrarUsuario } from '../../api/civilo_roller_api';
+import { RUTA_COBERTURAS, URL_CIVILO, registrarUsuario } from '../../api/civilo_roller_api';
 
 const Formulario = styled.form`
     background-color: #f8f8f8;
@@ -211,14 +211,14 @@ export const UpdateClientInfo = () => {
     };
 
     useEffect(() => {
-        fetch("http://localhost:8080/coverages")
+        fetch(`${URL_CIVILO}${RUTA_COBERTURAS}`)
             .then((response) => response.json())
             .then((data) => {
                 console.log(data);
                 setCommunes(data);
             })
             .catch((error) => {
-                console.error("Error fetching communes: ", error);
+                console.error("Error al obtener comunas: ", error);
             });
     }, []);
 
@@ -255,7 +255,7 @@ export const UpdateClientInfo = () => {
 
         else{ 
 
-          fetch(`http://localhost:8080/users/${id}`, {
+          fetch(`${URL_CIVILO}/users/${id}`, {
               method: 'POST',
               headers: {
                   'Content-Type': 'application/json'
@@ -266,7 +266,7 @@ export const UpdateClientInfo = () => {
                   if (!response.ok) {
                       throw new Error('Error al actualizar usuario');
                   }
-                  const url = `http://localhost:3000/`;
+                  const url = "/";
                   window.location.replace(url);
                   return response.json();
               })

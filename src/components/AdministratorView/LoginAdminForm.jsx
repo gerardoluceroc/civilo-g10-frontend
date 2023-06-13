@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { RUTA_LOGIN_ADMIN, URL_CIVILO } from "../../api/civilo_roller_api";
 
 const RUTA_HOME = "/";
 const LoginContainer = styled.div`
@@ -74,14 +75,14 @@ const AdminLoginForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch("http://localhost:8080/users/loginAdmin", {
+      const response = await fetch(`${URL_CIVILO}${RUTA_LOGIN_ADMIN}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
       if (response.ok) {
         const email = formData.email;
-        const userData = await fetch(`http://localhost:8080/users/${email}`);
+        const userData = await fetch(`${URL_CIVILO}/users/${email}`);
         const data = await userData.json();
         sessionStorage.setItem('user', JSON.stringify(data));
         console.log(sessionStorage.getItem('user'));

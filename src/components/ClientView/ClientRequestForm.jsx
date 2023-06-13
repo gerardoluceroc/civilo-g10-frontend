@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { RUTA_COBERTURAS, RUTA_CORTINAS, URL_CIVILO } from "../../api/civilo_roller_api";
+import { RUTA_COBERTURAS, RUTA_CORTINAS, RUTA_POST_SOLICITUDES_CLIENTE, URL_CIVILO } from "../../api/civilo_roller_api";
 
 const Container = styled.div`
   display: flex;
@@ -153,7 +153,7 @@ const ClientRequestForm = () => {
         console.log("sesion storage es ",sessionStorage.getItem('user'));
         console.log("data: ", data);
         try {
-            const response = await fetch(`${URL_CIVILO}/requests/clientRequest`, {
+            const response = await fetch(`${URL_CIVILO}${RUTA_POST_SOLICITUDES_CLIENTE}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

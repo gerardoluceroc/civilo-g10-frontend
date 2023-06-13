@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Container } from "@mui/material";
+import { RUTA_GET_REQUESTS, URL_CIVILO } from '../../../api/civilo_roller_api';
 
 
 const ListContainer = styled.ul`
@@ -30,7 +31,7 @@ const ReadRequests = () => {
   const [requests, setRequests] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8080/requests")
+    fetch(`${URL_CIVILO}${RUTA_GET_REQUESTS}`)
       .then((response) => response.json())
       .then((data) => setRequests(data));
   }, []);
