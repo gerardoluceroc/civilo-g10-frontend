@@ -3,7 +3,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import EmailIcon from '@mui/icons-material/Email';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import PlaceIcon from '@mui/icons-material/Place';
-import { CalendarMonth } from "@mui/icons-material";
+import { AccessTime, CalendarMonth } from "@mui/icons-material";
 import EventBusyIcon from '@mui/icons-material/EventBusy';
 import BlindsClosedIcon from '@mui/icons-material/BlindsClosed';
 import DescriptionIcon from '@mui/icons-material/Description';
@@ -134,6 +134,12 @@ export const RequestDetails = ({requestDetails}) => {
                         <Label>Comuna: </Label>
                         {usuario.commune}
                     </ItemInfoUsuario>
+                    <ItemInfoUsuario>
+                        <AccessTime/>
+                        <Label>Horario de atención: </Label>
+                        {usuario.startTime.substring(0, 5)} - {usuario.endTime.substring(0, 5)}                    
+                    </ItemInfoUsuario>
+
                 </InformacionUsuario>
 
                 <H2>Detalles de Cotizacion Solicitada: </H2>
