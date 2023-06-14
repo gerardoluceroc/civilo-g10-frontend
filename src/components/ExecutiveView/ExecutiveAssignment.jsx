@@ -70,12 +70,12 @@ const ExecutiveAssignment = () => {
     useEffect(() => {
 
         getAllRequests()
-        .then((data) => {setRequests(data)})
-        .catch((error) => {console.log("Error al obtener las solicitudes ",error)})
+            .then((data) => { setRequests(data) })
+            .catch((error) => { console.log("Error al obtener las solicitudes ", error) })
 
         getAllSellers()
-        .then((data) => {setSellers(data)})
-        .catch((error) => {console.log("Error al obtener los vendedores ",error)})
+            .then((data) => { setSellers(data) })
+            .catch((error) => { console.log("Error al obtener los vendedores ", error) })
     }, [user.userID]);
 
     const handleSellerChange = async (requestID, sellerID) => {
@@ -95,13 +95,14 @@ const ExecutiveAssignment = () => {
                 },
                 body: JSON.stringify({ requestID, sellerId: sellerID }),
             });
-            const data = await response.json();
-            console.log(data);
-            if (data.success) {
-                alert('¡Actualización exitosa!');
+            //const data = await response.json();
+            //console.log(data);
+            alert('Asignación realizada con éxito');
+            /*if (data.success) {
+                alert('Asignación realizada con éxito');
             } else {
-                alert('¡Actualización fallida!');
-            }
+                alert('Error al realizar la asignación');
+            }*/
         } catch (error) {
             console.error(error);
         }

@@ -343,8 +343,8 @@ const SellerQuote = () => {
                         <TableHeader>Total</TableHeader>
                     </TableRow>
                     <TableRow>
-                        <TableCell>{cost !== null ? cost.toFixed(2) : '-'}</TableCell>
-                        <TableCell>{saleValue !== null ? saleValue.toFixed(2) : '-'}</TableCell>
+                        <TableCell>{cost !== null ? `CLP $${cost.toLocaleString()}` : '-'}</TableCell>
+                        <TableCell>{saleValue !== null ? `CLP $${saleValue.toLocaleString()}` : '-'}</TableCell>
                         <TableCell>
                             <input
                                 type="number"
@@ -355,7 +355,7 @@ const SellerQuote = () => {
                             />
                         </TableCell>
                         <TableCell>{iva}%</TableCell>
-                        <TableCell>{total !== null ? total.toFixed(2) : '-'}</TableCell>
+                        <TableCell>{total !== null ? `CLP $${total.toLocaleString()}` : '-'}</TableCell>
                     </TableRow>
                 </tbody>
             </Table>
@@ -388,7 +388,7 @@ const SellerQuote = () => {
                         ))}
                     </TableRow>
                     <TableRow>
-                        <TableHeader>Valor por cortina (CLP)</TableHeader>
+                        <TableHeader>Valor por metro cuadrado (CLP)</TableHeader>
                         {curtains.map((curtain, index) => (
                             <TableCell key={curtain.curtainID}>
                                 <input
