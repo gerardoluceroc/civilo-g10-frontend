@@ -7,6 +7,7 @@ const RUTA_ASIGNACIONES_VENDEDOR = "/requests/sellerRequest" // +`${ID DEL VENDE
 export const RUTA_COBERTURAS = "/coverages"
 export const RUTA_CORTINAS = "/curtains"
 const RUTA_COVERAGES = "/coverages"
+const RUTA_PROFIT_MARGINS = "/profitMargins"
 const RUTA_DELETE_USERS = "/users"
 export const RUTA_GET_IVA = "/iva";
 const RUTA_GET_USERS = "/users"
@@ -128,6 +129,13 @@ export const getAllCoverages = async () => {
   const comunas = await respuesta.json();
   return comunas;
 
+}
+
+//Funcion para obtener todos los margenes de utilidad utilizados en la pagina
+export const getAllProfitMargins = async () => {
+  const respuesta = await fetch(`${URL_CIVILO}${RUTA_PROFIT_MARGINS}`);
+  const profitMargins = await respuesta.json();
+  return profitMargins;
 }
 
 //Funcion para obtener los estados posibles de las solicitudes disponibles en la pagina

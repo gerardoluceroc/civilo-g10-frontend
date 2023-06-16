@@ -8,6 +8,7 @@ const PAGE_READ_REQUESTS = "/admin/readRequests";
 const PAGE_READ_ROLES = "/admin/readRoles";
 const PAGE_READ_STATUS = "/admin/readStatus";
 const PAGE_READ_CURTAINS = "/admin/readCurtains";
+const PAGE_PROFIT_MARGIN = "/admin/readProfitMargins";
 
 const CardContainer = styled.div`
   display: flex;
@@ -167,6 +168,13 @@ const AdminHome = () => {
               <InformationItem>
                 <Titulo>Cotizaciones (en desarrollo) </Titulo>
                 <Link to={"/"} style={{ textDecoration: 'none' }}>
+                  <Boton>Ver Detalles</Boton>
+                </Link>
+              </InformationItem>
+
+              <InformationItem>
+                <Titulo>Margen de Utilidad</Titulo>
+                <Link to={PAGE_PROFIT_MARGIN} style={{ textDecoration: 'none' }}>
                   <Boton>Ver Detalles</Boton>
                 </Link>
               </InformationItem>

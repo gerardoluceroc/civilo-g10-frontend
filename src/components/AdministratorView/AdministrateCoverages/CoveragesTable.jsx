@@ -39,14 +39,14 @@ const SortIcon = styled.span`
 
 export const CoveragesTable = () => {
 
-    const [coverages, setCoverages] = useState([]);
+  const [coverages, setCoverages] = useState([]);
 
-    useEffect(() => {
+  useEffect(() => {
 
-        getAllCoverages()
-        .then((data) => {setCoverages(data);})
-        .catch((error) => {console.log("Error al obtener las comunas de cobertura", error)})
-    }, []);
+    getAllCoverages()
+      .then((data) => { setCoverages(data); })
+      .catch((error) => { console.log("Error al obtener las comunas de cobertura", error) })
+  }, []);
 
 
 
@@ -61,28 +61,28 @@ export const CoveragesTable = () => {
   const [order, setOrder] = useState('asc');
 
 
-//   // Estado para controlar la apertura y cierre del modal para cada rol
-//   const [modalDeleteUserOpen, setModalDeleteUserOpen] = useState({});
+  //   // Estado para controlar la apertura y cierre del modal para cada rol
+  //   const [modalDeleteUserOpen, setModalDeleteUserOpen] = useState({});
 
-//   // Función para abrir el modal de eliminación para rol
-//   const handleModalDeleteUserOpen = (userID) => {
-//     setModalDeleteUserOpen((prevState) => ({
-//       ...prevState,
-//       [userID]: true,
-//     }));
-//   };
+  //   // Función para abrir el modal de eliminación para rol
+  //   const handleModalDeleteUserOpen = (userID) => {
+  //     setModalDeleteUserOpen((prevState) => ({
+  //       ...prevState,
+  //       [userID]: true,
+  //     }));
+  //   };
 
-//   // Función para cerrar el modal de eliminación para un rol especifico
-//   const handleModalDeleteUserClose = (userID) => {
-//     setModalDeleteUserOpen((prevState) => ({
-//       ...prevState,
-//       [userID]: false,
-//     }));
-//   };
+  //   // Función para cerrar el modal de eliminación para un rol especifico
+  //   const handleModalDeleteUserClose = (userID) => {
+  //     setModalDeleteUserOpen((prevState) => ({
+  //       ...prevState,
+  //       [userID]: false,
+  //     }));
+  //   };
 
   const headers = [
-    {id: 'coverageID', label: 'ID de Comuna'},
-    {id: 'commune', label: 'Nombre de Comuna'},
+    { id: 'coverageID', label: 'ID de Comuna' },
+    { id: 'commune', label: 'Nombre de Comuna' },
     // { id: 'acciones', label: 'Acciones' }
   ];
 
@@ -104,7 +104,7 @@ export const CoveragesTable = () => {
 
   const sortedCoverages = [...coverages].sort(compareValues);
 
-  
+
 
   return (
     <TableContainer>
@@ -128,7 +128,7 @@ export const CoveragesTable = () => {
           {sortedCoverages.map((coverage) => (
             <TableRow key={coverage.coverageID}>
               <TableCell>{coverage.coverageID}</TableCell>
-              <TableCell>{coverage.commune}</TableCell> 
+              <TableCell>{coverage.commune}</TableCell>
               {/* <TableCell>
                 <IconButton onClick={() => handleModalDeleteUserOpen(usuario.userID)}>
                   <DeleteIcon/>

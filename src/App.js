@@ -25,6 +25,7 @@ import AdminReadUsersPage from "./pages/Papelera/AdminReadUsersPage";
 import UpdateClientInfoPage from "./pages/UpdateClientInfoPage";
 import { UsersListPage } from "./pages/UsersListPage";
 import SellerQuotePage from "./pages/SellerQuotePage";
+import AdminReadProfitMarginPage from "./pages/AdminReadProfitMarginPage";
 
 
 function App() {
@@ -41,6 +42,7 @@ function App() {
       <Route path="/loginAdmin" element={<AdminLoginFormPage />} />
       <Route path="/admin" element={<AdminHomePage />} />
       <Route path="/admin/readCoverages" element={<AdminReadCoveragesPage />} />
+      <Route path="/admin/readProfitMargins" element={<AdminReadProfitMarginPage />} />
       <Route path="/admin/readCurtains" element={<AdminReadCurtainsPage />} />
       <Route path="/admin/readPermissions" element={<AdminReadPermissionsPage />} />
       <Route path="/admin/readRequests" element={<AdminReadRequestsPage />} />
