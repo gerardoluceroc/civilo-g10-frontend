@@ -245,11 +245,21 @@ export const RegisterForm = () => {
 
   const handleCommuneChange = (event) => {
     const commune = event.target.value;
-    const selectedCoverage = communes.find(
-      (c) => c.commune === commune
-    );
-    setCoverage(selectedCoverage);
-  };
+    
+    //Si la cadena es vacía (esto es para corregir el error de que si se vuelve a "seleccionar comuna" la pagina se cae)
+    if(commune === ""){
+      setCoverage({
+        coverageID: "",
+        commune: "",
+    })
+    }
+    else{
+      const selectedCoverage = communes.find(
+        (c) => c.commune === commune
+      );
+      setCoverage(selectedCoverage);
+    }
+};
 
   useEffect(() => {
     obtenerCoberturas()

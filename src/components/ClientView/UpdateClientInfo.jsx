@@ -217,6 +217,8 @@ const SubmitButton = styled.button`
 `;
 
 export const UpdateClientInfo = () => {
+
+
     // Define los estados para cada campo del formulario
     const [nombre, setNombre] = useState('');
     const [apellido, setApellido] = useState('');
@@ -234,10 +236,20 @@ export const UpdateClientInfo = () => {
 
     const handleCommuneChange = (event) => {
         const commune = event.target.value;
-        const selectedCoverage = communes.find(
+        
+        //Si la cadena es vacía (esto es para corregir el error de que si se vuelve a "seleccionar comuna" la pagina se cae)
+        if(commune === ""){
+          setCoverage({
+            coverageID: "",
+            commune: "",
+        })
+        }
+        else{
+          const selectedCoverage = communes.find(
             (c) => c.commune === commune
-        );
-        setCoverage(selectedCoverage);
+          );
+          setCoverage(selectedCoverage);
+        }
     };
 
     useEffect(() => {
@@ -270,12 +282,12 @@ export const UpdateClientInfo = () => {
         }
 
         //borrar estos print despues
-        console.log("El objeto usuario es:");
-        console.log(usuarioActualizado);
+        // console.log("El objeto usuario esss:");
+        // console.log(usuarioActualizado);
 
         const user = JSON.parse(sessionStorage.getItem('user'));
         const id = user.userID;
-        console.log(user.userID);
+        //console.log(user.userID);
 
          const {name,surname,commune} = usuarioActualizado;
 

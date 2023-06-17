@@ -105,7 +105,7 @@ export const RequestDetails = ({requestDetails}) => {
         .then(data => setVendedor(data))
         .catch((error) => console.log("Error al obtener el vendedor: ",error));
       }, []);
-      
+      console.log("Usuarioooooooo es: ",usuario);
         
 
         return (
@@ -137,7 +137,10 @@ export const RequestDetails = ({requestDetails}) => {
                     <ItemInfoUsuario>
                         <AccessTime/>
                         <Label>Horario de atención: </Label>
-                        {usuario.startTime.substring(0, 5)} - {usuario.endTime.substring(0, 5)}                    
+                        {usuario.startTime === null || usuario.endTime === null ? 
+                        <p style={{ fontStyle: 'italic' }}>No Informado</p>
+                        : usuario.startTime.substring(0, 5) - usuario.endTime.substring(0, 5) 
+                         }                 
                     </ItemInfoUsuario>
 
                 </InformacionUsuario>
