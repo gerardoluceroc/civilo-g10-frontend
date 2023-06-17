@@ -311,11 +311,20 @@ export const RegisterForm = () => {
       }
     }
 
-    //borrar estos print despues
-    console.log("El objeto usuario es:");
-    console.log(usuarioNuevo);
+    //Si alguno de los campos está vacío, se muestra una alerta indicando que no se ha podido realizar la actualización
+    if(usuarioNuevo.name === "" || usuarioNuevo.surname === "" || usuarioNuevo.email === "" || usuarioNuevo.password === "" || telefono === "" || usuarioNuevo.commune === "" || usuarioNuevo.startTime === "" || usuarioNuevo.endTime === ""){
+      alert("Error: Debe completar todos los campos");
 
-    registrarUsuario(usuarioNuevo);
+    }
+
+    else{
+      //borrar estos print despues
+      // console.log("El objeto usuario es:");
+      // console.log(usuarioNuevo);
+
+      registrarUsuario(usuarioNuevo);
+
+    }
   }
   return (
 
