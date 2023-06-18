@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { RUTA_CORTINAS, RUTA_GET_IVA, URL_CIVILO, RUTA_TUBOS, RUTA_COTIZACIONES, URL_HOME } from '../../api/civilo_roller_api';
+import { RUTA_CORTINAS, RUTA_GET_IVA, URL_CIVILO, RUTA_TUBOS, RUTA_COTIZACIONES, URL_HOME, RUTA_PDF } from '../../api/civilo_roller_api';
 
 const Container = styled.div`
     display: flex;
@@ -329,6 +329,40 @@ const SellerQuote = () => {
             console.error('Error al enviar la cotización:', error);
         }
     };
+
+
+
+    
+    //const quote = JSON.parse(localStorage.getItem('quote'));
+    //const id = quote.quoteID;
+    const downloadPDF = () => {
+        // Solicitud HTTP GET al endpoint de generación de PDF
+        //const url = `${RUTA_PDF.replace(':id', id)}`;
+        //fetch(url)
+        fetch(`/cotizaciones/1/pdf`)
+            .then((response) => response.blob())
+            .then((blob) => {
+                // Crear una URL para el blob del PDF
+                const url = URL.createObjectURL(blob);
+                // Crear un enlace para descargar el PDF
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'cotizacion.pdf';
+                // Hacer clic en el enlace para iniciar la descarga
+                a.click();
+                // Liberar la URL del blob
+                URL.revokeObjectURL(url);
+            })
+            .catch((error) => {
+                // Manejar el error en caso de que ocurra
+                console.error('Error al descargar el PDF:', error);
+            });
+    };
+
+
+
+
+
     return (
         <Container>
             <Title>Cotización</Title>
@@ -550,6 +584,9 @@ const SellerQuote = () => {
             <ButtonContainer>
                 <RedButton onClick={() => window.location.href = `${URL_HOME}`}>Regresa</RedButton>
                 <GreenButton onClick={handleQuote}>Cotizar</GreenButton>
+            </ButtonContainer>
+            <ButtonContainer>
+                <button onClick={downloadPDF}>Descargar en PDF</button>
             </ButtonContainer>
         </Container>
     );
