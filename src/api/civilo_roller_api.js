@@ -28,6 +28,7 @@ const RUTA_VENDEDORES = "/sellers"
 export const RUTA_TUBOS = "/pipes"
 export const RUTA_COTIZACIONES = "/quotes"
 export const RUTA_PDF = "/quotes/:id/pdf" // :id porque el id es dinámico
+export const RUTA_REQUESTS = "/requests"
 
 
 //Funcion para pedirle al servidor que elimine un usuario especifico

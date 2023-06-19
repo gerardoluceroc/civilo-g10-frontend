@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { RUTA_CORTINAS, RUTA_GET_IVA, URL_CIVILO, RUTA_TUBOS, RUTA_COTIZACIONES, URL_HOME, RUTA_PDF } from '../../api/civilo_roller_api';
+import { RUTA_CORTINAS, RUTA_GET_IVA, URL_CIVILO, RUTA_TUBOS, RUTA_COTIZACIONES, URL_HOME, RUTA_PDF, RUTA_REQUESTS } from '../../api/civilo_roller_api';
 
 const Container = styled.div`
     display: flex;
@@ -80,7 +80,7 @@ const SellerQuote = () => {
     const [cost, setCost] = useState(null);
     const [saleValue, setSaleValue] = useState(null);
     const [total, setTotal] = useState(null);
-
+    const [requests, setRequests] = useState([]);
 
     useEffect(() => {
         const fetchIva = async () => {
@@ -115,10 +115,22 @@ const SellerQuote = () => {
             }
         };
 
+        const fetchRequests = async () => {
+            try {
+                const response = await fetch(`${URL_CIVILO}${RUTA_REQUESTS}`);
+                const data = await response.json();
+                setRequests(data)
+                console.log(requests)
+            } catch (error) {
+                console.log("Error al obtener las solicitudes:", error);
+            }
+        };
+
 
         fetchIva();
         fetchCurtains();
         fetchPipes();
+        fetchRequests();
     }, []);
 
     const createInitialQuoteData = (length) => {
@@ -227,6 +239,14 @@ const SellerQuote = () => {
         setQuoteData(updatedData);
     };
 
+    const handleUserChange = (index, value) => {
+        if(value) {
+            const updatedData = [...quoteData];
+            updatedData[index][14] = JSON.parse(value);
+            setQuoteData(updatedData);
+        } 
+    };
+
     useEffect(() => {
         // Guardar los datos por columna
         const saveData = () => {
@@ -265,6 +285,7 @@ const SellerQuote = () => {
                         seller: JSON.parse(sessionStorage.getItem('user')), // Por determinar
                         curtain: curtains[i], // Por determinar
                         currentIVA: null, // Por determinar
+                        requestEntity: quoteData[i][14]
                     };
                     console.log(rowData.pipe)
                     data.push(rowData);
@@ -305,7 +326,8 @@ const SellerQuote = () => {
                 date: null,
                 seller: JSON.parse(sessionStorage.getItem('user')),
                 curtain: curtains[i],
-                currentIVA: null
+                currentIVA: null,
+                requestEntity: data[14]
             }));
             const response = await fetch(`${URL_CIVILO}${RUTA_COTIZACIONES}`, {
                 method: 'POST',
@@ -399,6 +421,61 @@ const SellerQuote = () => {
                 value={description}
                 onChange={handleDescriptionChange}
             />
+
+            <Subtitle>Seleccione solicitud:</Subtitle> 
+            <TableRow>
+                <TableCell>
+                    <select
+                        value={quoteData[0][14] ? JSON.stringify(quoteData[0][14]) : ""}
+                        onChange={(e) => handleUserChange(0, e.target.value)}
+                    >
+                        <option value="">Seleccionar</option> {/* Opción por defecto */}
+                        {requests
+                            .filter((request) => request.status.statusName === "Asignada")
+                            .map((request) => (
+                                <option key={request.requestID} value={request.requestID}>
+                                    {request.requestID}
+                                </option>
+                            ))}
+                    </select>
+                </TableCell>
+            </TableRow>
+
+            {/*  No borrar             
+            <TableRow>
+                {requests.map((request, index) => (
+                    <TableCell key={request.requestID}>
+                        <select
+                            value={quoteData[index][14] ? JSON.stringify(quoteData[index][14]) : ""}
+                            onChange={(e) => handleUserChange(index, e.target.value)}
+                        >
+                            <option value="">Seleccionar</option> 
+                            {requests
+                                .filter((request) => request.status.statusName === "Asignada")
+                                .map((request) => ( 
+                                <option key={request.requestID} value={request.requestID}>
+                                    {request.requestID}
+                                </option>
+                            ))}
+                        </select>
+                    </TableCell>        
+                ))}  
+            </TableRow>
+            */}
+            
+
+
+             
+
+                    
+
+
+
+            
+            
+
+
+        
             <Subtitle>Ingreso de costos y variables</Subtitle>
             <Table>
                 <tbody>
@@ -584,10 +661,9 @@ const SellerQuote = () => {
             <ButtonContainer>
                 <RedButton onClick={() => window.location.href = `${URL_HOME}`}>Regresa</RedButton>
                 <GreenButton onClick={handleQuote}>Cotizar</GreenButton>
+                <GreenButton onClick={downloadPDF}>Descargar en PDF</GreenButton>
             </ButtonContainer>
-            <ButtonContainer>
-                <button onClick={downloadPDF}>Descargar en PDF</button>
-            </ButtonContainer>
+            
         </Container>
     );
 };
