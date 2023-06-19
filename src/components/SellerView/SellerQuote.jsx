@@ -422,6 +422,7 @@ const SellerQuote = () => {
                 onChange={handleDescriptionChange}
             />
 
+            {/*
             <Subtitle>Seleccione solicitud:</Subtitle> 
             <TableRow>
                 <TableCell>
@@ -429,7 +430,7 @@ const SellerQuote = () => {
                         value={quoteData[0][14] ? JSON.stringify(quoteData[0][14]) : ""}
                         onChange={(e) => handleUserChange(0, e.target.value)}
                     >
-                        <option value="">Seleccionar</option> {/* Opción por defecto */}
+                        <option value="">Seleccionar</option>
                         {requests
                             .filter((request) => request.status.statusName === "Asignada")
                             .map((request) => (
@@ -440,8 +441,8 @@ const SellerQuote = () => {
                     </select>
                 </TableCell>
             </TableRow>
-
-            {/*  No borrar             
+            */}
+                       
             <TableRow>
                 {requests.map((request, index) => (
                     <TableCell key={request.requestID}>
@@ -461,7 +462,7 @@ const SellerQuote = () => {
                     </TableCell>        
                 ))}  
             </TableRow>
-            */}
+            
             
 
 
