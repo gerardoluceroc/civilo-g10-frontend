@@ -163,6 +163,13 @@ export const getAllSellers = async () => {
   return vendedores;
 }
 
+//Funcion en la cual se obtiene una solicitud de cortina de acuerdo a su id
+export const getRequestById = async (id_solicitud) => {
+  const respuesta = await fetch(`${URL_CIVILO}${RUTA_GET_REQUESTS}/${id_solicitud}`);
+  const solicitud = await respuesta.json();
+  return solicitud;
+}
+
 
 export const iniciarSesion = (usuario) => {
   //Se envia la peticion POST al servidor

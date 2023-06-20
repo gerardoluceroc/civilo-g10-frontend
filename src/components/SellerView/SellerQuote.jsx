@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { RUTA_CORTINAS, RUTA_GET_IVA, URL_CIVILO, RUTA_TUBOS, RUTA_COTIZACIONES, URL_HOME, RUTA_PDF, RUTA_REQUESTS, obtenerAsignacionesVendedor } from '../../api/civilo_roller_api';
+import { RUTA_CORTINAS, RUTA_GET_IVA, URL_CIVILO, RUTA_TUBOS, RUTA_COTIZACIONES, URL_HOME, RUTA_PDF, RUTA_REQUESTS, obtenerAsignacionesVendedor, getRequestById } from '../../api/civilo_roller_api';
+import { RequestResume } from '../ClientView/RequestResume';
 
 const Container = styled.div`
     display: flex;
@@ -82,6 +83,8 @@ const SellerQuote = () => {
     const [saleValue, setSaleValue] = useState(null);
     const [total, setTotal] = useState(null);
     const [requests, setRequests] = useState([]);
+    const [solicitudSeleccionada, setSolicitudSeleccionada] = useState([]);
+    const [solicitudVisible, setSolicitudVisible] = useState(null);
     const user = JSON.parse(sessionStorage.getItem("user"));
     const id_vendedor = user.userID;
 
@@ -143,6 +146,8 @@ const SellerQuote = () => {
         fetchPipes();
         //fetchRequests();
     }, [id_vendedor]);
+
+
 
     const createInitialQuoteData = (length) => {
         const initialData = [];
@@ -256,7 +261,7 @@ const SellerQuote = () => {
 
 
 
-    
+    //Funcion que se activa al cambiar lo seleccionado en select
     const handleUserChange = (index, value) => {
         if(value) {
             const updatedData = [...quoteData];
@@ -264,14 +269,96 @@ const SellerQuote = () => {
             setQuoteData(updatedData);
         } 
 
+        const id_solicitud = index.target.value;
+
+        if(id_solicitud !== ""){
+            getRequestById(id_solicitud)
+            .then((solicitud) => {
+                console.log("la solicitud es: ", solicitud);
+                setSolicitudSeleccionada(solicitud);
+            })
+            .catch((error) => console.log("Error al obtener la solicitud especificada: ",error))
+        }
+        else{
+            setSolicitudSeleccionada([]);
+        }
+
         console.log("index es: ",index.target.value);
         console.log("value es: ",value);
-
-
-        
     };
+
+    //Este useEffect es para que cuando cambie la solicitud seleccionada se renderize nuevamente el componente 
+    //Y se muestre el resumen de otra solicitud
+    useEffect(() => {
+        let componenteRequestResume = null;
+
+        if(solicitudSeleccionada.length !== 0 ){
+            console.log("JJJJJJJJJJJJJJJJJ",solicitudSeleccionada.status.statusName.toLowerCase());
+            if (solicitudSeleccionada.status.statusName.toLowerCase() === "sin asignar") {
+                componenteRequestResume =
+                  <RequestResume
+                    key={solicitudSeleccionada.requestID}
+                    fecha={solicitudSeleccionada.admissionDate}
+                    IdSolicitud={solicitudSeleccionada.requestID}
+                    estado={"Enviada"}
+                    colorLetraTag="white"
+                    colorFondoTag="#1f618d"
+                    requestDetails={solicitudSeleccionada}
+                  />
+                ;
+              } else if (solicitudSeleccionada.status.statusName.toLowerCase() === "asignada") {
+                componenteRequestResume = 
+                  <RequestResume
+                    key={solicitudSeleccionada.requestID}
+                    fecha={solicitudSeleccionada.admissionDate}
+                    IdSolicitud={solicitudSeleccionada.requestID}
+                    estado={solicitudSeleccionada.status.statusName}
+                    colorLetraTag="#134c2b"
+                    colorFondoTag="#53cfb6"
+                    requestDetails={solicitudSeleccionada}
+                  />
+                ;
+              } else if (solicitudSeleccionada.status.statusName.toLowerCase() === "finalizada y fallida") {
+                componenteRequestResume =
+                  <RequestResume
+                    key={solicitudSeleccionada.requestID}
+                    fecha={solicitudSeleccionada.admissionDate}
+                    IdSolicitud={solicitudSeleccionada.requestID}
+                    estado={"Sin Éxito"}
+                    colorLetraTag="#9e1919"
+                    colorFondoTag="#f5b7b1"
+                    requestDetails={solicitudSeleccionada}
+                  />
+                ;
+              } else if (solicitudSeleccionada.status.statusName.toLowerCase() === "finalizada y exitosa") {
+                componenteRequestResume = 
+                  <RequestResume
+                    key={solicitudSeleccionada.requestID}
+                    fecha={solicitudSeleccionada.admissionDate}
+                    IdSolicitud={solicitudSeleccionada.requestID}
+                    estado={"Completada"}
+                    colorLetraTag="white"
+                    colorFondoTag=" #22653f"
+                    requestDetails={solicitudSeleccionada}
+                  />
+                ;
+              }
+        }
+        setSolicitudVisible(componenteRequestResume);
+
+    }, [solicitudSeleccionada])
     
-    
+
+
+
+
+
+
+
+
+
+
+
 
     {/*
     const handleUserChange = (e) => {
@@ -528,8 +615,7 @@ const SellerQuote = () => {
                     </option>
                 ))}
             </select> 
-
-
+            {solicitudVisible}
             
             
 
