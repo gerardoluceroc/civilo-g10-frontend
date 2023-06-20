@@ -7,7 +7,8 @@ const Container = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    //height: 100vh;
+    margin-bottom: 3%;
     `;
 
 const Title = styled.h1`
@@ -61,9 +62,9 @@ const GreenButton = styled(Button)`
     `;
 
 const DescriptionInput = styled.textarea`
-    width: 800px; /* Ajusta el ancho según tus necesidades */
-    height: 400px; /* Ajusta el alto según tus necesidades */
-    font-size: 18px; /* Ajusta el tamaño de la letra según tus necesidades */
+    width: 30%; /* Ajusta el ancho según tus necesidades */
+    height: 70%; /* Ajusta el alto según tus necesidades */
+    font-size: x-large; /* Ajusta el tamaño de la letra según tus necesidades */
 `;
 
 
@@ -262,6 +263,12 @@ const SellerQuote = () => {
             updatedData[index][14] = JSON.parse(value);
             setQuoteData(updatedData);
         } 
+
+        console.log("index es: ",index.target.value);
+        console.log("value es: ",value);
+
+
+        
     };
     
     
