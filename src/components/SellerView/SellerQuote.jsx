@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { RUTA_CORTINAS, RUTA_GET_IVA, URL_CIVILO, RUTA_TUBOS, RUTA_COTIZACIONES, URL_HOME, RUTA_PDF, RUTA_REQUESTS } from '../../api/civilo_roller_api';
+import { RUTA_CORTINAS, RUTA_GET_IVA, URL_CIVILO, RUTA_TUBOS, RUTA_COTIZACIONES, URL_HOME, RUTA_PDF, RUTA_REQUESTS, obtenerAsignacionesVendedor } from '../../api/civilo_roller_api';
 
 const Container = styled.div`
     display: flex;
@@ -81,6 +81,8 @@ const SellerQuote = () => {
     const [saleValue, setSaleValue] = useState(null);
     const [total, setTotal] = useState(null);
     const [requests, setRequests] = useState([]);
+    const user = JSON.parse(sessionStorage.getItem("user"));
+    const id_vendedor = user.userID;
 
     useEffect(() => {
         const fetchIva = async () => {
@@ -115,23 +117,31 @@ const SellerQuote = () => {
             }
         };
 
+        {/*
         const fetchRequests = async () => {
             try {
                 const response = await fetch(`${URL_CIVILO}${RUTA_REQUESTS}`);
                 const data = await response.json();
                 setRequests(data)
-                console.log(requests)
+                console.log("solicitudes =", requests)
             } catch (error) {
                 console.log("Error al obtener las solicitudes:", error);
             }
         };
+        */}
+
+        console.log("id vendedor",id_vendedor);
+        obtenerAsignacionesVendedor(id_vendedor)
+        .then((asignaciones) => setRequests(asignaciones))
+        .catch((error) => console.log("Error al obtener las asignaciones: ",error));
+        console.log("las solicitudes del seller son",requests); 
 
 
         fetchIva();
         fetchCurtains();
         fetchPipes();
-        fetchRequests();
-    }, []);
+        //fetchRequests();
+    }, [id_vendedor]);
 
     const createInitialQuoteData = (length) => {
         const initialData = [];
@@ -239,6 +249,13 @@ const SellerQuote = () => {
         setQuoteData(updatedData);
     };
 
+    
+
+
+
+
+
+    
     const handleUserChange = (index, value) => {
         if(value) {
             const updatedData = [...quoteData];
@@ -246,6 +263,19 @@ const SellerQuote = () => {
             setQuoteData(updatedData);
         } 
     };
+    
+    
+
+    {/*
+    const handleUserChange = (e) => {
+        if(e) {
+            setRequests(e.target.value)
+        }
+    };
+    */}
+
+
+
 
     useEffect(() => {
         // Guardar los datos por columna
@@ -354,7 +384,7 @@ const SellerQuote = () => {
 
 
 
-    
+    {/* NO PESCAR POR AHORA}
     //const quote = JSON.parse(localStorage.getItem('quote'));
     //const id = quote.quoteID;
     const downloadPDF = () => {
@@ -380,7 +410,7 @@ const SellerQuote = () => {
                 console.error('Error al descargar el PDF:', error);
             });
     };
-
+    */}
 
 
 
@@ -442,7 +472,9 @@ const SellerQuote = () => {
                 </TableCell>
             </TableRow>
             */}
-                       
+
+            {/*
+            <Subtitle>Seleccione solicitud:</Subtitle>        
             <TableRow>
                 {requests.map((request, index) => (
                     <TableCell key={request.requestID}>
@@ -462,6 +494,35 @@ const SellerQuote = () => {
                     </TableCell>        
                 ))}  
             </TableRow>
+            */}                        
+
+            {/*FUNCAAA
+            <Subtitle>Seleccione solicitud:</Subtitle>
+            <select onChange={handleUserChange}>
+                <option value="">Seleccionar</option>
+                {requests
+                    .filter((request) => request.status.statusName === "Asignada")
+                    .map((request) => (
+                    <option key={request.requestID} value={request.requestID}>
+                        {request.requestID}
+                    </option>
+                ))}
+            </select>
+            */} 
+
+            <Subtitle>Seleccione solicitud:</Subtitle>
+            <select onChange={(e) => handleUserChange(e)}>
+                <option value="">Seleccionar</option>
+                {requests
+                    .filter((request) => request.status.statusName === "Asignada")
+                    .map((request, index) => (
+                    <option key={request.requestID} value={request.requestID} index={index}>
+                        {request.requestID}
+                    </option>
+                ))}
+            </select> 
+
+
             
             
 
@@ -662,8 +723,8 @@ const SellerQuote = () => {
             <ButtonContainer>
                 <RedButton onClick={() => window.location.href = `${URL_HOME}`}>Regresa</RedButton>
                 <GreenButton onClick={handleQuote}>Cotizar</GreenButton>
-                <GreenButton onClick={downloadPDF}>Descargar en PDF</GreenButton>
-            </ButtonContainer>
+                <GreenButton >Descargar en PDF</GreenButton>
+            </ButtonContainer> 
             
         </Container>
     );
