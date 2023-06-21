@@ -451,7 +451,8 @@ const SellerQuote = () => {
                 seller: JSON.parse(sessionStorage.getItem('user')),
                 curtain: curtains[i],
                 currentIVA: null,
-                requestEntity: data[14]
+                //requestEntity: quoteData[i][14]
+                requestEntity: solicitudSeleccionada
             }));
             const response = await fetch(`${URL_CIVILO}${RUTA_COTIZACIONES}`, {
                 method: 'POST',
