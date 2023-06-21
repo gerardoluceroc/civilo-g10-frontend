@@ -170,6 +170,28 @@ export const getRequestById = async (id_solicitud) => {
   return solicitud;
 }
 
+//Funcion para realizar la solicitud del pdf de la cotizacion para descargar
+export const solicitarPDF = (sellerEntity, id_solicitud) =>{
+  //Se envia la peticion POST al servidor
+  fetch(`${URL_CIVILO}${RUTA_COTIZACIONES}/${id_solicitud}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(sellerEntity),
+  })
+    .then((response) => {
+      if (response.ok) {
+        console.log("Solicitud enviada con exito");
+      } else {
+        console.log("Fallo al enviar la solicitud del PDF");
+      }
+    })
+    .catch((error) => {
+      console.error("Fallo al enviar la solicitud del PDF: ", error);
+    });
+
+}
 
 export const iniciarSesion = (usuario) => {
   //Se envia la peticion POST al servidor

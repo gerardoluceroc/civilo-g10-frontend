@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { RUTA_CORTINAS, RUTA_GET_IVA, URL_CIVILO, RUTA_TUBOS, RUTA_COTIZACIONES, URL_HOME, RUTA_PDF, RUTA_REQUESTS, obtenerAsignacionesVendedor, getRequestById } from '../../api/civilo_roller_api';
+import { RUTA_CORTINAS, RUTA_GET_IVA, URL_CIVILO, RUTA_TUBOS, RUTA_COTIZACIONES, URL_HOME, RUTA_PDF, RUTA_REQUESTS, obtenerAsignacionesVendedor, getRequestById, solicitarPDF } from '../../api/civilo_roller_api';
 import { RequestResume } from '../ClientView/RequestResume';
 
 const Container = styled.div`
@@ -293,7 +293,6 @@ const SellerQuote = () => {
         let componenteRequestResume = null;
 
         if(solicitudSeleccionada.length !== 0 ){
-            console.log("JJJJJJJJJJJJJJJJJ",solicitudSeleccionada.status.statusName.toLowerCase());
             if (solicitudSeleccionada.status.statusName.toLowerCase() === "sin asignar") {
                 componenteRequestResume =
                   <RequestResume
@@ -347,6 +346,25 @@ const SellerQuote = () => {
         setSolicitudVisible(componenteRequestResume);
 
     }, [solicitudSeleccionada])
+
+
+
+    //Funcion que se activa cuando se presiona el boton descargar PDF
+    const handleDescargarPDF = () => {
+
+        const vendedor = JSON.parse(sessionStorage.getItem("user"));
+        let id_solicitud = [];
+
+        //Si existe alguna solicitud seleccionada
+        if(solicitudSeleccionada.length !== 0){
+            id_solicitud = solicitudSeleccionada.requestID;
+            console.log(id_solicitud, vendedor);
+            //se envia al servidor la entidad seller y la id de la cotizacion para realizar el descargo del PDF
+            solicitarPDF(vendedor, id_solicitud);
+        }
+
+    
+    }
     
 
 
@@ -817,7 +835,7 @@ const SellerQuote = () => {
             <ButtonContainer>
                 <RedButton onClick={() => window.location.href = `${URL_HOME}`}>Regresa</RedButton>
                 <GreenButton onClick={handleQuote}>Cotizar</GreenButton>
-                <GreenButton >Descargar en PDF</GreenButton>
+                <GreenButton onClick={handleDescargarPDF}>Descargar en PDF</GreenButton>
             </ButtonContainer> 
             
         </Container>
