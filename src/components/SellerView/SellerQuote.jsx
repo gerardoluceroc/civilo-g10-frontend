@@ -350,7 +350,7 @@ const SellerQuote = () => {
 
 
     //Funcion que se activa cuando se presiona el boton descargar PDF
-    const handleDescargarPDF = () => {
+    const handleDownloadPDF = () => {
 
         const vendedor = JSON.parse(sessionStorage.getItem("user"));
         let id_solicitud = [];
@@ -361,9 +361,10 @@ const SellerQuote = () => {
             console.log(id_solicitud, vendedor);
             //se envia al servidor la entidad seller y la id de la cotizacion para realizar el descargo del PDF
             solicitarPDF(vendedor, id_solicitud);
+        } else {
+            alert('Debe seleccionar una solicitud');
         }
-
-    
+         
     }
     
 
@@ -835,7 +836,7 @@ const SellerQuote = () => {
             <ButtonContainer>
                 <RedButton onClick={() => window.location.href = `${URL_HOME}`}>Regresa</RedButton>
                 <GreenButton onClick={handleQuote}>Cotizar</GreenButton>
-                <GreenButton onClick={handleDescargarPDF}>Descargar en PDF</GreenButton>
+                <GreenButton onClick={handleDownloadPDF}>Descargar en PDF</GreenButton>
             </ButtonContainer> 
             
         </Container>

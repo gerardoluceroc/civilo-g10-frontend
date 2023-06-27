@@ -182,10 +182,35 @@ export const solicitarPDF = (sellerEntity, id_solicitud) =>{
   })
     .then((response) => {
       if (response.ok) {
-        console.log("Solicitud enviada con exito");
+        return response.json(); // Parsear el cuerpo de la respuesta como un objeto JSON   
       } else {
         console.log("Fallo al enviar la solicitud del PDF");
       }
+    })
+    .then((data) => {
+      const fileName = data.fileName; // Obtener el nombre del archivo del objeto JSON
+      const pdfData = data.pdfData; // Obtener los datos del PDF codificados en Base64
+
+      console.log("Nombre del archivo:", fileName);
+
+      // Decodificar la cadena Base64 a bytes
+      const pdfBytes = Uint8Array.from(atob(pdfData), c => c.charCodeAt(0));
+
+      // Crear un objeto Blob a partir de los bytes del PDF
+      const blob = new Blob([pdfBytes], { type: "application/pdf" });
+      
+      // Crear un objeto URL para el blob
+      const url = URL.createObjectURL(blob);
+      
+      // Crear un enlace temporal para descargar el archivo
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = fileName; // Nombre del archivo
+      link.click();
+      
+      // Liberar el objeto URL
+      URL.revokeObjectURL(url);
+
     })
     .catch((error) => {
       console.error("Fallo al enviar la solicitud del PDF: ", error);
