@@ -231,6 +231,7 @@ export const RegisterForm = () => {
   const [codigoInternacional, setCodigoInternacional] = useState('+56');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [rut, setRut] = useState('');
   const [, setPasswordRepetida] = useState('');
   const [rolUsuario, setRolUsuario] = useState('Cliente');
   const [birthDate, setBirthDate] = useState('');
@@ -300,6 +301,7 @@ export const RegisterForm = () => {
       "surname": apellido,
       "email": email,
       "password": password,
+      "rut": rut,
       "phoneNumber": `${codigoInternacional}${telefono}`,
       "commune": coverage.commune,
       "birthDate": birthDate,
@@ -312,7 +314,7 @@ export const RegisterForm = () => {
     }
 
     //Si alguno de los campos está vacío, se muestra una alerta indicando que no se ha podido realizar la actualización
-    if(usuarioNuevo.name === "" || usuarioNuevo.surname === "" || usuarioNuevo.email === "" || usuarioNuevo.password === "" || telefono === "" || usuarioNuevo.commune === "" || usuarioNuevo.startTime === "" || usuarioNuevo.endTime === ""){
+    if(usuarioNuevo.name === "" || usuarioNuevo.surname === "" || usuarioNuevo.email === "" || usuarioNuevo.password === "" || usuarioNuevo.rut === "" || telefono === "" || usuarioNuevo.commune === "" || usuarioNuevo.startTime === "" || usuarioNuevo.endTime === ""){
       alert("Error: Debe completar todos los campos");
 
     }
@@ -349,6 +351,8 @@ export const RegisterForm = () => {
       <Input type="password" name="password" placeholder='Contraseña Nueva' onChange={(e) => setPassword(e.target.value)} />
       <EspacioVertical />
       <Input type="password" name="password" placeholder='Repita Su Contraseña' onChange={(e) => setPasswordRepetida(e.target.value)} />
+      <EspacioVertical />
+      <Input type="rut" name="rut" placeholder='RUT' onChange={(e) => setRut(e.target.value)} />
       <EspacioVertical />
 
       <NumeroTelefonico>
