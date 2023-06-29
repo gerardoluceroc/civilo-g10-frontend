@@ -1,3 +1,4 @@
+import ExecutiveAssignmentUI from "../components/ExecutiveAssignmentUI";
 import ExecutiveAssignment from "../components/ExecutiveView/ExecutiveAssignment";
 import Footer from "../components/Footer"
 import NavbarResponsive from "../components/NavbarResponsive";
@@ -8,6 +9,7 @@ const ExecutiveAssignmentPage = () => {
         <>
             <NavbarResponsive/>
             <ExecutiveAssignment />
+            <ExecutiveAssignmentUI/>
             <Footer />
         </>
     )
