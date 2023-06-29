@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { obtenerCoberturas, registrarUsuario } from '../api/civilo_roller_api';
 import { useState, useEffect } from 'react';
-
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 
 
@@ -217,11 +217,28 @@ const SubmitButton = styled.button`
 
 `;
 
+const PasswordContainer = styled.div`
+  display: flex;
+  align-items: center;
+  background-color: #ccd0d5;
+  border-radius: 6px;
+  width: 80%;
+  margin: auto;
+`;
 
+const PasswordInput = styled.input`
+  flex: 1;
+  border: none;
+  background-color: transparent;
+  padding: 6px;
+  font-size: 13px;
+`;
 
-
-
-
+const ShowPasswordButton = styled.button`
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+`;
 
 export const RegisterForm = () => {
   // Define los estados para cada campo del formulario
@@ -242,7 +259,11 @@ export const RegisterForm = () => {
     coverageID: "",
     commune: "",
   });
+  const [showPassword, setShowPassword] = useState(false);
 
+  const handleTogglePassword = () => {
+    setShowPassword((prevShowPassword) => !prevShowPassword);
+  };
 
   const handleCommuneChange = (event) => {
     const commune = event.target.value;
@@ -348,9 +369,19 @@ export const RegisterForm = () => {
 
       <Input type="email" name="email" placeholder='Correo Electrónico' onChange={(e) => setEmail(e.target.value)} />
       <EspacioVertical />
-      <Input type="password" name="password" placeholder='Contraseña Nueva' onChange={(e) => setPassword(e.target.value)} />
-      <EspacioVertical />
-      <Input type="password" name="password" placeholder='Repita Su Contraseña' onChange={(e) => setPasswordRepetida(e.target.value)} />
+      
+      <PasswordContainer>
+      <PasswordInput
+        type={showPassword ? 'text' : 'password'}
+        name="password"
+        placeholder="Contraseña Nueva"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+      <ShowPasswordButton type="button" onClick={handleTogglePassword}>
+        {showPassword ? <VisibilityOff /> : <Visibility />}
+      </ShowPasswordButton>
+    </PasswordContainer>      
       <EspacioVertical />
       <Input type="rut" name="rut" placeholder='RUT' onChange={(e) => setRut(e.target.value)} />
       <EspacioVertical />
