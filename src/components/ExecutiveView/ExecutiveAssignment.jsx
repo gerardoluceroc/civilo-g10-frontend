@@ -98,11 +98,7 @@ const ExecutiveAssignment = () => {
             //const data = await response.json();
             //console.log(data);
             alert('Asignación realizada con éxito');
-            /*if (data.success) {
-                alert('Asignación realizada con éxito');
-            } else {
-                alert('Error al realizar la asignación');
-            }*/
+
         } catch (error) {
             console.error(error);
         }

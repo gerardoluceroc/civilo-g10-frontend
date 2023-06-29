@@ -9,6 +9,7 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import { getAllRequests, getAllSellers } from '../api/civilo_roller_api';
+import SelectUI from './SelectUI';
 
 // Define las cabeceras de las columnas y sus propiedades
 const columns = [
@@ -98,12 +99,14 @@ export default function ExecutiveAssignmentUI() {
     useEffect(() => {
         //Se obtienen del servidor todas las solicitudes y vendedores
         getAllRequests()
-            .then((data) => { setRequests(data) })
+            .then((data) => { setRequests(data);})
             .catch((error) => { console.log("Error al obtener las solicitudes ", error) })
 
         getAllSellers()
             .then((data) => { setSellers(data) })
-            .catch((error) => { console.log("Error al obtener los vendedores ", error) })
+            .catch((error) => { 
+              console.log("Error al obtener los vendedores ", error); })
+        
     }, [user.userID]);
 
     //funcion que crea un objeto con la fila de la tabla
@@ -127,8 +130,8 @@ export default function ExecutiveAssignmentUI() {
                                 formatDateToSpanish(solicitud.deadline),
                                 `${solicitud.user.name} ${solicitud.user.surname}`,
                                 solicitud.status.statusName,
-                                'vendedorrrrrrrrrrrrrrrrrrr'));
-    console.log("jajajaja",rows);
+                                solicitud.sellerId));
+
     
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -168,11 +171,14 @@ export default function ExecutiveAssignmentUI() {
                 <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
                   {/* Itera sobre las columnas y muestra los valores */}
                   {columns.map((column) => {
+                    const id_solicitud = row.identificador;
                     const value = row[column.id];
                     return (
                       <StyledTableCell key={column.id} align={column.align}>
+                        
                         {column.format && typeof value === 'number'
                           ? column.format(value)
+                          : column.id === "vendedorAsignado" ? <SelectUI tipoSelect={"asignarVendedor"} listado = {sellers} IdSolicitud={id_solicitud} solicitudes={requests} vendedorAsignado = {value}/> 
                           : value}
                       </StyledTableCell>
                     );
