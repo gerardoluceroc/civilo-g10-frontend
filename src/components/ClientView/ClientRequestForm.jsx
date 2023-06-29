@@ -226,7 +226,7 @@ const ClientRequestForm = () => {
                     placeholder="Descripción de solicitud"
                     value={description}
                     onChange={(event) => setDescription(event.target.value)}
-                    required
+                    
                 />
 
                 
