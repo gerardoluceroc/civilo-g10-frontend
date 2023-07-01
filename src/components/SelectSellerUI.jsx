@@ -3,21 +3,44 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import { URL_CIVILO, obtenerVendedor } from '../api/civilo_roller_api';
+import { URL_CIVILO, asignarVendedor, obtenerVendedor } from '../api/civilo_roller_api';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
-export default function SelectUI({ tipoSelect ,listado, IdSolicitud, solicitudes, vendedorAsignado: sellerID}) {
-  const [vendedorSeleccionado, setVendedorSeleccionado] = useState('');
+export default function SelectSellerUI({ tipoSelect ,listado, IdSolicitud, solicitudes, vendedorAsignado: sellerID}) {
+
+  const [vendedorSeleccionado, setVendedorSeleccionado] = useState();
   const [requests, setRequests] = useState(solicitudes);
   const [open, setOpen] = useState(false);
-  
-  console.log("djsfkdshkj id: ",IdSolicitud);
 
-  const handleSellerChange = async (requestID, sellerID) => {
-    //Queda pediente esta parte, no pude lograr hacer la peticion correctamente
-};
+  
+  //Funcion que se activa a seleccionar una opcion en el select
+  //En este caso, cuando se asigna un vendedor a una solicitud 
+  const handleSellerChange = async (event) => {
+
+    const opcionSeleccionada = event.target.value;
+
+    // Buscar el vendedor seleccionado en el listado de todos los vendedores
+    const vendedorSeleccionado = listado.find((item) => `${item.name} ${item.surname}` === opcionSeleccionada);
+    
+    //si se encuentra el vendedor
+    if (vendedorSeleccionado) {
+      try {
+        const mensaje = await asignarVendedor(IdSolicitud, vendedorSeleccionado.userID);
+        setVendedorSeleccionado(opcionSeleccionada); // Cambiar el valor del select
+        alert(mensaje);
+      } catch (error) {
+        alert(error.message);
+      }
+      } 
+    
+    else {
+      alert("Error: Vendedor no encontrado");
+    }
+
+
+  };
 
   const handleClose = () => {
     setOpen(false);
@@ -27,7 +50,7 @@ export default function SelectUI({ tipoSelect ,listado, IdSolicitud, solicitudes
     setOpen(true);
   };
 
-  if(tipoSelect === "asignarVendedor"){
+
     return (
         <div>
           <FormControl sx={{ m: 1, minWidth: 120}}>
@@ -39,7 +62,7 @@ export default function SelectUI({ tipoSelect ,listado, IdSolicitud, solicitudes
               onClose={handleClose}
               onOpen={handleOpen}
               value={vendedorSeleccionado}
-              onChange={(e) => handleSellerChange(IdSolicitud, sellerID)}
+              onChange={handleSellerChange}
             >
               {listado.map((item) => (
                 <MenuItem key={item.userID} value={`${item.name} ${item.surname}`}>
@@ -51,7 +74,5 @@ export default function SelectUI({ tipoSelect ,listado, IdSolicitud, solicitudes
           </FormControl>
         </div>
       );
-  }
-
 
 }

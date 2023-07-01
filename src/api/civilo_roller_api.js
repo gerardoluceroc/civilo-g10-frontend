@@ -29,6 +29,7 @@ export const RUTA_TUBOS = "/pipes"
 export const RUTA_COTIZACIONES = "/quotes"
 export const RUTA_PDF = "/quotes/:id/pdf" // :id porque el id es dinámico
 export const RUTA_REQUESTS = "/requests"
+export const RUTA_UPDATE_REQUEST_ASSIGNMENT = "/updateRequest";
 
 
 //Funcion para pedirle al servidor que elimine un usuario especifico
@@ -74,9 +75,28 @@ export const deleteUser = async (userID) => {
 
 
   }
-
-
 }
+//Funcion que asigna a un vendedor a una solicitud realizada por un cliente
+export const asignarVendedor = async (id_solicitud, id_vendedor) => {
+
+  try {
+    const response = await fetch(`${URL_CIVILO}${RUTA_REQUESTS}${RUTA_UPDATE_REQUEST_ASSIGNMENT}/${id_solicitud}/${id_vendedor}`, {
+      method: 'POST',
+    });
+
+    if (response.ok) {
+      return 'Asignación realizada con éxito';
+    } else {
+      throw new Error('Lo sentimos, asignación fallida');
+    }
+  } catch (error) {
+    console.log('Error:', error);
+    throw new Error('Lo sentimos, asignación fallida');
+  }
+};
+
+
+
 //Funcion que permite obtener todos los usuarios
 export const getAllUsers = async () => {
   const respuesta = await fetch(`${URL_CIVILO}${RUTA_GET_USERS}`);

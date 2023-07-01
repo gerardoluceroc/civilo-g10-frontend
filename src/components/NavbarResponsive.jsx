@@ -25,10 +25,11 @@ const RUTA_PAGE_REGISTER = "/register";
 const RUTA_PAGE_SOLICITUDES_CLIENTE = "/client/request";
 const RUTA_PAGE_ASIGNACIONES_VENDEDOR = "/seller/assignnedRequest";
 const RUTA_PAGE_COTIZAR_VENDEDOR = "/seller/quote";
-const RUTA_PAGE_SOLICITUDES_EJECUTIVO = "/executive/executiveAssignment";
+const RUTA_PAGE_SOLICITUDES_EJECUTIVO = "/executive/requestManagement";
 const RUTA_PAGE_UPDATE_INFO_CLIENTE = "/client/updateInfo";
 const RUTA_PAGE_ADMIN_READUSERS = "/admin/readUsers";
 const RUTA_PAGE_READ_CURTAINS = "/admin/readCurtains";
+const RUTA_PAGE_SOLICITUDES_ADMIN = "/admin/requestManagement"
 
 
 function NavbarResponsive() {
@@ -216,6 +217,10 @@ function NavbarResponsive() {
         //Si es de tipo ejecutivo
         if(JSON.parse(sessionStorage.getItem('user')).role.accountType.toLowerCase() === 'ejecutivo'){
           return RUTA_PAGE_SOLICITUDES_EJECUTIVO;
+        }
+        //Si es de tipo administrador
+        else if(JSON.parse(sessionStorage.getItem('user')).role.accountType.toLowerCase() === 'administrador'){
+          return RUTA_PAGE_SOLICITUDES_ADMIN;
         }
       }
     }

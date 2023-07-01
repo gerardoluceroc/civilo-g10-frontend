@@ -9,7 +9,23 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import { getAllRequests, getAllSellers } from '../api/civilo_roller_api';
-import SelectUI from './SelectUI';
+import SelectSellerUI from './SelectSellerUI';
+
+
+const Title = styled.h1`
+  text-align: center;
+  margin-bottom: 3%;
+`;
+
+const Div = styled.div`
+    min-height: calc(100vh - 80px);
+`;
+
+
+
+
+
+
 
 // Define las cabeceras de las columnas y sus propiedades
 const columns = [
@@ -80,9 +96,10 @@ const StyledTableCell = styled(TableCell)`
 
 const StyledTableContainer = styled(TableContainer)`
   max-height: 440px;
+  max-height: 100vh; /* Establece un tamaño máximo para la tabla */
 `;
 
-export default function ExecutiveAssignmentUI() {
+export default function RequestManagementUI() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 ////////////////////Codigo relacionado con los datos a colocar en la tabla /////////////////////////////////////////
@@ -96,6 +113,7 @@ export default function ExecutiveAssignmentUI() {
     const user = JSON.parse(sessionStorage.getItem("user"));
 
     console.log(user.userID);
+    
     useEffect(() => {
         //Se obtienen del servidor todas las solicitudes y vendedores
         getAllRequests()
@@ -146,8 +164,10 @@ export default function ExecutiveAssignmentUI() {
   };
 
   return (
+    <Div>
     <Paper>
       <StyledTableContainer>
+        <Title>Solicitudes Realizadas</Title>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
@@ -178,7 +198,7 @@ export default function ExecutiveAssignmentUI() {
                         
                         {column.format && typeof value === 'number'
                           ? column.format(value)
-                          : column.id === "vendedorAsignado" ? <SelectUI tipoSelect={"asignarVendedor"} listado = {sellers} IdSolicitud={id_solicitud} solicitudes={requests} vendedorAsignado = {value}/> 
+                          : column.id === "vendedorAsignado" ? <SelectSellerUI tipoSelect={"asignarVendedor"} listado = {sellers} IdSolicitud={id_solicitud} solicitudes={requests} vendedorAsignado = {value}/> 
                           : value}
                       </StyledTableCell>
                     );
@@ -198,5 +218,6 @@ export default function ExecutiveAssignmentUI() {
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
     </Paper>
+    </Div>
   );
 }

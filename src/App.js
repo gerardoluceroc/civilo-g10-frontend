@@ -26,6 +26,7 @@ import UpdateClientInfoPage from "./pages/UpdateClientInfoPage";
 import { UsersListPage } from "./pages/UsersListPage";
 import SellerQuotePage from "./pages/SellerQuotePage";
 import AdminReadProfitMarginPage from "./pages/AdminReadProfitMarginPage";
+import RequestManagementPage from "./pages/RequestManagementPage";
 
 
 function App() {
@@ -49,8 +50,11 @@ function App() {
       <Route path="/admin/readRoles" element={<AdminReadRolesPage />} />
       <Route path="/admin/readStatus" element={<AdminReadStatusPage />} />
       <Route path="/admin/readUsers" element={<UsersListPage/>} />
+      <Route path="/admin/requestManagement" element={<RequestManagementPage />} />
 
+      <Route path="/executive/requestManagement" element={<RequestManagementPage />} />
       <Route path="/executive/executiveAssignment" element={<ExecutiveAssignmentPage />} />
+      <Route path="/executive/requestManagement" element={<RequestManagementPage />} />
       <Route path="/executive" element={<ExecutiveHomePage />} />
       <Route path="/loginExecutive" element={<ExecutiveLoginFormPage />} />
 

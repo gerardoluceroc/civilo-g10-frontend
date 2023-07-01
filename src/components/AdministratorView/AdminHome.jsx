@@ -9,6 +9,7 @@ const PAGE_READ_ROLES = "/admin/readRoles";
 const PAGE_READ_STATUS = "/admin/readStatus";
 const PAGE_READ_CURTAINS = "/admin/readCurtains";
 const PAGE_PROFIT_MARGIN = "/admin/readProfitMargins";
+const PAGE_SOLICITUDES_ADMIN = "/admin/requestManagement"
 
 const CardContainer = styled.div`
   display: flex;
@@ -159,7 +160,7 @@ const AdminHome = () => {
               </InformationItem>
 
               <InformationItem>
-                <Titulo>Solicitudes de Cotización</Titulo>
+                <Titulo>Ver Solicitudes de Cotización</Titulo>
                 <Link to={PAGE_READ_REQUESTS} style={{ textDecoration: 'none' }}>
                   <Boton>Ver Detalles</Boton>
                 </Link>
@@ -168,6 +169,13 @@ const AdminHome = () => {
               <InformationItem>
                 <Titulo>Cotizaciones (en desarrollo) </Titulo>
                 <Link to={"/"} style={{ textDecoration: 'none' }}>
+                  <Boton>Ver Detalles</Boton>
+                </Link>
+              </InformationItem>
+
+              <InformationItem>
+                <Titulo>Gestionar Solicitudes de Cotización</Titulo>
+                <Link to={PAGE_SOLICITUDES_ADMIN} style={{ textDecoration: 'none' }}>
                   <Boton>Ver Detalles</Boton>
                 </Link>
               </InformationItem>
