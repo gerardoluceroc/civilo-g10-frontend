@@ -8,6 +8,8 @@ import { Button } from "@mui/material"
 import AddIcon from '@mui/icons-material/Add';
 import Modal from "../components/Modal"
 import { useState } from "react"
+import { showAlert } from "../functions/funciones"
+
 
 const MyRequestSection = styled.div`
   display: flex;
@@ -105,7 +107,7 @@ export const ClientRequestPage = () => {
   const handleModalClose = () => {
     setModalOpen(false);
   };
-  
+
 
 
   return (
