@@ -26,6 +26,7 @@ const ModalContainer = styled.div`
   width: 50%;
   height: 85%;
   overflow-y: auto; /* añade esta línea para permitir el desplazamiento vertical */
+  
 
 
   @media (max-width: 760px) {
