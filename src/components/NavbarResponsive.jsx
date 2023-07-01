@@ -30,6 +30,7 @@ const RUTA_PAGE_UPDATE_INFO_CLIENTE = "/client/updateInfo";
 const RUTA_PAGE_ADMIN_READUSERS = "/admin/readUsers";
 const RUTA_PAGE_READ_CURTAINS = "/admin/readCurtains";
 const RUTA_PAGE_SOLICITUDES_ADMIN = "/admin/requestManagement"
+const RUTA_PAGE_UPDATE_INFO_VENDEDOR = "/seller/sellerInformation"
 
 
 function NavbarResponsive() {
@@ -46,7 +47,7 @@ function NavbarResponsive() {
   const settingsCliente = ['Cerrar Sesión', 'Actualizar Información'];
 
   const pagesVendedor = ['Inicio', 'Mis Asignaciones', 'Cotizar'];
-  const settingsVendedor = ['Cerrar Sesión'];
+  const settingsVendedor = ['Cerrar Sesión', 'Actualizar Información', 'Actualizar Cobertura'];
 
   const pagesEjecutivo = ['Inicio', 'Solicitudes'];
   const settingsEjecutivo = ['Cerrar Sesión'];
@@ -180,6 +181,9 @@ function NavbarResponsive() {
     }
     else if(itemSeleccionado === 'actualizar información'){
       return RUTA_PAGE_UPDATE_INFO_CLIENTE;
+    }
+    else if(itemSeleccionado === 'actualizar cobertura'){
+      return RUTA_PAGE_UPDATE_INFO_VENDEDOR;
     }
 
     else if(itemSeleccionado === 'mis solicitudes'){

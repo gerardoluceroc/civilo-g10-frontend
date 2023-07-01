@@ -118,77 +118,85 @@ const Boton = styled.button`
 `;
 
 const AdminHome = () => {
-    return (
-        <>
-        <Header>Información de Plataforma</Header>
-        <p style={{ textAlign: 'center' }}>Acceda y administre los distintos aspectos que existen en la plataforma</p>
-        <CardContainer>    
-              
-              <InformationItem>
-                <Titulo>Usuarios Registrados</Titulo>
-                <Link to={PAGE_READ_USERS} style={{ textDecoration: 'none' }}>
-                  <Boton>Ver Detalles</Boton>
-                </Link>
-              </InformationItem>
+  return (
+    <>
+      <Header>Información de Plataforma</Header>
+      <p style={{ textAlign: 'center' }}>Acceda y administre los distintos aspectos que existen en la plataforma</p>
+      <CardContainer>
 
-              <InformationItem>
-                <Titulo>Roles Disponibles</Titulo>
-                <Link to={PAGE_READ_ROLES} style={{ textDecoration: 'none' }}>
-                  <Boton>Ver Detalles</Boton>
-                </Link>
-              </InformationItem>
+        <InformationItem>
+          <Titulo>Usuarios Registrados</Titulo>
+          <Link to={PAGE_READ_USERS} style={{ textDecoration: 'none' }}>
+            <Boton>Ver Detalles</Boton>
+          </Link>
+        </InformationItem>
 
-              <InformationItem>
-                <Titulo>Cortinas Registradas</Titulo>
-                <Link to={PAGE_READ_CURTAINS} style={{ textDecoration: 'none' }}>
-                  <Boton>Ver Detalles</Boton>
-                </Link>
-              </InformationItem>
+        <InformationItem>
+          <Titulo>Roles Disponibles</Titulo>
+          <Link to={PAGE_READ_ROLES} style={{ textDecoration: 'none' }}>
+            <Boton>Ver Detalles</Boton>
+          </Link>
+        </InformationItem>
 
-              <InformationItem>
-                <Titulo>Comunas de Cobertura</Titulo>
-                <Link to={PAGE_COVERAGES} style={{ textDecoration: 'none' }}>
-                  <Boton>Ver Detalles</Boton>
-                </Link>
-              </InformationItem>
+        <InformationItem>
+          <Titulo>Cortinas Registradas</Titulo>
+          <Link to={PAGE_READ_CURTAINS} style={{ textDecoration: 'none' }}>
+            <Boton>Ver Detalles</Boton>
+          </Link>
+        </InformationItem>
 
-              <InformationItem>
-                <Titulo>Estados Posibles de Solicitudes</Titulo>
-                <Link to={PAGE_READ_STATUS} style={{ textDecoration: 'none' }}>
-                  <Boton>Ver Detalles</Boton>
-                </Link>
-              </InformationItem>
+        <InformationItem>
+          <Titulo>Comunas de Cobertura</Titulo>
+          <Link to={PAGE_COVERAGES} style={{ textDecoration: 'none' }}>
+            <Boton>Ver Detalles</Boton>
+          </Link>
+        </InformationItem>
 
-              <InformationItem>
-                <Titulo>Ver Solicitudes de Cotización</Titulo>
-                <Link to={PAGE_READ_REQUESTS} style={{ textDecoration: 'none' }}>
-                  <Boton>Ver Detalles</Boton>
-                </Link>
-              </InformationItem>
+        <InformationItem>
+          <Titulo>Estados Posibles de Solicitudes</Titulo>
+          <Link to={PAGE_READ_STATUS} style={{ textDecoration: 'none' }}>
+            <Boton>Ver Detalles</Boton>
+          </Link>
+        </InformationItem>
 
-              <InformationItem>
-                <Titulo>Cotizaciones (en desarrollo) </Titulo>
-                <Link to={"/"} style={{ textDecoration: 'none' }}>
-                  <Boton>Ver Detalles</Boton>
-                </Link>
-              </InformationItem>
+        <InformationItem>
+          <Titulo>Ver Solicitudes de Cotización</Titulo>
+          <Link to={PAGE_READ_REQUESTS} style={{ textDecoration: 'none' }}>
+            <Boton>Ver Detalles</Boton>
+          </Link>
+        </InformationItem>
 
-              <InformationItem>
-                <Titulo>Gestionar Solicitudes de Cotización</Titulo>
-                <Link to={PAGE_SOLICITUDES_ADMIN} style={{ textDecoration: 'none' }}>
-                  <Boton>Ver Detalles</Boton>
-                </Link>
-              </InformationItem>
+        <InformationItem>
+          <Titulo>Cotizaciones (en desarrollo) </Titulo>
+          <Link to={"/"} style={{ textDecoration: 'none' }}>
+            <Boton>Ver Detalles</Boton>
+          </Link>
+        </InformationItem>
 
-              <InformationItem>
-                <Titulo>Margen de Utilidad</Titulo>
-                <Link to={PAGE_PROFIT_MARGIN} style={{ textDecoration: 'none' }}>
-                  <Boton>Ver Detalles</Boton>
-                </Link>
-              </InformationItem>
-            
-        </CardContainer>
-        </>
-    )};
+        <InformationItem>
+          <Titulo>Gestionar Solicitudes de Cotización</Titulo>
+          <Link to={PAGE_SOLICITUDES_ADMIN} style={{ textDecoration: 'none' }}>
+            <Boton>Ver Detalles</Boton>
+          </Link>
+        </InformationItem>
+
+        <InformationItem>
+          <Titulo>Margen de Utilidad</Titulo>
+          <Link to={PAGE_PROFIT_MARGIN} style={{ textDecoration: 'none' }}>
+            <Boton>Ver Detalles</Boton>
+          </Link>
+        </InformationItem>
+
+        <InformationItem>
+          <Titulo>Tubos de cortinas</Titulo>
+          <Link to={"/"} style={{ textDecoration: 'none' }}>
+            <Boton>Ver Detalles</Boton>
+          </Link>
+        </InformationItem>
+
+      </CardContainer>
+    </>
+  )
+};
 
 export default AdminHome;

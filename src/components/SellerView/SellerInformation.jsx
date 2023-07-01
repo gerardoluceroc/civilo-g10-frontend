@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { RUTA_COBERTURAS, RUTA_UPDATE_COBERTURAS_VENDEDOR, URL_CIVILO } from "../../api/civilo_roller_api";
+import { RUTA_COBERTURAS, RUTA_UPDATE_COBERTURAS_VENDEDOR, URL_CIVILO, URL_HOME } from "../../api/civilo_roller_api";
 
 const Container = styled.div`
   display: flex;
@@ -127,8 +127,16 @@ const SellerInformation = () => {
             coverageID: selectedCoverages,
             companyName: companyName,
         };
-        console.log(data);
-
+        console.log("PASO 1")
+        try {
+            console.log("PASO 1.1: ", JSON.parse(sessionStorage.getItem('user')).email != null);
+            if (JSON.parse(sessionStorage.getItem('user')).email != null) {
+                data.email = JSON.parse(sessionStorage.getItem('user')).email;
+            }
+        } catch (error) {
+            console.log("ERROR: ", error);
+        }
+        console.log("PASO 2: ", data);
         fetch(`${URL_CIVILO}${RUTA_UPDATE_COBERTURAS_VENDEDOR}`, {
             method: "POST",
             headers: {
@@ -138,8 +146,19 @@ const SellerInformation = () => {
         })
             .then((response) => {
                 if (response.ok) {
-                    alert("Información actualizada con exito");
-                    window.location.replace(RUTA_PAGE_LOGIN);
+                    console.log("PASO 3: ")
+                    try {
+                        if (JSON.parse(sessionStorage.getItem('user')).email != null) {
+                            console.log("TRY")
+                            alert("Información actualizada con exito");
+                            window.location.replace(URL_HOME);
+                        }
+                    } catch (error) {
+                        console.log("ERROR: ", error);
+                        console.log("NOP")
+                        alert("Información actualizada con exito");
+                        window.location.replace(RUTA_PAGE_LOGIN);
+                    }
                 } else {
                     alert("Complete todos los campos");
                 }
