@@ -14,28 +14,35 @@ const Container = styled.div`
     `;
 
 const Title = styled.h1`
-    font-size: 24px;
+    font-size: xx-large;
     `;
 
 const Subtitle = styled.h2`
-    font-size: 18px;
+    font-size: x-large;
     `;
 
 const Table = styled.table`
     border-collapse: collapse;
     margin-top: 20px;
+    
+    
     `;
 
 const TableRow = styled.tr``;
 
 const TableHeader = styled.th`
     padding: 8px;
-    border: 1px solid black;
+    border: 6px inset #073088;
+    background-color: #073088;
+    color: white;
+    
     `;
 
 const TableCell = styled.td`
     padding: 8px;
-    border: 1px solid black;
+    border: 6px inset #073088;
+    background-color: #1976d265;
+    
     `;
 
 const Button = styled.button`
@@ -73,9 +80,39 @@ const Input = styled.input`
   width: 100%;
 `;
 
+// const Select = styled.select`
+//     width: 100%;
+//   `;
+
 const Select = styled.select`
-    width: 100%;
-  `;
+  /* Estilos para el select */
+  padding: 8px;
+  font-size: large;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 200px;
+  text-align: center; /* Centrar el texto */
+
+  /* Estilos para las opciones del select */
+  option {
+    padding: 8px;
+  }
+`;
+
+const SelectSolicitud = styled.select`
+  /* Estilos para el select */
+  padding: 8px;
+  font-size: x-large;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 200px;
+  text-align: center; /* Centrar el texto */
+
+  /* Estilos para las opciones del select */
+  option {
+    padding: 8px;
+  }
+`;
 
 const Textarea = styled.textarea`
   width: 49%;
@@ -719,7 +756,7 @@ const SellerQuote = () => {
         onChange={handleDescriptionChange}
       />
       <Subtitle>Seleccione solicitud:</Subtitle>
-      <select onChange={(e) => handleUserChange(e)}>
+      <SelectSolicitud onChange={(e) => handleUserChange(e)}>
         <option value="">Seleccionar</option>
         {requests
           .filter((request) => request.status.statusName === "Asignada")
@@ -728,7 +765,7 @@ const SellerQuote = () => {
               {request.requestID}
             </option>
           ))}
-      </select>
+      </SelectSolicitud>
       {solicitudVisible}
 
       <Subtitle>Ingreso de costos y variables</Subtitle>
