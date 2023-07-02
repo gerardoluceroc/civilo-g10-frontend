@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { useState, useEffect } from 'react';
 import { RUTA_COBERTURAS, URL_CIVILO, registrarUsuario } from '../../api/civilo_roller_api';
+import { showAlert } from '../../functions/funciones';
 
 const Formulario = styled.form`
     background-color: #f8f8f8;
@@ -293,7 +294,7 @@ export const UpdateClientInfo = () => {
 
         //Si alguno de los campos está vacío, se muestra una alerta indicando que no se ha podido realizar la actualización
         if(name === "" || surname === "" || usuarioActualizado.email === "" || usuarioActualizado.password === "" || telefono === "" || commune === "" || startTime === "" || endTime === ""){
-          alert("Error: Debe completar todos los campos");
+          showAlert("Error: Debe completar todos los campos");
 
         }
 

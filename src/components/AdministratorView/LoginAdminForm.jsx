@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { RUTA_LOGIN_ADMIN, URL_CIVILO } from "../../api/civilo_roller_api";
+import { showAlert } from "../../functions/funciones";
 
 const RUTA_HOME = "/";
 const LoginContainer = styled.div`
@@ -91,11 +92,11 @@ const AdminLoginForm = () => {
         )}&password=${encodeURIComponent(formData.password)}`;
         window.location.replace(RUTA_HOME);
       } else {
-        alert("Email o contraseña incorrectos");
+        showAlert("Email o contraseña incorrectos");
       }
     } catch (error) {
       console.error(error);
-      alert("Error al iniciar sesión");
+      showAlert("Error al iniciar sesión");
     }
   };
 

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { RUTA_CORTINAS, RUTA_GET_IVA, URL_CIVILO, RUTA_TUBOS, RUTA_COTIZACIONES, URL_HOME, RUTA_PDF, RUTA_REQUESTS, obtenerAsignacionesVendedor, getRequestById, solicitarPDF } from '../../api/civilo_roller_api';
 import { RequestResume } from '../ClientView/RequestResume';
+import { showAlert } from '../../functions/funciones';
 
 const Container = styled.div`
     display: flex;
@@ -369,9 +370,9 @@ const SellerQuote = () => {
         setCost(quoteSummary.totalCostOfProduction);
         setSaleValue(quoteSummary.totalSaleValue);
         setTotal(quoteSummary.total);
-        alert('Cotización enviada');
+        showAlert('Cotización enviada');
       } else {
-        alert('Error al enviar la cotización');
+        showAlert('Error al enviar la cotización');
       }
     }
   };
@@ -676,7 +677,7 @@ const SellerQuote = () => {
       //se envia al servidor la entidad seller y la id de la cotizacion para realizar el descargo del PDF
       solicitarPDF(vendedor, id_solicitud);
     } else {
-      alert('Debe seleccionar una solicitud');
+      showAlert('Debe seleccionar una solicitud');
     }
 
   }

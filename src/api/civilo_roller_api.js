@@ -1,5 +1,7 @@
 //Archivo donde se definirán todas las conexiones a la api de civilo_roller
 
+import { showAlert } from "../functions/funciones"
+
 export const URL_CIVILO = "http://localhost:8080"
 export const URL_HOME = "http://localhost:3000"
 
@@ -40,7 +42,7 @@ export const deleteUser = async (userID) => {
 
   //SI el usuario a eliminar es el mismo que se encuentra con la cuenta activa
   if (usuario.userID === userID) {
-    alert("Error: No puede eliminar su propia cuenta");
+    showAlert("Error: No puede eliminar su propia cuenta");
   }
 
   else {
@@ -49,13 +51,13 @@ export const deleteUser = async (userID) => {
     })
       .then(response => {
         if (response.ok) {
-          alert("Usuario eliminado con exito");
+          showAlert("Usuario eliminado con exito");
           setTimeout(() => {
             //Se recarga la pagina luego de 1 segundo
             window.location.reload();
           }, 1000);
         } else {
-          alert("Error: Ha ocurrido un problema el eliminar a este usuario");
+          showAlert("Error: Ha ocurrido un problema el eliminar a este usuario");
           setTimeout(() => {
             //Se recarga la pagina luego de 1 segundo
             window.location.reload();
@@ -64,7 +66,7 @@ export const deleteUser = async (userID) => {
       })
       .catch(error => {
         console.error('Error al eliminar el usuario:', error);
-        alert("Error: Ha ocurrido un problema el eliminar a este usuario");
+        showAlert("Error: Ha ocurrido un problema el eliminar a este usuario");
         setTimeout(() => {
           //Se recarga la pagina luego de 1 segundo
           window.location.reload();
@@ -281,7 +283,7 @@ export const registrarUsuario = (usuario) => {
         }
         //si el usuario registrado es de tipo ejecutivo o administrador
         else if ((usuario.role.accountType.toLowerCase() === "ejecutivo") || (usuario.role.accountType.toLowerCase() === "administrador")) {
-          alert("Usuario agregado con exito");
+          showAlert("Usuario agregado con exito");
           setTimeout(() => {
             //Se recarga la pagina luego de 1 segundo
             window.location.reload();
@@ -293,7 +295,7 @@ export const registrarUsuario = (usuario) => {
       }
     })
     .catch((error) => {
-      alert("Error al registrar usuario");
+      showAlert("Error al registrar usuario");
       console.error("Error:", error);
     });
 }
@@ -339,11 +341,11 @@ export const iniciarSesionCliente = async (event, formData) => {
       )}&password=${encodeURIComponent(formData.password)}`;
       window.location.replace(RUTA_HOME);
     } else {
-      alert("Email o contraseña incorrectos");
+      showAlert("Email o contraseña incorrectos");
     }
   } catch (error) {
     console.error(error);
-    alert("Error al iniciar sesión");
+    showAlert("Error al iniciar sesión");
   }
 };
 

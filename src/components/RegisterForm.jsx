@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import { obtenerCoberturas, registrarUsuario } from '../api/civilo_roller_api';
 import { useState, useEffect } from 'react';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { showAlert } from '../functions/funciones';
 
 
 
@@ -336,7 +337,7 @@ export const RegisterForm = () => {
 
     //Si alguno de los campos está vacío, se muestra una alerta indicando que no se ha podido realizar la actualización
     if(usuarioNuevo.name === "" || usuarioNuevo.surname === "" || usuarioNuevo.email === "" || usuarioNuevo.password === "" || usuarioNuevo.rut === "" || telefono === "" || usuarioNuevo.commune === "" || usuarioNuevo.startTime === "" || usuarioNuevo.endTime === ""){
-      alert("Error: Debe completar todos los campos");
+      showAlert("Error: Debe completar todos los campos");
 
     }
 

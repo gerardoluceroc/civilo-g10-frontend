@@ -7,6 +7,7 @@ import { URL_CIVILO, asignarVendedor, obtenerVendedor } from '../api/civilo_roll
 import { useEffect } from 'react';
 import { useState } from 'react';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { showAlert } from '../functions/funciones';
 
 export default function SelectSellerUI({ tipoSelect ,listado, IdSolicitud, solicitudes, vendedorAsignado: sellerID}) {
 
@@ -29,14 +30,14 @@ export default function SelectSellerUI({ tipoSelect ,listado, IdSolicitud, solic
       try {
         const mensaje = await asignarVendedor(IdSolicitud, vendedorSeleccionado.userID);
         setVendedorSeleccionado(opcionSeleccionada); // Cambiar el valor del select
-        alert(mensaje);
+        showAlert(mensaje);
       } catch (error) {
-        alert(error.message);
+        showAlert(error.message);
       }
       } 
     
     else {
-      alert("Error: Vendedor no encontrado");
+      showAlert("Error: Vendedor no encontrado");
     }
 
 

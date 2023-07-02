@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { showAlert } from "../../functions/funciones";
 
 const RUTA_HOME = "/";
 
@@ -91,11 +92,11 @@ const SellerLoginForm = () => {
         )}&password=${encodeURIComponent(formData.password)}`;
         window.location.replace(RUTA_HOME);
       } else {
-        alert("Email o contraseña incorrectos");
+        showAlert("Email o contraseña incorrectos");
       }
     } catch (error) {
       console.error(error);
-      alert("Error al iniciar sesión");
+      showAlert("Error al iniciar sesión");
     }
   };
 

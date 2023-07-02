@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { RUTA_COBERTURAS, RUTA_UPDATE_COBERTURAS_VENDEDOR, URL_CIVILO, URL_HOME } from "../../api/civilo_roller_api";
+import { showAlert } from "../../functions/funciones";
 
 const Container = styled.div`
   display: flex;
@@ -150,17 +151,17 @@ const SellerInformation = () => {
                     try {
                         if (JSON.parse(sessionStorage.getItem('user')).email != null) {
                             console.log("TRY")
-                            alert("Información actualizada con exito");
+                            showAlert("Información actualizada con exito");
                             window.location.replace(URL_HOME);
                         }
                     } catch (error) {
                         console.log("ERROR: ", error);
                         console.log("NOP")
-                        alert("Información actualizada con exito");
+                        showAlert("Información actualizada con exito");
                         window.location.replace(RUTA_PAGE_LOGIN);
                     }
                 } else {
-                    alert("Complete todos los campos");
+                    showAlert("Complete todos los campos");
                 }
             })
             .catch((error) => {

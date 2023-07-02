@@ -76,33 +76,6 @@ const LoginForm = () => {
 
     const handleSubmit = (evento) => {iniciarSesionCliente(evento, formData)};
 
-  // const handleSubmit = async (event) => {
-  //   event.preventDefault();
-  //   try {
-  //     const response = await fetch("http://localhost:8080/users/login", {
-  //       method: "POST",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify(formData),
-  //     });
-  //     if (response.ok) {
-  //       const email = formData.email;
-  //       const userData = await fetch(`http://localhost:8080/users/${email}`);
-  //       const data = await userData.json();
-  //       sessionStorage.setItem('user', JSON.stringify(data));
-  //       console.log(sessionStorage.getItem('user'));
-  //       const url = `/client?email=${encodeURIComponent(
-  //         formData.email
-  //       )}&password=${encodeURIComponent(formData.password)}`;
-  //       window.location.replace(RUTA_HOME);
-  //     } else {
-  //       alert("Email o contraseña incorrectos");
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //     alert("Error al iniciar sesión");
-  //   }
-  // };
-
 
   return (
     <>

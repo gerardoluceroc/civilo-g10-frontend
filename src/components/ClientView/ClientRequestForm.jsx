@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { RUTA_COBERTURAS, RUTA_CORTINAS, RUTA_POST_SOLICITUDES_CLIENTE, URL_CIVILO } from "../../api/civilo_roller_api";
+import { showAlert } from "../../functions/funciones";
 
 const Container = styled.div`
   display: flex;
@@ -163,13 +164,13 @@ const ClientRequestForm = () => {
             });
 
             if (response.ok) {
-                alert("Solicitud creada con éxito");
+                showAlert("Solicitud creada con éxito");
             } else {
-                alert("Ha ocurrido un error al crear la solicitud");
+                showAlert("Ha ocurrido un error al crear la solicitud");
             }
         } catch (error) {
             console.error(error);
-            alert("Ha ocurrido un error al crear la solicitud");
+            showAlert("Ha ocurrido un error al crear la solicitud");
         }
     };
 

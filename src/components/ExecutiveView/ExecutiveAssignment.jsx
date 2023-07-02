@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { URL_CIVILO, getAllRequests, getAllSellers } from "../../api/civilo_roller_api";
+import { showAlert } from "../../functions/funciones";
 
 const TableContainer = styled.div`
   margin-top: 50px;
@@ -97,7 +98,7 @@ const ExecutiveAssignment = () => {
             });
             //const data = await response.json();
             //console.log(data);
-            alert('Asignación realizada con éxito');
+            showAlert('Asignación realizada con éxito');
 
         } catch (error) {
             console.error(error);
@@ -155,10 +156,10 @@ const ExecutiveAssignment = () => {
                     fetch(`${URL_CIVILO}/requests/automaticAssignment`, {
                         method: 'POST'
                     }).then(() => {
-                        alert('Asignación automática realizada con éxito');
+                        showAlert('Asignación automática realizada con éxito');
                     }).catch((error) => {
                         console.error('Error al enviar la solicitud:', error);
-                        alert('Error al asignar automáticamente');
+                        showAlert('Error al asignar automáticamente');
                     });
                 }}>Asignar Automáticamente</Button>
             </ButtonContainer>
