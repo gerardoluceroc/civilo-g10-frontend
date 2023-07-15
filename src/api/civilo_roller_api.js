@@ -16,6 +16,7 @@ const RUTA_GET_USERS = "/users"
 export const RUTA_GET_PERMISSIONS = "/permissions";
 export const RUTA_GET_REQUESTS = "/requests";
 const RUTA_GET_SELLERS = "/sellers";
+const RUTA_GET_STATUS = "/status";
 const RUTA_HOME = "/"
 const RUTA_LOGIN = "/users/login"
 export const RUTA_LOGIN_ADMIN = "/users/loginAdmin";
@@ -168,6 +169,11 @@ export const getAllStatus = async () => {
   const respuesta = await fetch(`${URL_CIVILO}${RUTA_STATUS}`);
   const status = await respuesta.json();
   return status;
+
+}
+
+//Función que permite actualizar el estado de una solicitud
+const updateRequestStatus = async () => {
 
 }
 

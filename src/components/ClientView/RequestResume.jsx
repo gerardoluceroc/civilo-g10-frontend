@@ -6,6 +6,7 @@ import ModalSellerInformation from "../ModalRequestDetails";
 import ModalRequestDetails from "../ModalRequestDetails";
 import PersonIcon from '@mui/icons-material/Person';
 import DeleteIcon from '@mui/icons-material/Delete';
+import MenuRequestStatus from "../MenuRequestStatus";
 
 
 const StyledDiv = styled.div`
@@ -123,6 +124,12 @@ const EstadoSolicitud = styled.div`
     
   }
 
+  @media (max-width: 484px) {
+    margin: auto;
+    margin-left: 1%;
+    
+  }
+
 
   
 
@@ -147,14 +154,16 @@ const nombreUsuario = requestDetails.user.name;
 const apellidoUsuario = requestDetails.user.surname;
 const [modalOpen, setModalOpen] = useState(false);
 const [userInfo, setUserInfo] = useState(null);
+
+const [changeRequestStatusOption, setChangeRequestStatusOption] = useState(null);
 //const [Acciones, setAcciones] = useState(null)
 const [tipoUsuarioLogueado, setTipoUsuarioLogueado] = useState(JSON.parse(sessionStorage.getItem('user')).role.accountType);
-
 
 
 //Si el tipo de usuario logueado cambia
 useEffect(() => {
   let componenteUserInfo = null;
+  let componenteChangeRequestStatus = null;
   //let componenteAcciones = null;
   let tipoUsuario = tipoUsuarioLogueado.toLowerCase();
 
@@ -167,7 +176,14 @@ useEffect(() => {
                           </Fecha>;
   }
 
+  //Si el tipo de usuario es vendedor
+  if(tipoUsuario === "vendedor"){
+    //Se muestra el menu de opciones para poder cambiar el estado de una solicitud
+    componenteChangeRequestStatus = <MenuRequestStatus estadoActual={requestDetails.status}/>;
+  }
+
   setUserInfo(componenteUserInfo);
+  setChangeRequestStatusOption(componenteChangeRequestStatus);
 
 }, [tipoUsuarioLogueado])
 
@@ -195,7 +211,7 @@ useEffect(() => {
                 Ver Detalles
               </VerDetalles>
           </InfoSolicitud>
-          <EstadoSolicitud backgroundColor={colorFondoTag} color={colorLetraTag}>{estado}</EstadoSolicitud>
+          <EstadoSolicitud backgroundColor={colorFondoTag} color={colorLetraTag}>{estado}{changeRequestStatusOption}</EstadoSolicitud>
 
     </StyledDiv>
   )
