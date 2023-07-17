@@ -33,6 +33,7 @@ export const RUTA_COTIZACIONES = "/quotes"
 export const RUTA_PDF = "/quotes/:id/pdf" // :id porque el id es dinámico
 export const RUTA_REQUESTS = "/requests"
 export const RUTA_UPDATE_REQUEST_ASSIGNMENT = "/updateRequest";
+export const RUTA_QUOTES = "/quotes";
 
 
 //Funcion para pedirle al servidor que elimine un usuario especifico
@@ -182,6 +183,13 @@ export const getAllRequests = async () => {
   const respuesta = await fetch(`${URL_CIVILO}${RUTA_GET_REQUESTS}`);
   const solicitudes = await respuesta.json();
   return solicitudes;
+}
+
+//Función para obtener todas las cotizaciones del sistema
+export const getAllQuotes = async () => {
+  const respuesta = await fetch(`${URL_CIVILO}${RUTA_QUOTES}`);
+  const cotizaciones = await respuesta.json();
+  return cotizaciones;
 }
 
 //Funcion para obtener todas los solicitudes registradas en la pagina

@@ -31,6 +31,7 @@ const RUTA_PAGE_ADMIN_READUSERS = "/admin/readUsers";
 const RUTA_PAGE_READ_CURTAINS = "/admin/readCurtains";
 const RUTA_PAGE_SOLICITUDES_ADMIN = "/admin/requestManagement"
 const RUTA_PAGE_UPDATE_INFO_VENDEDOR = "/seller/sellerInformation"
+const RUTA_PAGE_SELLER_MY_QUOTES = "/seller/myQuotes";
 
 
 function NavbarResponsive() {
@@ -46,7 +47,7 @@ function NavbarResponsive() {
   const pagesCLiente = ['Inicio', 'Mis Solicitudes'];
   const settingsCliente = ['Cerrar Sesión', 'Actualizar Información'];
 
-  const pagesVendedor = ['Inicio', 'Mis Asignaciones', 'Cotizar'];
+  const pagesVendedor = ['Inicio', 'Mis Asignaciones', 'Cotizar', 'Mis Cotizaciones'];
   const settingsVendedor = ['Cerrar Sesión', 'Actualizar Información', 'Actualizar Cobertura'];
 
   const pagesEjecutivo = ['Inicio', 'Solicitudes'];
@@ -212,6 +213,15 @@ function NavbarResponsive() {
         //Si es de tipo vendedor
         if(JSON.parse(sessionStorage.getItem('user')).role.accountType.toLowerCase() === 'vendedor'){
           return RUTA_PAGE_COTIZAR_VENDEDOR;
+        }
+      }
+    }
+    else if(itemSeleccionado === 'mis cotizaciones'){
+      //Si existe una sesion activa
+      if(JSON.parse(sessionStorage.getItem('user')) !== null){
+        //Si es de tipo vendedor
+        if(JSON.parse(sessionStorage.getItem('user')).role.accountType.toLowerCase() === 'vendedor'){
+          return RUTA_PAGE_SELLER_MY_QUOTES;
         }
       }
     }

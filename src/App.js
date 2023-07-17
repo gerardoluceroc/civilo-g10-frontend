@@ -27,6 +27,7 @@ import { UsersListPage } from "./pages/UsersListPage";
 import SellerQuotePage from "./pages/SellerQuotePage";
 import AdminReadProfitMarginPage from "./pages/AdminReadProfitMarginPage";
 import RequestManagementPage from "./pages/RequestManagementPage";
+import SellerMyQuotesPage from "./pages/SellerMyQuotesPage";
 
 
 function App() {
@@ -52,7 +53,6 @@ function App() {
       <Route path="/admin/readUsers" element={<UsersListPage/>} />
       <Route path="/admin/requestManagement" element={<RequestManagementPage />} />
 
-      <Route path="/executive/requestManagement" element={<RequestManagementPage />} />
       <Route path="/executive/executiveAssignment" element={<ExecutiveAssignmentPage />} />
       <Route path="/executive/requestManagement" element={<RequestManagementPage />} />
       <Route path="/executive" element={<ExecutiveHomePage />} />
@@ -63,6 +63,7 @@ function App() {
       <Route path="/loginSeller" element={<SellerLoginFormPage/>} />
       <Route path="/seller" element={<SellerHomePage />} />
       <Route path="/seller/quote" element={<SellerQuotePage />} />
+      <Route path="/seller/myQuotes" element={<SellerMyQuotesPage/>} />
 
       <Route path="/request" element={<ClientRequestFormPage />} />
       {/*<Route path="/client" element={<ClientHomePage/>} />*/}
