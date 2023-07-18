@@ -14,6 +14,7 @@ import ModalRequestDetails from '../ModalRequestDetails';
 import DownloadIcon from '@mui/icons-material/Download';
 import { getAllQuotes, getAllRequests, getAllSellers, solicitarPDF } from '../../api/civilo_roller_api';
 import { showAlert } from '../../functions/funciones';
+import ModalQuoteDetails from '../ModalQuoteDetails';
 
 
 const Title = styled.h1`
@@ -204,6 +205,7 @@ export default function SellerMyQuotes() {
 ////////////////////Codigo relacionado con los datos a colocar en la tabla /////////////////////////////////////////
 
     const [cotizaciones, setCotizaciones] = useState([]);
+    const [cotizacionSeleccionada, setCotizacionSeleccionada] = useState([]);
     useEffect(() => {
       getAllQuotes()
       .then((data) => {setCotizaciones(data); console.log("cotizacionesssssssss",data);})
@@ -281,12 +283,10 @@ export default function SellerMyQuotes() {
                                 )
                                 );
     //Funcion que se activa al presionar el boton Ver Detalles
-    const handleVerDetalles = (event, id_solicitud) => {
-      //se busca la solicitud con la id de entrada
-      const solicitudSeleccionada = requests.find((solicitud) => solicitud.requestID === id_solicitud);
-
-      //se cambia para que se pueda mostrar en el modal
-      setDetallesSolicitud(solicitudSeleccionada);
+    const handleVerDetalles = (event, id_cotizacion) => {
+      //se busca la cotizacion con la id de entrada
+      const cotizacion = cotizaciones.find((cotizacion) => cotizacion.quoteID === id_cotizacion);
+      setCotizacionSeleccionada(cotizacion);
 
       //se abre el modal con los detalles de la solicitud
       setModalOpen(true);
@@ -329,7 +329,8 @@ export default function SellerMyQuotes() {
 
   return (
     <Div>
-      <ModalRequestDetails open={modalOpen} onClose={handleModalClose} requestDetails={detallesSolicitud} /> 
+      {/* <ModalRequestDetails open={modalOpen} onClose={handleModalClose} requestDetails={detallesSolicitud} />  */}
+      <ModalQuoteDetails open={modalOpen} onClose={handleModalClose} quoteDetails={cotizacionSeleccionada} />
       <Paper>
         <StyledTableContainer>
           <Title>Cotizaciones Realizadas</Title>
@@ -368,7 +369,7 @@ export default function SellerMyQuotes() {
                           {column.format && typeof value === 'number'
                             ? column.format(value)
                             : column.id === "acciones" ? <Acciones> 
-                                                            <BotonVerDetalles onClick={(e) => handleVerDetalles(e,id_solicitud)}> <InfoIcon/> </BotonVerDetalles> 
+                                                            <BotonVerDetalles onClick={(e) => handleVerDetalles(e, id_cotizacion)}> <InfoIcon/> </BotonVerDetalles> 
                                                             <BotonDescargarPDF onClick={(e) => handleDescargarPDF(e, id_cotizacion)}> <DownloadIcon/> </BotonDescargarPDF> 
                                                           </Acciones>
                             : value}
