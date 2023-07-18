@@ -11,7 +11,9 @@ import TableRow from '@mui/material/TableRow';
 import SelectSellerUI from '../SelectSellerUI';
 import InfoIcon from '@mui/icons-material/Info';
 import ModalRequestDetails from '../ModalRequestDetails';
-import { getAllQuotes, getAllRequests, getAllSellers } from '../../api/civilo_roller_api';
+import DownloadIcon from '@mui/icons-material/Download';
+import { getAllQuotes, getAllRequests, getAllSellers, solicitarPDF } from '../../api/civilo_roller_api';
+import { showAlert } from '../../functions/funciones';
 
 
 const Title = styled.h1`
@@ -21,6 +23,13 @@ const Title = styled.h1`
 
 const Div = styled.div`
     min-height: calc(100vh - 80px);
+`;
+
+const Acciones = styled.div`
+  background-color: transparent;
+  display: flex;
+  justify-content: space-between;
+  width: 70%;
 `;
 
 
@@ -39,7 +48,50 @@ const BotonVerDetalles = styled.button`
   &:hover::before {
     content: 'Ver Detalles';
     position: absolute;
-    top: -35px; /* Modificado: Ajusta la posición vertical del texto */
+    top: -15px; /* Modificado: Ajusta la posición vertical del texto */
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 4px 8px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    border-radius: 4px;
+    font-size: 12px;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  &:hover::after {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-style: solid;
+    border-width: 5px;
+    border-color: transparent transparent rgba(0, 0, 0, 0.8) rgba(0, 0, 0, 0.8);
+  }
+
+  &:hover::before {
+    opacity: 1;
+  }
+`;
+
+const BotonDescargarPDF = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  &:hover::before {
+    content: 'Descargar PDF';
+    position: absolute;
+    top: -15px; /* Modificado: Ajusta la posición vertical del texto */
     left: 50%;
     transform: translateX(-50%);
     padding: 4px 8px;
@@ -76,8 +128,14 @@ const BotonVerDetalles = styled.button`
 // Define las cabeceras de las columnas y sus propiedades
 const columns = [
   { id:'identificador', label: 'Identificador', minWidth: 170}, 
-  { id:'costoTotal', label: 'Costo Total', minWidth: 170}, 
-  { id:'acciones', label: 'Acciones', minWidth: 170},  
+  { id:'identificadorSolicitud', label: 'ID Solicitud', minWidth: 170}, 
+  { id:'clienteAsociado', label: 'Cliente Asociado', minWidth: 170}, 
+  { id:'costoTotal', label: 'Costo de Producción', minWidth: 170}, 
+  { id:'valorVenta', label: 'Valor de Venta', minWidth: 170},  
+  { id:'porcentajeDescuento', label: 'Descuento (%)', minWidth: 170},  
+  { id:'valorNeto', label: 'Valor Neto', minWidth: 170},  
+  { id:'total', label: 'Total', minWidth: 170},  
+  { id:'acciones', label: 'Acciones', minWidth: 170}, 
   
 //   { id: 'name', label: 'Name', minWidth: 170 },
 //   { id: 'code', label: 'ISO\u00a0Code', minWidth: 100 },
@@ -199,8 +257,8 @@ export default function SellerMyQuotes() {
     }, [user.userID]);
 
     //funcion que crea un objeto con la fila de la tabla
-    function createData(identificador, costoTotal, acciones){
-        return {identificador, costoTotal, acciones};
+    function createData(identificador, identificadorSolicitud, clienteAsociado, costoTotal,valorVenta, porcentajeDescuento, valorNeto, total, acciones){
+        return {identificador, identificadorSolicitud, clienteAsociado, costoTotal, valorVenta, porcentajeDescuento, valorNeto, total, acciones};
     }
     //funcion que transforma una fecha del tipo "2023-16-06" al formato "16/06/2023"
     function formatDateToSpanish(dateString) {
@@ -213,7 +271,13 @@ export default function SellerMyQuotes() {
     //Se definen las filas de la tabla
     const rows = cotizaciones.map((cotizacion) => 
                     createData(cotizacion.quoteID,
-                                cotizacion.quoteSummary.totalCostOfProduction,
+                                `${cotizacion.requestEntity.requestID}`,
+                                `${cotizacion.requestEntity.user.name} ${cotizacion.requestEntity.user.surname}`,
+                                `$ ${cotizacion.quoteSummary.totalCostOfProduction}`,
+                                `$ ${cotizacion.quoteSummary.totalSaleValue}`,
+                                `% ${cotizacion.quoteSummary.percentageDiscount}`,
+                                `$ ${cotizacion.quoteSummary.netTotal}`,
+                                `$ ${cotizacion.quoteSummary.total}`,
                                 )
                                 );
     //Funcion que se activa al presionar el boton Ver Detalles
@@ -226,6 +290,27 @@ export default function SellerMyQuotes() {
 
       //se abre el modal con los detalles de la solicitud
       setModalOpen(true);
+
+    }
+
+    //Funcion que se activa al presionar el boton Descargar PDF
+    const handleDescargarPDF = (event, id_cotizacion) => {
+
+      console.log("id cotizacion a descargar: ",id_cotizacion);
+
+      const cotizacionSeleccionada = cotizaciones.find((cotizacion) => cotizacion.quoteID === id_cotizacion);
+
+      console.log("cotizacion seleccionada: ",cotizacionSeleccionada);
+
+      //id de la solicitud asociada a la cotizacion seleccionada
+      const id_solicitud = cotizacionSeleccionada.requestEntity.requestID;
+
+      //vendedor asociado a la cotizacion seleccionada
+      const vendedor = cotizacionSeleccionada.seller;
+
+      //se solicita la descarga del pdf de la cotizacion
+      solicitarPDF(vendedor, id_solicitud);
+      showAlert("PDF Descargado");
 
     }
 
@@ -274,14 +359,18 @@ export default function SellerMyQuotes() {
                   <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
                     {/* Itera sobre las columnas y muestra los valores */}
                     {columns.map((column) => {
-                      const id_solicitud = row.identificador;
+                      const id_cotizacion = row.identificador;
+                      const id_solicitud = row.identificador; //BORRAR
                       const value = row[column.id];
                       return (
                         <StyledTableCell key={column.id} align={column.align}>
                           
                           {column.format && typeof value === 'number'
                             ? column.format(value)
-                            : column.id === "acciones" ? <BotonVerDetalles onClick={(e) => handleVerDetalles(e,id_solicitud)}> <InfoIcon/> </BotonVerDetalles>
+                            : column.id === "acciones" ? <Acciones> 
+                                                            <BotonVerDetalles onClick={(e) => handleVerDetalles(e,id_solicitud)}> <InfoIcon/> </BotonVerDetalles> 
+                                                            <BotonDescargarPDF onClick={(e) => handleDescargarPDF(e, id_cotizacion)}> <DownloadIcon/> </BotonDescargarPDF> 
+                                                          </Acciones>
                             : value}
                         </StyledTableCell>
                       );

@@ -22,16 +22,16 @@ const StyledDiv = styled.div`
     padding: 7px;
     //padding-left: -5px;
 
-    @media (max-width: 1572px){
-      width: 18%;
+    @media (max-width: 1662px){
+      width: 20%;
     }
 
     @media (max-width: 1390px){
       width: 25%;
     }
 
-    @media (max-width: 998px){
-      width: 32%;
+    @media (max-width: 1102px){
+      width: 36%;
     }
 
     @media (max-width: 804px){
@@ -112,7 +112,7 @@ const EstadoSolicitud = styled.div`
   font-size: 150%; /* Tamaño de fuente del texto */
   align-items: center; 
   height: 40px; /* Altura del contenedor */
-  width: 56%; /* Ancho del contenedor */
+  width: 45%; /* Ancho del contenedor */
   display: flex; /* Establece el contenedor como un elemento flex */
   justify-content: center; /* Centra horizontalmente los elementos */
   padding: 0.35rem; /* Espacio interior alrededor del contenido */
