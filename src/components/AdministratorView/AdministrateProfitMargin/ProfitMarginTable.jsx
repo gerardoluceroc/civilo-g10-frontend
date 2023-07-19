@@ -2,6 +2,10 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { getAllProfitMargins } from '../../../api/civilo_roller_api';
 import AddIcon from '@mui/icons-material/Add';
+import ModalRegister from '../../ModalCreateProfitMargin';
+import { Button, IconButton } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import ModalDeleteProfitMargin from '../../Modals/ModalDeleteProfitMargin';
 
 const BotonCrearMargen = styled.button` 
   background-color: #1010b3;
@@ -95,101 +99,124 @@ const StyledDiv = styled.div`
 `;
 
 export const ProfitMarginTable = () => {
-    const [modalOpen, setModalOpen] = useState(false);
-    const handleModalClose = () => {
-        setModalOpen(false);
-    };
+  const [modalOpen, setModalOpen] = useState(false);
 
-    const crearMargen = () => {
-        return (
-            <StyledDiv>
-                <h3>Crear Margen de Utilidad</h3>
-                <BotonCrearMargen onClick={() => setModalOpen(true)}>
-                    Crear
-                    <AddIcon sx={{ fontSize: 40 }} />
-                </BotonCrearMargen>
-            </StyledDiv>
-        )
+  const handleModalClose = () => {
+    setModalOpen(false);
+  };
 
-    }
-
-    const [profitMargins, setProfitMargins] = useState([]);
-    useEffect(() => {
-        getAllProfitMargins()
-            .then((data) => { setProfitMargins(data); })
-            .catch((error) => { console.log("Error al obtener los margenes de utilidad", error) })
-    }, []);
-
-    const [orderBy, setOrderBy] = useState('');
-    const [order, setOrder] = useState('asc');
-
-    const headers = [
-        { id: 'profitMarginID', label: 'ID de Margen de Utilidad' },
-        { id: 'profitMarginPercentaje', label: 'Margen de Utilidad (Porcentaje)' },
-        { id: 'decimalProfitMargin', label: 'Margen de Utilidad (Decimal)' }
-    ];
-
-    const handleSort = (columnId) => {
-        const isAsc = orderBy === columnId && order === 'asc';
-        setOrder(isAsc ? 'desc' : 'asc');
-        setOrderBy(columnId);
-    };
-
-    const compareValues = (a, b) => {
-        if (a[orderBy] < b[orderBy]) {
-            return order === 'asc' ? -1 : 1;
-        }
-        if (a[orderBy] > b[orderBy]) {
-            return order === 'asc' ? 1 : -1;
-        }
-        return 0;
-    };
-
-    const sortedProfitMargins = [...profitMargins].sort(compareValues);
-
+  const crearMargen = () => {
     return (
-        <TableContainer>
-            {crearMargen()}
-            <TableWrapper>
-                <thead>
-                    <tr>
-                        {headers.map((header) => (
-                            <TableHeader
-                                key={header.id}
-                                onClick={() => handleSort(header.id)}
-                            >
-                                {header.label}
-                                {orderBy === header.id && (
-                                    <SortIcon>{order === 'asc' ? '▲' : '▼'}</SortIcon>
-                                )}
-                            </TableHeader>
-                        ))}
-                    </tr>
-                </thead>
-                <TableBody>
-                    {sortedProfitMargins.map((profitMargin) => (
-                        <TableRow key={profitMargin.profitMargin}>
-                            <TableCell>{profitMargin.profitMarginID}</TableCell>
-                            <TableCell>{profitMargin.profitMarginPercentaje}</TableCell>
-                            <TableCell>{profitMargin.decimalProfitMargin}</TableCell>
-                            {/* <TableCell>
-                <IconButton onClick={() => handleModalDeleteUserOpen(usuario.userID)}>
-                  <DeleteIcon/>
+      <StyledDiv>
+        <h3>Crear Margen de Utilidad</h3>
+        <BotonCrearMargen onClick={() => setModalOpen(true)}>
+          Crear
+          <AddIcon sx={{ fontSize: 40 }} />
+        </BotonCrearMargen>
+      </StyledDiv>
+    )
+
+  }
+
+  const [profitMargins, setProfitMargins] = useState([]);
+  useEffect(() => {
+    getAllProfitMargins()
+      .then((data) => { setProfitMargins(data); })
+      .catch((error) => { console.log("Error al obtener los margenes de utilidad", error) })
+  }, []);
+
+  const [orderBy, setOrderBy] = useState('');
+  const [order, setOrder] = useState('asc');
+
+  // Estado para controlar la apertura y cierre del modal para cada margen
+  const [modalDeleteProfitMarginOpen, setModalDeleteProfitMarginOpen] = useState({});
+
+  // Función para abrir el modal de eliminación para un margen específico
+  const handleModalDeleteProfitMarginOpen = (userID) => {
+    setModalDeleteProfitMarginOpen((prevState) => ({
+      ...prevState,
+      [userID]: true,
+    }));
+  };
+
+  // Función para cerrar el modal de eliminación para un margen específico
+  const handleModalDeleteProfitMarginClose = (userID) => {
+    setModalDeleteProfitMarginOpen((prevState) => ({
+      ...prevState,
+      [userID]: false,
+    }));
+  };
+
+
+  const headers = [
+    { id: 'profitMarginID', label: 'ID de Margen de Utilidad' },
+    { id: 'profitMarginPercentaje', label: 'Margen de Utilidad (Porcentaje)' },
+    { id: 'decimalProfitMargin', label: 'Margen de Utilidad (Decimal)' },
+    { id: 'acciones', label: 'Acciones' }
+  ];
+
+  const handleSort = (columnId) => {
+    const isAsc = orderBy === columnId && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
+    setOrderBy(columnId);
+  };
+
+  const compareValues = (a, b) => {
+    if (a[orderBy] < b[orderBy]) {
+      return order === 'asc' ? -1 : 1;
+    }
+    if (a[orderBy] > b[orderBy]) {
+      return order === 'asc' ? 1 : -1;
+    }
+    return 0;
+  };
+
+  const sortedProfitMargins = [...profitMargins].sort(compareValues);
+
+  return (
+    <TableContainer>
+      <ModalRegister open={modalOpen} onClose={handleModalClose} />
+      {crearMargen()}
+      <TableWrapper>
+        <thead>
+          <tr>
+            {headers.map((header) => (
+              <TableHeader
+                key={header.id}
+                onClick={() => handleSort(header.id)}
+              >
+                {header.label}
+                {orderBy === header.id && (
+                  <SortIcon>{order === 'asc' ? '▲' : '▼'}</SortIcon>
+                )}
+              </TableHeader>
+            ))}
+          </tr>
+        </thead>
+        <TableBody>
+          {sortedProfitMargins.map((profitMargin) => (
+            <TableRow key={profitMargin.profitMargin}>
+              <TableCell>{profitMargin.profitMarginID}</TableCell>
+              <TableCell>{profitMargin.profitMarginPercentaje}</TableCell>
+              <TableCell>{profitMargin.decimalProfitMargin}</TableCell>
+              <TableCell>
+                <IconButton onClick={() => handleModalDeleteProfitMarginOpen(profitMargin.profitMarginID)}>
+                  <DeleteIcon />
                 </IconButton>
-                <ModalDeleteUser
-                  open={modalDeleteUserOpen[usuario.userID]}
-                  onClose={() => handleModalDeleteUserClose(usuario.userID)}
-                  nombreUsuario={usuario.name}
-                  apellidoUsuario={usuario.surname}
-                  userID={usuario.userID}
+                <ModalDeleteProfitMargin
+                  open={modalDeleteProfitMarginOpen[profitMargin.profitMarginID]}
+                  onClose={() => handleModalDeleteProfitMarginClose(profitMargin.profitMarginID)}
+                  porcentajeMargen={profitMargin.profitMarginPercentaje}
+                  decimalMargen={profitMargin.decimalProfitMargin}
+                  margenID={profitMargin.profitMarginID}
                 />
-              </TableCell> */}
-                        </TableRow>
-                    ))}
-                </TableBody>
-            </TableWrapper>
-        </TableContainer>
-    );
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </TableWrapper>
+    </TableContainer>
+  );
 };
 
 
