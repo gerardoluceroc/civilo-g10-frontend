@@ -105,7 +105,6 @@ export const RequestDetails = ({ requestDetails }) => {
             .then(data => setVendedor(data))
             .catch((error) => console.log("Error al obtener el vendedor: ", error));
     }, []);
-    console.log("Usuarioooooooo es: ", usuario);
 
 
     return (

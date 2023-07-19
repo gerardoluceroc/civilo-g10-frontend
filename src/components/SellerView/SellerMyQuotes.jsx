@@ -8,11 +8,9 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import SelectSellerUI from '../SelectSellerUI';
 import InfoIcon from '@mui/icons-material/Info';
-import ModalRequestDetails from '../ModalRequestDetails';
 import DownloadIcon from '@mui/icons-material/Download';
-import { getAllQuotes, getAllRequests, getAllSellers, solicitarPDF } from '../../api/civilo_roller_api';
+import { getAllQuotes, getAllSellerQuotes, solicitarPDF } from '../../api/civilo_roller_api';
 import { showAlert } from '../../functions/funciones';
 import ModalQuoteDetails from '../ModalQuoteDetails';
 
@@ -30,7 +28,7 @@ const Acciones = styled.div`
   background-color: transparent;
   display: flex;
   justify-content: space-between;
-  width: 70%;
+  width: 45%;
 `;
 
 
@@ -138,57 +136,9 @@ const columns = [
   { id:'total', label: 'Total', minWidth: 170},  
   { id:'acciones', label: 'Acciones', minWidth: 170}, 
   
-//   { id: 'name', label: 'Name', minWidth: 170 },
-//   { id: 'code', label: 'ISO\u00a0Code', minWidth: 100 },
-//   {
-//     id: 'population',
-//     label: 'Population',
-//     minWidth: 170,
-//     align: 'right',
-//     format: (value) => value.toLocaleString('es-ES'),
-//   },
-//   {
-//     id: 'size',
-//     label: 'Size\u00a0(km\u00b2)',
-//     minWidth: 170,
-//     align: 'right',
-//     format: (value) => value.toLocaleString('en-US'),
-//   },
-//   {
-//     id: 'density',
-//     label: 'Density',
-//     minWidth: 170,
-//     align: 'right',
-//     format: (value) => value.toFixed(2),
-//   },
 ];
 
-// // Crea tus propios datos y reemplaza los datos de ejemplo
-// function createData(name, code, population, size) {
-//   const density = population / size;
-//   return { name, code, population, size, density };
-// }
 
-
-// // Reemplaza los datos de ejemplo con tus propios datos
-// const rows = [
-//   createData('India', 'IN', 1324171354, 3287263),
-//   createData('China', 'CN', 1403500365, 9596961),
-//   createData('China', 'CN', 1403500365, 9596961),
-//   createData('China', 'CN', 1403500365, 9596961),
-//   createData('China', 'CN', 1403500365, 9596961),
-//   createData('China', 'CN', 1403500365, 9596961),
-//   createData('China', 'CN', 1403500365, 9596961),
-//   createData('China', 'CN', 1403500365, 9596961),
-//   createData('China', 'CN', 1403500365, 9596961),
-//   createData('China', 'CN', 1403500365, 9596961),
-//   createData('China', 'CN', 1403500365, 9596961),
-//   createData('China', 'CN', 1403500365, 9596961),
-//   createData('China', 'CN', 1403500365, 9596961),
-//   createData('China', 'CN', 1403500365, 9596961),
-//   createData('China', 'CN', 1403500365, 9596961),
-//   // Agrega más filas según tus datos
-// ];
 
 const StyledTableCell = styled(TableCell)`
   min-width: ${({ minWidth }) => minWidth}px;
@@ -204,25 +154,40 @@ export default function SellerMyQuotes() {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 ////////////////////Codigo relacionado con los datos a colocar en la tabla /////////////////////////////////////////
 
+
+    
+    //Funcion que recibe un numero y retorna el mismo en formato CLP 
+    function formatToCLP(value) {
+      const number = parseFloat(value);
+      if (isNaN(number)) {
+        return "Valor inválido";
+      }
+      return number.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' });
+    }
+    
     const [cotizaciones, setCotizaciones] = useState([]);
     const [cotizacionSeleccionada, setCotizacionSeleccionada] = useState([]);
     useEffect(() => {
-      getAllQuotes()
-      .then((data) => {setCotizaciones(data); console.log("cotizacionesssssssss",data);})
-      .catch((error) => console.log("error al obtener cotizaciones: ",error));
-    
-      
+      const usuario = JSON.parse(sessionStorage.getItem("user"));
+      const tipo_usuario = usuario.role.accountType.toLowerCase();
+
+      if(tipo_usuario === "vendedor"){ 
+        const id_vendedor = usuario.userID;
+        //Se obtienen las cotizaciones asociadas al vendedor logueado
+        getAllSellerQuotes(id_vendedor)
+        .then((data) => {setCotizaciones(data);})
+        .catch((error) => console.log("error al obtener cotizaciones: ",error));
+      }
+
+      else if( tipo_usuario === "ejecutivo" || tipo_usuario === "administrador"){
+        //Se obtienen todas las cotizaciones realizadas
+        getAllQuotes()
+        .then((data) => {setCotizaciones(data);})
+        .catch((error) => console.log("error al obtener cotizaciones: ",error));
+      }
+          
     }, [])
     
-
-
-
-
-
-
-
-
-
 
     //modal que muestra los detalles de la solicitud
     const [modalOpen, setModalOpen] = useState(false);
@@ -231,32 +196,6 @@ export default function SellerMyQuotes() {
     const handleModalClose = () => {
       setModalOpen(false);
     };
-
-    //Todas las solicitudes
-    const [requests, setRequests] = useState([]);
-
-    //solicitud seleccionada para ver sus detalles
-    const [detallesSolicitud, setDetallesSolicitud] = useState([]);
-
-    //Todos los vendedores
-    const [sellers, setSellers] = useState([]);
-
-    const user = JSON.parse(sessionStorage.getItem("user"));
-
-    console.log(user.userID);
-    
-    useEffect(() => {
-        //Se obtienen del servidor todas las solicitudes y vendedores
-        getAllRequests()
-            .then((data) => { setRequests(data);})
-            .catch((error) => { console.log("Error al obtener las solicitudes ", error) })
-
-        getAllSellers()
-            .then((data) => { setSellers(data) })
-            .catch((error) => { 
-              console.log("Error al obtener los vendedores ", error); })
-        
-    }, [user.userID]);
 
     //funcion que crea un objeto con la fila de la tabla
     function createData(identificador, identificadorSolicitud, clienteAsociado, costoTotal,valorVenta, porcentajeDescuento, valorNeto, total, acciones){
@@ -275,11 +214,11 @@ export default function SellerMyQuotes() {
                     createData(cotizacion.quoteID,
                                 `${cotizacion.requestEntity.requestID}`,
                                 `${cotizacion.requestEntity.user.name} ${cotizacion.requestEntity.user.surname}`,
-                                `$ ${cotizacion.quoteSummary.totalCostOfProduction}`,
-                                `$ ${cotizacion.quoteSummary.totalSaleValue}`,
+                                formatToCLP(cotizacion.quoteSummary.totalCostOfProduction),
+                                formatToCLP(cotizacion.quoteSummary.totalSaleValue),
                                 `% ${cotizacion.quoteSummary.percentageDiscount}`,
-                                `$ ${cotizacion.quoteSummary.netTotal}`,
-                                `$ ${cotizacion.quoteSummary.total}`,
+                                formatToCLP(cotizacion.quoteSummary.netTotal),
+                                formatToCLP(cotizacion.quoteSummary.total),
                                 )
                                 );
     //Funcion que se activa al presionar el boton Ver Detalles
@@ -296,11 +235,7 @@ export default function SellerMyQuotes() {
     //Funcion que se activa al presionar el boton Descargar PDF
     const handleDescargarPDF = (event, id_cotizacion) => {
 
-      console.log("id cotizacion a descargar: ",id_cotizacion);
-
       const cotizacionSeleccionada = cotizaciones.find((cotizacion) => cotizacion.quoteID === id_cotizacion);
-
-      console.log("cotizacion seleccionada: ",cotizacionSeleccionada);
 
       //id de la solicitud asociada a la cotizacion seleccionada
       const id_solicitud = cotizacionSeleccionada.requestEntity.requestID;
@@ -329,7 +264,6 @@ export default function SellerMyQuotes() {
 
   return (
     <Div>
-      {/* <ModalRequestDetails open={modalOpen} onClose={handleModalClose} requestDetails={detallesSolicitud} />  */}
       <ModalQuoteDetails open={modalOpen} onClose={handleModalClose} quoteDetails={cotizacionSeleccionada} />
       <Paper>
         <StyledTableContainer>
@@ -361,7 +295,7 @@ export default function SellerMyQuotes() {
                     {/* Itera sobre las columnas y muestra los valores */}
                     {columns.map((column) => {
                       const id_cotizacion = row.identificador;
-                      const id_solicitud = row.identificador; //BORRAR
+                      //const id_solicitud = row.identificador; //BORRAR
                       const value = row[column.id];
                       return (
                         <StyledTableCell key={column.id} align={column.align}>
@@ -389,6 +323,7 @@ export default function SellerMyQuotes() {
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
+          labelRowsPerPage="Cantidad de filas"
         />
       </Paper>
     </Div>

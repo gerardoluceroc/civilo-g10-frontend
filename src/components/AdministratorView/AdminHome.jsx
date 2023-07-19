@@ -10,6 +10,7 @@ const PAGE_READ_STATUS = "/admin/readStatus";
 const PAGE_READ_CURTAINS = "/admin/readCurtains";
 const PAGE_PROFIT_MARGIN = "/admin/readProfitMargins";
 const PAGE_SOLICITUDES_ADMIN = "/admin/requestManagement"
+const PAGE_QUOTES = "/admin/quotes";
 
 const CardContainer = styled.div`
   display: flex;
@@ -167,8 +168,8 @@ const AdminHome = () => {
         </InformationItem>
 
         <InformationItem>
-          <Titulo>Cotizaciones (en desarrollo) </Titulo>
-          <Link to={"/"} style={{ textDecoration: 'none' }}>
+          <Titulo>Cotizaciones Realizadas</Titulo>
+          <Link to={PAGE_QUOTES} style={{ textDecoration: 'none' }}>
             <Boton>Ver Detalles</Boton>
           </Link>
         </InformationItem>

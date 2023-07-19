@@ -84,58 +84,9 @@ const columns = [
   { id:'estatusSolicitud', label: 'Estado de Solicitud', minWidth: 170}, 
   { id:'vendedorAsignado', label: 'Vendedor Asignado', minWidth: 170}, 
   { id:'acciones', label: 'Acciones', minWidth: 170},  
-  
-//   { id: 'name', label: 'Name', minWidth: 170 },
-//   { id: 'code', label: 'ISO\u00a0Code', minWidth: 100 },
-//   {
-//     id: 'population',
-//     label: 'Population',
-//     minWidth: 170,
-//     align: 'right',
-//     format: (value) => value.toLocaleString('es-ES'),
-//   },
-//   {
-//     id: 'size',
-//     label: 'Size\u00a0(km\u00b2)',
-//     minWidth: 170,
-//     align: 'right',
-//     format: (value) => value.toLocaleString('en-US'),
-//   },
-//   {
-//     id: 'density',
-//     label: 'Density',
-//     minWidth: 170,
-//     align: 'right',
-//     format: (value) => value.toFixed(2),
-//   },
+
 ];
 
-// // Crea tus propios datos y reemplaza los datos de ejemplo
-// function createData(name, code, population, size) {
-//   const density = population / size;
-//   return { name, code, population, size, density };
-// }
-
-
-// // Reemplaza los datos de ejemplo con tus propios datos
-// const rows = [
-//   createData('India', 'IN', 1324171354, 3287263),
-//   createData('China', 'CN', 1403500365, 9596961),
-//   createData('China', 'CN', 1403500365, 9596961),
-//   createData('China', 'CN', 1403500365, 9596961),
-//   createData('China', 'CN', 1403500365, 9596961),
-//   createData('China', 'CN', 1403500365, 9596961),
-//   createData('China', 'CN', 1403500365, 9596961),
-//   createData('China', 'CN', 1403500365, 9596961),
-//   createData('China', 'CN', 1403500365, 9596961),
-//   createData('China', 'CN', 1403500365, 9596961),
-//   createData('China', 'CN', 1403500365, 9596961),
-//   createData('China', 'CN', 1403500365, 9596961),
-//   createData('China', 'CN', 1403500365, 9596961),
-//   createData('China', 'CN', 1403500365, 9596961),
-//   createData('China', 'CN', 1403500365, 9596961),
-//   // Agrega más filas según tus datos
-// ];
 
 const StyledTableCell = styled(TableCell)`
   min-width: ${({ minWidth }) => minWidth}px;
@@ -169,8 +120,6 @@ export default function RequestManagementUI() {
     const [sellers, setSellers] = useState([]);
 
     const user = JSON.parse(sessionStorage.getItem("user"));
-
-    console.log(user.userID);
     
     useEffect(() => {
         //Se obtienen del servidor todas las solicitudes y vendedores
@@ -293,6 +242,7 @@ export default function RequestManagementUI() {
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
+          labelRowsPerPage="Cantidad de filas"
         />
       </Paper>
     </Div>

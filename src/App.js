@@ -52,6 +52,7 @@ function App() {
       <Route path="/admin/readStatus" element={<AdminReadStatusPage />} />
       <Route path="/admin/readUsers" element={<UsersListPage/>} />
       <Route path="/admin/requestManagement" element={<RequestManagementPage />} />
+      <Route path= "/admin/quotes" element={<SellerMyQuotesPage/>}/>
 
       <Route path="/executive/executiveAssignment" element={<ExecutiveAssignmentPage />} />
       <Route path="/executive/requestManagement" element={<RequestManagementPage />} />

@@ -28,6 +28,7 @@ const RUTA_PAGE_COTIZAR_VENDEDOR = "/seller/quote";
 const RUTA_PAGE_SOLICITUDES_EJECUTIVO = "/executive/requestManagement";
 const RUTA_PAGE_UPDATE_INFO_CLIENTE = "/client/updateInfo";
 const RUTA_PAGE_ADMIN_READUSERS = "/admin/readUsers";
+const RUTA_PAGE_QUOTES = "/admin/quotes";
 const RUTA_PAGE_READ_CURTAINS = "/admin/readCurtains";
 const RUTA_PAGE_SOLICITUDES_ADMIN = "/admin/requestManagement"
 const RUTA_PAGE_UPDATE_INFO_VENDEDOR = "/seller/sellerInformation"
@@ -222,6 +223,15 @@ function NavbarResponsive() {
         //Si es de tipo vendedor
         if(JSON.parse(sessionStorage.getItem('user')).role.accountType.toLowerCase() === 'vendedor'){
           return RUTA_PAGE_SELLER_MY_QUOTES;
+        }
+      }
+    }
+    else if(itemSeleccionado === 'cotizaciones'){
+      //Si existe una sesion activa
+      if(JSON.parse(sessionStorage.getItem('user')) !== null){
+        //Si es de tipo vendedor
+        if(JSON.parse(sessionStorage.getItem('user')).role.accountType.toLowerCase() === 'administrador'){
+          return RUTA_PAGE_QUOTES;
         }
       }
     }
