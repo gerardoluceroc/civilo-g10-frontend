@@ -35,6 +35,7 @@ export const RUTA_REQUESTS = "/requests"
 export const RUTA_UPDATE_REQUEST_ASSIGNMENT = "/updateRequest";
 export const RUTA_QUOTES = "/quotes";
 export const RUTA_SELLER_QUOTES = "/sellerQuotes";
+export const RUTA_POST_CORTINA = "/curtains/register"; //Peticion POST para crear cortina
 
 
 //Funcion para pedirle al servidor que elimine un usuario especifico
@@ -81,6 +82,38 @@ export const deleteUser = async (userID) => {
 
   }
 }
+
+//Funcion para pedirle al servidor que elimine un usuario especifico
+export const deleteCurtain = async (curtainID) => {
+const respuesta = fetch(`${URL_CIVILO}${RUTA_CORTINAS}/${curtainID}`, {
+  method: 'DELETE'
+})
+  .then(response => {
+    if (response.ok) {
+      showAlert("Producto eliminado con exito");
+      setTimeout(() => {
+        //Se recarga la pagina luego de 1 segundo
+        window.location.reload();
+      }, 1000);
+      } else {
+        showAlert("Error: Ha ocurrido un problema el eliminar este producto");
+        setTimeout(() => {
+          //Se recarga la pagina luego de 1 segundo
+          window.location.reload();
+        }, 1000);
+      }
+    })
+    .catch(error => {
+      console.error('Error al eliminar el producto:', error);
+      showAlert("Error: Ha ocurrido un problema el eliminar este producto");
+      setTimeout(() => {
+        //Se recarga la pagina luego de 1 segundo
+        window.location.reload();
+      }, 1000);
+      // Hacer algo en caso de que ocurra un error en la solicitud
+  });
+}
+
 //Funcion que asigna a un vendedor a una solicitud realizada por un cliente
 export const asignarVendedor = async (id_solicitud, id_vendedor) => {
 
@@ -322,6 +355,28 @@ export const registrarUsuario = (usuario) => {
     });
 }
 
+// Función para crear una cortina como administrador
+export const registrarCortina = (cortina) => {
+  fetch(`${URL_CIVILO}${RUTA_POST_CORTINA}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(cortina),
+  })
+    .then((response) => {
+      if (response.ok) {
+        console.log("Registro exitoso");
+      } else {
+        console.log("Registro fallido");
+      }
+      window.location.reload();
+    })
+    .catch((error) => {
+      showAlert("Error al registrar tipo de corina");
+      console.error("Error:", error);
+    });
+}
 
 //funcion para cerrar la sesion de un usuario tipo cliente
 export const cerrarSesionUsuario = () => {
