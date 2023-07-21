@@ -17,6 +17,7 @@ import AdminLoginFormPage from "./pages/AdminLoginFormPage";
 import AdminHomePage from "./pages/AdminHomePage";
 import AdminReadCoveragesPage from "./pages/AdminReadCoveragesPage";
 import AdminReadCurtainsPage from "./pages/AdminReadCurtainsPage";
+import AdminReadCurtainPipesPage from "./pages/AdminReadCurtainPipesPage";
 import AdminReadPermissionsPage from "./pages/AdminReadPermissionsPage";
 import AdminReadRequestsPage from "./pages/AdminReadRequestsPage";
 import AdminReadRolesPage from "./pages/AdminReadRolesPage";
@@ -46,6 +47,7 @@ function App() {
       <Route path="/admin/readCoverages" element={<AdminReadCoveragesPage />} />
       <Route path="/admin/readProfitMargins" element={<AdminReadProfitMarginPage />} />
       <Route path="/admin/readCurtains" element={<AdminReadCurtainsPage />} />
+      <Route path="/admin/readCurtainPipes" element={<AdminReadCurtainPipesPage />} />
       <Route path="/admin/readPermissions" element={<AdminReadPermissionsPage />} />
       <Route path="/admin/readRequests" element={<AdminReadRequestsPage />} />
       <Route path="/admin/readRoles" element={<AdminReadRolesPage />} />

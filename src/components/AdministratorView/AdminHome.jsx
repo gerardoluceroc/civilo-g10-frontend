@@ -9,6 +9,7 @@ const PAGE_READ_ROLES = "/admin/readRoles";
 const PAGE_READ_STATUS = "/admin/readStatus";
 const PAGE_READ_CURTAINS = "/admin/readCurtains";
 const PAGE_PROFIT_MARGIN = "/admin/readProfitMargins";
+const PAGE_CURTAIN_PIPES = "/admin/readCurtainPipes"
 const PAGE_SOLICITUDES_ADMIN = "/admin/requestManagement"
 const PAGE_QUOTES = "/admin/quotes";
 
@@ -190,6 +191,13 @@ const AdminHome = () => {
 
         <InformationItem>
           <Titulo>Tubos de cortinas</Titulo>
+          <Link to={PAGE_CURTAIN_PIPES} style={{ textDecoration: 'none' }}>
+            <Boton>Ver Detalles</Boton>
+          </Link>
+        </InformationItem>
+
+        <InformationItem>
+          <Titulo>IVA</Titulo>
           <Link to={"/"} style={{ textDecoration: 'none' }}>
             <Boton>Ver Detalles</Boton>
           </Link>

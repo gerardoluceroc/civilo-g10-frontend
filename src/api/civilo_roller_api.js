@@ -13,6 +13,7 @@ const RUTA_PROFIT_MARGINS = "/profitMargins"
 const RUTA_DELETE_USERS = "/users"
 export const RUTA_GET_IVA = "/iva";
 const RUTA_GET_USERS = "/users"
+const RUTA_GET_CURTAIN_PIPES = "/pipes"
 export const RUTA_GET_PERMISSIONS = "/permissions";
 export const RUTA_GET_REQUESTS = "/requests";
 const RUTA_GET_SELLERS = "/sellers";
@@ -36,6 +37,7 @@ export const RUTA_UPDATE_REQUEST_ASSIGNMENT = "/updateRequest";
 export const RUTA_QUOTES = "/quotes";
 export const RUTA_SELLER_QUOTES = "/sellerQuotes";
 export const RUTA_POST_CORTINA = "/curtains/register"; //Peticion POST para crear cortina
+export const RUTA_POST_TUBO = "/pipes"; //Peticion POST para crear cortina
 
 
 //Funcion para pedirle al servidor que elimine un usuario especifico
@@ -114,6 +116,37 @@ const respuesta = fetch(`${URL_CIVILO}${RUTA_CORTINAS}/${curtainID}`, {
   });
 }
 
+//Funcion para pedirle al servidor que elimine un producto especifico
+export const deleteCurtainPipe = async (pipeID) => {
+  const respuesta = fetch(`${URL_CIVILO}${RUTA_GET_CURTAIN_PIPES}/${pipeID}`, {
+    method: 'DELETE'
+  })
+    .then(response => {
+      if (response.ok) {
+        showAlert("Tubo eliminado con exito");
+        setTimeout(() => {
+          //Se recarga la pagina luego de 1 segundo
+          window.location.reload();
+        }, 1000);
+        } else {
+          showAlert("Error: Ha ocurrido un problema el eliminar este tubo");
+          setTimeout(() => {
+            //Se recarga la pagina luego de 1 segundo
+            window.location.reload();
+          }, 1000);
+        }
+      })
+      .catch(error => {
+        console.error('Error al eliminar el tubo:', error);
+        showAlert("Error: Ha ocurrido un problema el eliminar este tubo");
+        setTimeout(() => {
+          //Se recarga la pagina luego de 1 segundo
+          window.location.reload();
+        }, 1000);
+        // Hacer algo en caso de que ocurra un error en la solicitud
+    });
+  }
+
 //Funcion para pedirle al servidor que elimine un margen de utilidad especifico
 export const deleteProfitMargin = async (profitMarginID) => {
   const respuesta = fetch(`${URL_CIVILO}${RUTA_PROFIT_MARGINS}/${profitMarginID}`, {
@@ -171,6 +204,13 @@ export const getAllUsers = async () => {
   const respuesta = await fetch(`${URL_CIVILO}${RUTA_GET_USERS}`);
   const usuarios = await respuesta.json();
   return usuarios;
+}
+
+//Funcion que permite obtener todos los tubos
+export const getAllCurtainPipes = async () => {
+  const respuesta = await fetch(`${URL_CIVILO}${RUTA_GET_CURTAIN_PIPES}`);
+  const tubos = await respuesta.json();
+  return tubos;
 }
 
 export const obtenerVendedor = async (idVendedor) => {
@@ -394,6 +434,29 @@ export const registrarCortina = (cortina) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(cortina),
+  })
+    .then((response) => {
+      if (response.ok) {
+        console.log("Registro exitoso");
+      } else {
+        console.log("Registro fallido");
+      }
+      window.location.reload();
+    })
+    .catch((error) => {
+      showAlert("Error al registrar tipo de corina");
+      console.error("Error:", error);
+    });
+}
+
+// Función para crear un tubo como administrador
+export const registrarTubo = (tubo) => {
+  fetch(`${URL_CIVILO}${RUTA_POST_TUBO}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(tubo),
   })
     .then((response) => {
       if (response.ok) {
