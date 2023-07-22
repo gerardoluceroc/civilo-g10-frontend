@@ -12,6 +12,7 @@ const PAGE_PROFIT_MARGIN = "/admin/readProfitMargins";
 const PAGE_CURTAIN_PIPES = "/admin/readCurtainPipes"
 const PAGE_SOLICITUDES_ADMIN = "/admin/requestManagement"
 const PAGE_QUOTES = "/admin/quotes";
+const PAGE_IVA = "/admin/readIVA"
 
 const CardContainer = styled.div`
   display: flex;
@@ -198,7 +199,7 @@ const AdminHome = () => {
 
         <InformationItem>
           <Titulo>IVA</Titulo>
-          <Link to={"/"} style={{ textDecoration: 'none' }}>
+          <Link to={PAGE_IVA} style={{ textDecoration: 'none' }}>
             <Boton>Ver Detalles</Boton>
           </Link>
         </InformationItem>

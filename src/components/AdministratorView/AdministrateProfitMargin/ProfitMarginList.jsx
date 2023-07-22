@@ -18,11 +18,20 @@ const Container = styled.div`
 
 `;
 
+const Subtitulo = styled.h1`
+
+  font-size: small;
+  display: flex;
+  justify-content: center;
+
+`;
+
 const ProfitMarginList = () => {
 
   return (
     <Container>
         <Titulo>Márgenes de Utilidad</Titulo>
+        <Subtitulo>El último margen de utilidad es el actual</Subtitulo>
         <ProfitMarginTable/>
     </Container>
     

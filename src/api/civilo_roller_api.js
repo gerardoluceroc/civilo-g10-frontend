@@ -38,7 +38,7 @@ export const RUTA_QUOTES = "/quotes";
 export const RUTA_SELLER_QUOTES = "/sellerQuotes";
 export const RUTA_POST_CORTINA = "/curtains/register"; //Peticion POST para crear cortina
 export const RUTA_POST_TUBO = "/pipes"; //Peticion POST para crear cortina
-
+const RUTA_GET_ALL_IVA = "/iva/all"
 
 //Funcion para pedirle al servidor que elimine un usuario especifico
 export const deleteUser = async (userID) => {
@@ -87,16 +87,16 @@ export const deleteUser = async (userID) => {
 
 //Funcion para pedirle al servidor que elimine un producto especifico
 export const deleteCurtain = async (curtainID) => {
-const respuesta = fetch(`${URL_CIVILO}${RUTA_CORTINAS}/${curtainID}`, {
-  method: 'DELETE'
-})
-  .then(response => {
-    if (response.ok) {
-      showAlert("Producto eliminado con exito");
-      setTimeout(() => {
-        //Se recarga la pagina luego de 1 segundo
-        window.location.reload();
-      }, 1000);
+  const respuesta = fetch(`${URL_CIVILO}${RUTA_CORTINAS}/${curtainID}`, {
+    method: 'DELETE'
+  })
+    .then(response => {
+      if (response.ok) {
+        showAlert("Producto eliminado con exito");
+        setTimeout(() => {
+          //Se recarga la pagina luego de 1 segundo
+          window.location.reload();
+        }, 1000);
       } else {
         showAlert("Error: Ha ocurrido un problema el eliminar este producto");
         setTimeout(() => {
@@ -113,7 +113,39 @@ const respuesta = fetch(`${URL_CIVILO}${RUTA_CORTINAS}/${curtainID}`, {
         window.location.reload();
       }, 1000);
       // Hacer algo en caso de que ocurra un error en la solicitud
-  });
+    });
+}
+
+//Funcion para pedirle al servidor que elimine un IVA especifico
+export const deleteIVA = async (ivaID) => {
+  console.log(ivaID)
+  const respuesta = fetch(`${URL_CIVILO}${RUTA_GET_IVA}/${ivaID}`, {
+    method: 'DELETE'
+  })
+    .then(response => {
+      if (response.ok) {
+        showAlert("IVA eliminado con exito");
+        setTimeout(() => {
+          //Se recarga la pagina luego de 1 segundo
+          window.location.reload();
+        }, 1000);
+      } else {
+        showAlert("Error: Ha ocurrido un problema el eliminar este IVA");
+        setTimeout(() => {
+          //Se recarga la pagina luego de 1 segundo
+          window.location.reload();
+        }, 1000);
+      }
+    })
+    .catch(error => {
+      console.error('Error al eliminar el IVA:', error);
+      showAlert("Error: Ha ocurrido un problema el eliminar este IVA");
+      setTimeout(() => {
+        //Se recarga la pagina luego de 1 segundo
+        window.location.reload();
+      }, 1000);
+      // Hacer algo en caso de que ocurra un error en la solicitud
+    });
 }
 
 //Funcion para pedirle al servidor que elimine un producto especifico
@@ -128,24 +160,24 @@ export const deleteCurtainPipe = async (pipeID) => {
           //Se recarga la pagina luego de 1 segundo
           window.location.reload();
         }, 1000);
-        } else {
-          showAlert("Error: Ha ocurrido un problema el eliminar este tubo");
-          setTimeout(() => {
-            //Se recarga la pagina luego de 1 segundo
-            window.location.reload();
-          }, 1000);
-        }
-      })
-      .catch(error => {
-        console.error('Error al eliminar el tubo:', error);
+      } else {
         showAlert("Error: Ha ocurrido un problema el eliminar este tubo");
         setTimeout(() => {
           //Se recarga la pagina luego de 1 segundo
           window.location.reload();
         }, 1000);
-        // Hacer algo en caso de que ocurra un error en la solicitud
+      }
+    })
+    .catch(error => {
+      console.error('Error al eliminar el tubo:', error);
+      showAlert("Error: Ha ocurrido un problema el eliminar este tubo");
+      setTimeout(() => {
+        //Se recarga la pagina luego de 1 segundo
+        window.location.reload();
+      }, 1000);
+      // Hacer algo en caso de que ocurra un error en la solicitud
     });
-  }
+}
 
 //Funcion para pedirle al servidor que elimine un margen de utilidad especifico
 export const deleteProfitMargin = async (profitMarginID) => {
@@ -159,24 +191,24 @@ export const deleteProfitMargin = async (profitMarginID) => {
           //Se recarga la pagina luego de 1 segundo
           window.location.reload();
         }, 1000);
-        } else {
-          showAlert("Error: Ha ocurrido un problema el eliminar este margen");
-          setTimeout(() => {
-            //Se recarga la pagina luego de 1 segundo
-            window.location.reload();
-          }, 1000);
-        }
-      })
-      .catch(error => {
-        console.error('Error al eliminar el margen:', error);
+      } else {
         showAlert("Error: Ha ocurrido un problema el eliminar este margen");
         setTimeout(() => {
           //Se recarga la pagina luego de 1 segundo
           window.location.reload();
         }, 1000);
-        // Hacer algo en caso de que ocurra un error en la solicitud
+      }
+    })
+    .catch(error => {
+      console.error('Error al eliminar el margen:', error);
+      showAlert("Error: Ha ocurrido un problema el eliminar este margen");
+      setTimeout(() => {
+        //Se recarga la pagina luego de 1 segundo
+        window.location.reload();
+      }, 1000);
+      // Hacer algo en caso de que ocurra un error en la solicitud
     });
-  }
+}
 
 //Funcion que asigna a un vendedor a una solicitud realizada por un cliente
 export const asignarVendedor = async (id_solicitud, id_vendedor) => {
@@ -204,6 +236,13 @@ export const getAllUsers = async () => {
   const respuesta = await fetch(`${URL_CIVILO}${RUTA_GET_USERS}`);
   const usuarios = await respuesta.json();
   return usuarios;
+}
+
+//Funcion que permite obtener todos los IVA utilizados
+export const getAllIVA = async () => {
+  const respuesta = await fetch(`${URL_CIVILO}${RUTA_GET_ALL_IVA}`);
+  const iva = await respuesta.json();
+  return iva;
 }
 
 //Funcion que permite obtener todos los tubos
@@ -319,7 +358,7 @@ export const getRequestById = async (id_solicitud) => {
 }
 
 //Funcion para realizar la solicitud del pdf de la cotizacion para descargar
-export const solicitarPDF = (sellerEntity, id_solicitud) =>{
+export const solicitarPDF = (sellerEntity, id_solicitud) => {
   //Se envia la peticion POST al servidor
   fetch(`${URL_CIVILO}${RUTA_COTIZACIONES}/${id_solicitud}`, {
     method: "POST",
@@ -346,16 +385,16 @@ export const solicitarPDF = (sellerEntity, id_solicitud) =>{
 
       // Crear un objeto Blob a partir de los bytes del PDF
       const blob = new Blob([pdfBytes], { type: "application/pdf" });
-      
+
       // Crear un objeto URL para el blob
       const url = URL.createObjectURL(blob);
-      
+
       // Crear un enlace temporal para descargar el archivo
       const link = document.createElement("a");
       link.href = url;
       link.download = fileName; // Nombre del archivo
       link.click();
-      
+
       // Liberar el objeto URL
       URL.revokeObjectURL(url);
 
@@ -422,6 +461,29 @@ export const registrarUsuario = (usuario) => {
     })
     .catch((error) => {
       showAlert("Error al registrar usuario");
+      console.error("Error:", error);
+    });
+}
+
+// Función para crear un iva como administrador
+export const registrarIVA = (iva) => {
+  fetch(`${URL_CIVILO}${RUTA_GET_IVA}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(iva),
+  })
+    .then((response) => {
+      if (response.ok) {
+        console.log("Registro exitoso");
+      } else {
+        console.log("Registro fallido");
+      }
+      window.location.reload();
+    })
+    .catch((error) => {
+      showAlert("Error al registrar el IVA");
       console.error("Error:", error);
     });
 }

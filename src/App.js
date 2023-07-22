@@ -29,6 +29,7 @@ import SellerQuotePage from "./pages/SellerQuotePage";
 import AdminReadProfitMarginPage from "./pages/AdminReadProfitMarginPage";
 import RequestManagementPage from "./pages/RequestManagementPage";
 import SellerMyQuotesPage from "./pages/SellerMyQuotesPage";
+import AdminReadIVAPage from "./pages/AdminReadIVAPage";
 
 
 function App() {
@@ -55,6 +56,7 @@ function App() {
       <Route path="/admin/readUsers" element={<UsersListPage/>} />
       <Route path="/admin/requestManagement" element={<RequestManagementPage />} />
       <Route path= "/admin/quotes" element={<SellerMyQuotesPage/>}/>
+      <Route path="/admin/readIVA" element={<AdminReadIVAPage />} />
 
       <Route path="/executive/executiveAssignment" element={<ExecutiveAssignmentPage />} />
       <Route path="/executive/requestManagement" element={<RequestManagementPage />} />
