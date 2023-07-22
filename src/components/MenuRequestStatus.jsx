@@ -5,7 +5,8 @@ import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { getAllStatus } from '../api/civilo_roller_api';
+import { getAllStatus, updateRequestStatus } from '../api/civilo_roller_api';
+import { showAlert } from '../functions/funciones';
 
 // const options = [
 //   'None',
@@ -28,7 +29,7 @@ import { getAllStatus } from '../api/civilo_roller_api';
 
 const ITEM_HEIGHT = 48;
 
-export default function MenuRequestStatus({estadoActual}) {
+export default function MenuRequestStatus({estadoActual, solicitud}) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
@@ -55,11 +56,28 @@ export default function MenuRequestStatus({estadoActual}) {
   };
   const handleClose = (opcionSeleccionada) => {
     setAnchorEl(null);
-    console.log("Opción seleccionada:", opcionSeleccionada);
+
+    //Se actualiza el objeto que es la solicitud del cliente
+    const solicitudActualizada = solicitud;
+    const id_solicitud = solicitud.requestID;
+    solicitudActualizada.status = opcionSeleccionada;
 
     //Se cambia el estado de la solicitud
+
+    //Se envia la solicitud actualizada al servidor
     
-    /* Insertar Funcion */
+    updateRequestStatus(id_solicitud, solicitudActualizada)
+    .then(() => {
+                  showAlert(`Estado de solicitud #${id_solicitud} actualizado con éxito`);
+                  setTimeout(() => {
+                    window.location.reload();
+                  }, 2000);
+                })
+    .catch((error) => {
+      console.log("Error al actualizar el estado de solicitud: ", error);
+      showAlert("Lo sentimos, ha ocurrido un error al actualizar el estado de la solicitud seleccionada");
+    })
+
   };
 
   return (

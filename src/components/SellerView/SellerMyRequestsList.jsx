@@ -90,6 +90,7 @@ const showRequestResume = (solicitudes) => {
           estado={"Sin Éxito"}
           colorLetraTag="#9e1919"
           colorFondoTag="#f5b7b1"
+          requestDetails={solicitud}
         />
       );
     } else if (solicitud.status.statusName.toLowerCase() === "finalizada y exitosa") {
@@ -101,6 +102,7 @@ const showRequestResume = (solicitudes) => {
           estado={"Completada"}
           colorLetraTag="white"
           colorFondoTag=" #22653f "
+          requestDetails={solicitud}
         />
       );
     }

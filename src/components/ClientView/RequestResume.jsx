@@ -16,44 +16,41 @@ const StyledDiv = styled.div`
     display: flex;
     //flex-direction: column;
     align-items: center;
-    width: 16%;
+    width: 20%;
     margin: 5px; //separador vertical entre este elementos y otros hermanos
     margin-left: 10px;//separador horizontal respecto al borde izquierdo
     padding: 7px;
     //padding-left: -5px;
 
-    @media (max-width: 1662px){
-      width: 20%;
-    }
-
-    @media (max-width: 1390px){
-      width: 25%;
+    @media (max-width: 1604px){
+      width: 30%;
     }
 
     @media (max-width: 1102px){
       width: 36%;
     }
 
-    @media (max-width: 804px){
+    @media (max-width: 910px){
       width: 36%;
     }
 
-    @media (max-width: 734px){
-      width: 39%;
+    @media (max-width: 910px){
+      width: 45%;
     }
 
-    @media (max-width: 679px){
+
+    @media (max-width: 712px){
       margin: auto;
       width: 65%;
     }
 
-    @media (max-width: 400px){
+    @media (max-width: 542px){
       margin: auto;
       width: 75%;
     }
 
     @media (max-width: 436px) {
-    width: 85%;
+    width: 90%;
     
   }
 
@@ -112,7 +109,7 @@ const EstadoSolicitud = styled.div`
   font-size: 150%; /* Tamaño de fuente del texto */
   align-items: center; 
   height: 40px; /* Altura del contenedor */
-  width: 45%; /* Ancho del contenedor */
+  width: 70%; /* Ancho del contenedor */
   display: flex; /* Establece el contenedor como un elemento flex */
   justify-content: center; /* Centra horizontalmente los elementos */
   padding: 0.35rem; /* Espacio interior alrededor del contenido */
@@ -148,6 +145,7 @@ const CalendarioIcono = styled(CalendarMonth)`
 
 export const RequestResume = ({fecha,estado, colorFondoTag, colorLetraTag, IdSolicitud, requestDetails}) => {
 
+
 const nuevaFecha = new Date(fecha);
 const fechaFormatoES = nuevaFecha.toLocaleDateString('es-ES').replace(/\//g, '-');
 const nombreUsuario = requestDetails.user.name;
@@ -179,7 +177,7 @@ useEffect(() => {
   //Si el tipo de usuario es vendedor
   if(tipoUsuario === "vendedor"){
     //Se muestra el menu de opciones para poder cambiar el estado de una solicitud
-    componenteChangeRequestStatus = <MenuRequestStatus estadoActual={requestDetails.status}/>;
+    componenteChangeRequestStatus = <MenuRequestStatus estadoActual={requestDetails.status} solicitud={requestDetails}/>;
   }
 
   setUserInfo(componenteUserInfo);

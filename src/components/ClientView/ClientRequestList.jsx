@@ -98,6 +98,7 @@ const showRequestResume = (solicitudes) => {
           estado={"Sin Éxito"}
           colorLetraTag="#9e1919"
           colorFondoTag="#f5b7b1"
+          requestDetails={solicitud}
         />
       );
     } else if (solicitud.status.statusName.toLowerCase() === "finalizada y exitosa") {
@@ -109,6 +110,7 @@ const showRequestResume = (solicitudes) => {
           estado={"Completada"}
           colorLetraTag="white"
           colorFondoTag=" #22653f "
+          requestDetails={solicitud}
         />
       );
     }
@@ -132,7 +134,7 @@ export const ClientRequestList = () => {
   useEffect(() => {
     //obtenerSolicitudes().then((solicitudes) => setSolicitudes(solicitudes));
     solicitarMisSolicitudes(IdUsuario)
-    .then((solicitudes) => setSolicitudes(solicitudes))
+    .then((solicitudes) => {setSolicitudes(solicitudes);})
     .catch((error) => (console.log("Error al obtener solicitudes:",error)));
   }, [IdUsuario]);
 

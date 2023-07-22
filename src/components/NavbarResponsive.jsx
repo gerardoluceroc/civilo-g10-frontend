@@ -346,13 +346,14 @@ function NavbarResponsive() {
               mr: 2,
               display: { xs: 'none', md: 'flex' },
               fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
+              fontWeight: 800,
+              letterSpacing: '0rem',
+              color: 'white',
               textDecoration: 'none',
+              marginRight: '30px'
             }}
           >
-            ROLLER
+            ROLLER DECO
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -405,7 +406,7 @@ function NavbarResponsive() {
                 textDecoration: 'none',
               }}
             >
-              ROLLER
+              ROLLER DECO
             </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {mostrarOpcionesDesktop(pages)}

@@ -318,9 +318,23 @@ export const getAllStatus = async () => {
 }
 
 //Función que permite actualizar el estado de una solicitud
-const updateRequestStatus = async () => {
+export const updateRequestStatus = async (id_solicitud, solicitudActualizada) => {
+  try {
+    const url = `${URL_CIVILO}${RUTA_REQUESTS}/${id_solicitud}`; 
 
-}
+    await fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(solicitudActualizada),
+    });
+
+    // No necesitamos esperar la respuesta del servidor, ya que solo se espera un código de estado 200 OK.
+  } catch (error) {
+    console.error('Error al enviar la solicitud:', error);
+  }
+};
 
 //Funcion para obtener todas las solicitudes realizadas en la pagina
 export const getAllRequests = async () => {
