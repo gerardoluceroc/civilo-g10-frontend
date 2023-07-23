@@ -96,12 +96,23 @@ const Button = styled.button`
   }
 `;
 
+const Card = styled.div`
+  border: 2px solid blue;
+  padding: 16px;
+  border-radius: 8px;
+  width: 300px;
+  margin: 20px auto;
+`;
+
 const RUTA_PAGE_LOGIN = "/login";
 
 const SellerInformation = () => {
   const [coverages, setCoverages] = useState([]);
   const [selectedCoverages, setSelectedCoverages] = useState([]);
   const [companyName, setCompanyName] = useState("");
+  const [bank, setBank] = useState("");
+  const [bankAccountType, setBankAccountType] = useState("");
+  const [bankAccountNumber, setBankAccountNumber] = useState("");
 
   useEffect(() => {
     fetch(`${URL_CIVILO}${RUTA_COBERTURAS}`)
@@ -127,11 +138,26 @@ const SellerInformation = () => {
     setCompanyName(event.target.value);
   };
 
+  const handleBankChange = (event) => {
+    setBank(event.target.value);
+  };
+
+  const handleBankAccountTypeChange = (event) => {
+    setBankAccountType(event.target.value);
+  };
+
+  const handleBankAccountNumberChange = (event) => {
+    setBankAccountNumber(event.target.value);
+  };
+
   const handleSubmit = () => {
     const data = {
       email: localStorage.getItem('email'),
       coverageID: selectedCoverages,
       companyName: companyName,
+      bank: bank,
+      bankAccountType: bankAccountType,
+      bankAccountNumber: bankAccountNumber,
     };
 
     try {
@@ -171,7 +197,7 @@ const SellerInformation = () => {
   };
 
   const renderTables = () => {
-    const minRowsPerTable = 100;
+    const minRowsPerTable = 85;
     const numTables = Math.ceil(coverages.length / minRowsPerTable);
     const coverageChunks = chunkArray(coverages, minRowsPerTable);
 
@@ -180,14 +206,14 @@ const SellerInformation = () => {
         <Table>
           <thead>
             <tr>
-              <TableHeader>Comuna y Cobertura</TableHeader>
+              <TableHeader>Comuna</TableHeader>
               <TableHeader>Seleccionar</TableHeader>
             </tr>
           </thead>
           <tbody>
             {chunk.map((coverage) => (
               <TableRow key={coverage.coverageID}>
-                <TableCell>{coverage.commune} - {coverage.coverage}</TableCell>
+                <TableCell>{coverage.commune}</TableCell>
                 <TableCell>
                   <Checkbox
                     type="checkbox"
@@ -215,14 +241,34 @@ const SellerInformation = () => {
 
   return (
     <Container>
-      <Title>Indique el nombre de su empresa</Title>
-      <Input
-        type="text"
-        placeholder="Nombre empresa"
-        value={companyName}
-        onChange={handleCompanyNameChange}
-      />
-      <Title>Indique las comunas y coberturas a las cuales le realiza cobertura</Title>
+      <Card>
+        <Title>Datos de empresa</Title>
+        <Input
+          type="text"
+          placeholder="Nombre empresa"
+          value={companyName}
+          onChange={handleCompanyNameChange}
+        />
+        <Input
+          type="text"
+          placeholder="Banco"
+          value={bank}
+          onChange={handleBankChange}
+        />
+        <Input
+          type="text"
+          placeholder="Tipo de cuenta"
+          value={bankAccountType}
+          onChange={handleBankAccountTypeChange}
+        />
+        <Input
+          type="int"
+          placeholder="Número de cuenta"
+          value={bankAccountNumber}
+          onChange={handleBankAccountNumberChange}
+        />
+      </Card>
+      <Title>Indique las comunas a las cuales le realiza cobertura</Title>
       <TableContainer>
         {renderTables()}
       </TableContainer>

@@ -165,6 +165,9 @@ const ClientRequestForm = () => {
 
             if (response.ok) {
                 showAlert("Solicitud creada con éxito");
+                setTimeout(() => {
+                    window.location.reload();
+                  }, 3000);
             } else {
                 showAlert("Ha ocurrido un error al crear la solicitud");
             }
