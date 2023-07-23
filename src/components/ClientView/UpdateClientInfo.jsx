@@ -293,7 +293,7 @@ export const UpdateClientInfo = () => {
          const {name,surname,commune} = usuarioActualizado;
 
         //Si alguno de los campos está vacío, se muestra una alerta indicando que no se ha podido realizar la actualización
-        if(name === "" || surname === "" || usuarioActualizado.email === "" || usuarioActualizado.password === "" || telefono === "" || commune === "" || startTime === "" || endTime === ""){
+        if(name === "" || surname === "" || usuarioActualizado.email === "" || usuarioActualizado.password === "" || telefono === "" || commune === ""){
           showAlert("Error: Debe completar todos los campos");
 
         }

@@ -336,12 +336,16 @@ export const RegisterForm = () => {
     }
 
     //Si alguno de los campos está vacío, se muestra una alerta indicando que no se ha podido realizar la actualización
-    if(usuarioNuevo.name === "" || usuarioNuevo.surname === "" || usuarioNuevo.email === "" || usuarioNuevo.password === "" || usuarioNuevo.rut === "" || telefono === "" || usuarioNuevo.commune === "" || usuarioNuevo.startTime === "" || usuarioNuevo.endTime === ""){
+    if(usuarioNuevo.name === "" || usuarioNuevo.surname === "" || usuarioNuevo.email === "" || usuarioNuevo.password === "" || usuarioNuevo.rut === "" || telefono === "" || usuarioNuevo.commune === ""){
       showAlert("Error: Debe completar todos los campos");
 
     }
 
     else{
+      if(usuarioNuevo.startTime === "" || usuarioNuevo.endTime === ""){
+        usuarioNuevo.startTime = null
+        usuarioNuevo.endTime = null
+      }
       //borrar estos print despues
       // console.log("El objeto usuario es:");
       // console.log(usuarioNuevo);
