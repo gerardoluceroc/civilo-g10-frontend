@@ -2,7 +2,7 @@
   "name": "frontend-civilo-roller",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://gerardoluceroc.github.io/civilo-g10-frontend",
+  "homepage": "https://gerardoluceroc.github.io/civilo-g10-frontend",
   "dependencies": {
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
